@@ -24,7 +24,7 @@
 				<el-input class="mb_10" type="password" v-model="login_password" placeholder="密码">
 					<i class="icon" slot="prepend">&#xe617;</i>
 				</el-input>
-				<el-button type="primary" class="login_btn" v-on:click="login">登录</el-button>
+				<el-button type="primary" class="login_btn" @click="login" @keyup.enter="login">登录</el-button>
 				<div class="thirdParty clearfix">
 					<div class="top">
 						<div class="line"></div>
@@ -57,7 +57,7 @@
 				<el-input class="mb_10" type="password" v-model="register_password" placeholder="设置密码">
 					<i class="icon" slot="prepend">&#xe617;</i>
 				</el-input>
-				<el-button type="success" class="register_btn" v-on:click="register">注册</el-button>
+				<el-button type="success" class="register_btn" @click="register" @keyup.enter="register">注册</el-button>
 			</div>
 		</div>
 	</div>
