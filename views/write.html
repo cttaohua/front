@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/plugins/element/element.min.css">
+    <link rel="stylesheet" href="/css/style.min.css?v={{ env.version }}">
+</head>
+
+<body>
+
+    {% include './layout/header.html' %}
+    <div id="writePage" class="container">
+        <div class="write">
+            <input type="text" class="word_title" placeholder="输入文章标题" maxlength="50" autofocus="" v-model="title"/>
+            <div class="upload">
+                <img :src="imageUrl" alt="" class="coverPic"/>
+                <button class="upload_btn" id="fileSelect">上传封面图</button>
+                <input accept="image/*" name="upimage" id="upload_file" type="file" style="display:none;">
+            </div>
+            <div id="editor"></div>
+            <!--编辑器-->
+            <button class="publish" v-on:click="comfirm()">发布博客</button>
+        </div>
+    </div>
+    {% include './layout/footer.html' %}
+
+    <script src="/plugins/jquery.min.js"></script>
+	<script src="/plugins/vue.min.js"></script>
+	<script src="/plugins/element/element.min.js"></script>
+	<script src="/plugins/wangeditor/wangEditor.min.js"></script>
+	<script src="/js/common.min.js?v={{ env.version }}"></script>
+    <script src="/js/write.min.js?v={{ env.version }}"></script>
+</body>
+
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/plugins/swiper/css/swiper.min.css">
+	<link rel="stylesheet" href="/plugins/element/element.min.css">
+    <link rel="stylesheet" href="/css/style.min.css?v={{ env.version }}">
+</head>
+
+<body>
+    {% include './layout/header.html' %}
+    <div id="homePage" class="container">
+        <div class="home_container">
+            <div class="banner">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide bgi1"></div>
+                        <div class="swiper-slide bgi2"></div>
+                        <div class="swiper-slide bgi3"></div>
+                    </div>
+                    <!-- 如果需要导航按钮 -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+            <div class="articleList">
+                <div class="articleItem">
+                    <img class="art_img" src="/img/nav.jpg" alt="" />
+                    <div class="art_top">
+                        <img class="art_touxiang fl" src="/img/nav.jpg" alt="" />
+                        <span class="fl name">作者姓名</span>
+                        <span class="fl time">2017.12.29 14:52</span>
+                    </div>
+                    <div class="art_title">男博士自述：我渴望摆脱“农村”和“贫穷”</div>
+                    <p class="abstract">作者：小七姐 采访时间：12月20日 姓名：李想（化名） 性别：男 年龄：24岁 河北人。大学在长沙，拿到双学士学位后，保研来京主攻金融方向。研究生毕业后，又继续攻读本校博士作者：小七姐 采访时间：12月20日
+                        姓名：李想（化名） 性别：男 年龄：24岁</p>
+                    <div class="art_bottom">
+                        <div class="fl">
+                            <i class="icon browse">&#xe614;</i>
+                            <span>4235</span>
+                        </div>
+                        <div class="fl">
+                            <i class="icon comment">&#xe64c;</i>
+                            <span>4235</span>
+                        </div>
+                        <div class="fl">
+                            <i class="icon attention">&#xe6e7;</i>
+                            <span>4235</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="articleItem">
+                    <img class="art_img" src="/img/nav.jpg" alt="" />
+                    <div class="art_top">
+                        <img class="art_touxiang fl" src="/img/nav.jpg" alt="" />
+                        <span class="fl name">作者姓名</span>
+                        <span class="fl time">2017.12.29 14:52</span>
+                    </div>
+                    <div class="art_title">男博士自述：我渴望摆脱“农村”和“贫穷”</div>
+                    <p class="abstract">作者：小七姐 采访时间：12月20日 姓名：李想（化名） 性别：男 年龄：24岁 河北人。大学在长沙，拿到双学士学位后，保研来京主攻金融方向。研究生毕业后，又继续攻读本校博士作者：小七姐 采访时间：12月20日
+                        姓名：李想（化名） 性别：男 年龄：24岁</p>
+                    <div class="art_bottom">
+                        <div class="fl">
+                            <i class="icon browse">&#xe614;</i>
+                            <span>4235</span>
+                        </div>
+                        <div class="fl">
+                            <i class="icon comment">&#xe64c;</i>
+                            <span>4235</span>
+                        </div>
+                        <div class="fl">
+                            <i class="icon attention">&#xe6e7;</i>
+                            <span>4235</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="articleItem">
+                    <img class="art_img" src="/img/nav.jpg" alt="" />
+                    <div class="art_top">
+                        <img class="art_touxiang fl" src="/img/nav.jpg" alt="" />
+                        <span class="fl name">作者姓名</span>
+                        <span class="fl time">2017.12.29 14:52</span>
+                    </div>
+                    <div class="art_title">男博士自述：我渴望摆脱“农村”和“贫穷”</div>
+                    <p class="abstract">作者：小七姐 采访时间：12月20日 姓名：李想（化名） 性别：男 年龄：24岁 河北人。大学在长沙，拿到双学士学位后，保研来京主攻金融方向。研究生毕业后，又继续攻读本校博士作者：小七姐 采访时间：12月20日
+                        姓名：李想（化名） 性别：男 年龄：24岁</p>
+                    <div class="art_bottom">
+                        <div class="fl">
+                            <i class="icon browse">&#xe614;</i>
+                            <span>4235</span>
+                        </div>
+                        <div class="fl">
+                            <i class="icon comment">&#xe64c;</i>
+                            <span>4235</span>
+                        </div>
+                        <div class="fl">
+                            <i class="icon attention">&#xe6e7;</i>
+                            <span>4235</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar">
+                {% include './layout/sidebar.html' %}
+            </div>
+        </div>
+    </div>
+    {% include './layout/footer.html' %}
+
+    <script src="/plugins/jquery.min.js"></script>
+	<script src="/plugins/vue.min.js"></script>
+    <script src="/plugins/swiper/js/swiper.min.js"></script>
+    <script src="/plugins/jquery.windstagball.js"></script>
+	<script src="/js/common.min.js?v={{ env.version }}"></script>
+    <script src="/js/home.min.js?v={{ env.version }}"></script>
+</body>
+
+</html>

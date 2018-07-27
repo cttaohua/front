@@ -1,0 +1,110 @@
+@import './variable.scss';
+#loginPage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    background-color: #f1f1f1;
+    .logo {
+        position: absolute;
+        top: 30px;
+        left: 30px;
+    }
+    .login_center {
+        width: 400px;
+        margin: 180px auto 0;
+        padding: 50px 50px 30px;
+        background-color: #fff;
+        border-radius: 4px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, .1);
+        vertical-align: middle;
+		.tab {
+			display: flex;
+			justify-content: center;
+			margin-bottom: 25px;
+			li {
+				font-size: $fontBig;
+				cursor: pointer;
+				padding: 0 10px;
+				line-height: 40px;
+				color: $fontlight;
+			}
+			li.active {
+				color: $themefontColor;
+				border-bottom: 3px solid $themefontColor;
+			}
+		}
+		.login_module {
+			.thirdParty {
+				position: relative;
+				margin-top: 40px;
+				.top {
+					width: 100%;
+					height: 40px;
+					position: absolute;
+					top: 0;
+					overflow: hidden;
+					.line {
+						margin: 20px auto 0;
+						height: 1px;
+						background-color: $wireframe;
+					}
+					.title {
+						position: absolute;
+						top: 0;
+						left: 95px;
+						width: 120px;
+						height: 40px;
+						line-height: 40px;
+						background-color: #fff;
+						font-size: $fontSmall;
+						text-align: center;
+						color: $fontlight;
+					}
+				}
+			}
+			.child {
+				width: 33.3%;
+				float: left;
+				line-height: 50px;
+				margin-top: 50px;
+				a {
+					display: block;
+					margin: 0 auto;
+					text-align: center;
+					width: 100%;
+					height: 100%;
+				}
+				i {
+					font-size: 30px;
+				}
+				.microblog {
+					color: #e05244;
+				}
+				.wechat {
+					color: #00bb29;
+					font-size: 22px;
+				}
+				.qq {
+					color: #498ad5;
+					font-size: 25px;
+				}
+			}
+		}
+		.login_btn {
+			width: 100%;
+			background-color: $themefontColor;
+			border-radius: 30px;
+			border-color: $themefontColor;
+			margin-top: 30px;
+		}
+		.register_btn {
+			width: 100%;
+			border-radius: 30px;
+			margin-top: 30px;
+			margin-bottom: 20px;
+		}
+    }
+}

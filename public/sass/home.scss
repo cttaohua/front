@@ -1,0 +1,160 @@
+@import './variable.scss';
+#homePage {
+    .home_container {
+        width: 100%;
+        padding-right: 320px;
+        padding-top: 86px;
+        position: relative;
+    }
+    .sidebar {
+        width: 300px;
+        height: 500px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin-top: 86px;
+    }
+    .banner {
+        width: 100%;
+        height: 270px;
+        border-radius: 5px;
+        .swiper-container {
+            width: 100%;
+            height: 270px;
+        }
+        .swiper-slide {
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .bgi1 {
+            background-image: url('/img/banner1.jpg');
+        }
+        .bgi2 {
+            background-image: url('/img/banner2.png');
+        }
+        .bgi3 {
+            background-image: url('/img/banner3.jpg');
+        }
+    }
+    .banner:hover {
+        .swiper-button-prev {
+            display: block;
+        }
+        .swiper-button-next {
+            display: block;
+        }
+    }
+    .swiper-button-prev {
+        background-color: rgba(0, 0, 0, .4);
+        left: 0;
+        width: 40px;
+        height: 50px;
+        background-size: 20px 25px;
+        display: none;
+    }
+    .swiper-button-next {
+        background-color: rgba(0, 0, 0, .4);
+        right: 0;
+        width: 40px;
+        height: 50px;
+        background-size: 20px 25px;
+        display: none;
+    }
+    .articleList {
+        margin-top: 17px;
+        border-top: 1px solid #f0f0f0;
+        padding-top: 17px;
+    }
+    /*文章列表*/
+    .articleItem {
+        width: 100%;
+        padding-right: 160px;
+        border-bottom: 1px solid #f0f0f0;
+        padding-bottom: 12px;
+        margin-bottom: 17px;
+        position: relative;
+        .art_img {
+            position: absolute;
+            top: 50%;
+            margin-top: -68px;
+            right: 0;
+            width: 150px;
+            height: 120px;
+            display: block;
+            border-radius: 3px;
+        }
+        .art_top {
+            width: 100%;
+            height: 32px;
+            line-height: 32px;
+            font-size: 14px;
+            .art_touxiang {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                display: block;
+            }
+            .name {
+                margin-left: 10px;
+                margin-right: 10px;
+                font-size: 14px;
+            }
+            .time {
+                color: #9e9e9e;
+                font-size: 14px;
+            }
+        }
+        .art_title {
+            font-size: 18px;
+            font-weight: 700;
+            text-align: left;
+            line-height: 1.5;
+            margin-bottom: 4px;
+            margin-top: 7px;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .abstract {
+            margin: 0 0 8px;
+            font-size: 13px;
+            height: 72px;
+            line-height: 24px;
+            text-align: left;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+        }
+        .art_bottom {
+            width: 100%;
+            height: 20px;
+            line-height: 20px;
+            color: #9e9e9e;
+            .fl {
+                line-height: 20px;
+                i {
+                    line-height: 20px;
+                    display: block;
+                    float: left;
+                }
+                span {
+                    font-size: 12px;
+                    line-height: 20px;
+                    display: block;
+                    float: left;
+                    margin-left: 5px;
+                }
+            }
+            .browse {
+                font-size: 24px;
+            }
+            .comment {
+                font-size: 23px;
+                margin-left: 10px;
+            }
+            .attention {
+                margin-left: 10px;
+            }
+        }
+    }
+}

@@ -1,0 +1,109 @@
+var express = require('express');
+var router = express.Router();
+var query = require('../../config/node-mysql.js');
+var data = require('../../config/env.js').data;
+var async = require('async');
+
+//注册接口
+router.post('/register', function (req, res, next) {
+
+    var user_name = req.body['user_name'];
+    var user_phone = req.body['user_phone'];
+    var user_password = req.body['user_password'];
+
+    async.series({
+        one: function (callback) {
+            var phoneSql = "select * from th_user where account='" + user_phone + "'";
+            query(phoneSql, function (err, vals, fields) {
+                if (vals.length) { //用户存在
+                    callback('err');
+                } else { //可注册
+                    callback(null);
+                }
+            })
+        },
+        two: function (callback) {
+            var nowDate = new Date().getTime();
+            var addSql = "insert into th_user (`account`,`nick`,`password`,`create_time`)" +
+                " values ('" + user_phone + "','" + user_name + "','" + user_password + "','" +
+                nowDate + "')";
+            query(addSql, function (err, vals, fields) {
+                if (err) {
+                    callback('err', 1);
+                } else {
+                    callback(null);
+                }
+            })
+        }
+    }, function (err, result) {
+        if (err) {
+            if (result[1] == 1) {
+                data['code'] = 1;
+                data['body'] = '注册失败';
+            } else {
+                data['code'] = 2;
+                data['body'] = '该手机号已经被注册';
+            }
+        } else {
+            data['code'] = 200;
+            data['body'] = '注册成功';
+        }
+        res.json(data);
+    })
+
+});
+
+//登录接口
+router.post('/login', function (req, res, next) {
+    var user_phone = req.body.user_phone;
+	var user_password = req.body.user_password;
+	
+	if(!(/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test( user_phone )) ) {
+		data['code'] = 0;
+		data['body'] = '请输入正确的手机号';
+		res.json(data);
+		return false;
+	}
+	
+	if(user_password.length<6) {
+		data['code'] = 0;
+		data['body'] = '密码长度必须大于6位';
+		res.json(data);
+		return false;
+	}
+	
+	
+	async.series({
+		one: function(callback) {
+			var s_sql = "select * from th_user where account='" + user_phone + "'";
+			query(s_sql,function(err, vals, fields){
+				if(vals.length) { //用户存在
+					if(user_password == vals[0].password) {  //密码正确
+						callback(null,vals[0]);
+					}else {   //密码错误
+						callback('err',2);
+					}
+				}else {
+					callback('err',1);
+				}
+			})
+		}
+	},function(err,result){
+		if(err) {
+			if(result.one==1) {
+				data['code'] = 1;
+				data['body'] = '此手机号没有注册，请先注册';
+			}else {
+				data['code'] = 2;
+				data['body'] = '密码错误';
+			}
+		}else {
+			data['code'] = 200;
+			data['body'] = result.one;
+		}
+		res.json(data);
+	})
+	
+})
+
+module.exports = router;

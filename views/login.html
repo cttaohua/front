@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+	<link rel="stylesheet" href="/plugins/element/element.min.css">
+    <link rel="stylesheet" href="/css/style.min.css?v={{ env.version }}">
+</head>
+
+<body>
+	<div id="loginPage">
+		<img src="/img/logo.png" alt="" class="logo" />
+		<div class="login_center">
+			<ul class="tab">
+				<li :class="{active:cut_flag==1}" v-on:click="cut(1)">登录</li>
+				<li>·</li>
+				<li :class="{active:cut_flag==2}" v-on:click="cut(2)">注册</li>
+			</ul>
+			<div class="login_module" v-show="cut_flag==1">
+				<el-input class="mb_10" v-model="login_phone" placeholder="手机号">
+					<i class="icon" slot="prepend">&#xe616;</i>
+				</el-input>
+				<el-input class="mb_10" type="password" v-model="login_password" placeholder="密码">
+					<i class="icon" slot="prepend">&#xe617;</i>
+				</el-input>
+				<el-button type="primary" class="login_btn" v-on:click="login">登录</el-button>
+				<div class="thirdParty clearfix">
+					<div class="top">
+						<div class="line"></div>
+						<div class="title">社交账号登录</div>
+					</div>
+					<div class="child">
+						<a href="javascript:;" v-on:click="thirdParty">
+							<i class="icon microblog">&#xe63d;</i>
+						</a>
+					</div>
+					<div class="child">
+						<a href="javascript:;" v-on:click="thirdParty">
+							<i class="icon wechat">&#xe62f;</i>
+						</a>
+					</div>
+					<div class="child">
+						<a href="javascript:;" v-on:click="thirdParty">
+							<i class="icon qq">&#xe612;</i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="register_module" v-show="cut_flag==2">
+				<el-input class="mb_10" v-model="register_name" placeholder="你的昵称">
+					<i class="icon" slot="prepend">&#xe687;</i>
+				</el-input>
+				<el-input class="mb_10" v-model="register_phone" placeholder="手机号">
+					<i class="icon" slot="prepend">&#xe616;</i>
+				</el-input>
+				<el-input class="mb_10" type="password" v-model="register_password" placeholder="设置密码">
+					<i class="icon" slot="prepend">&#xe617;</i>
+				</el-input>
+				<el-button type="success" class="register_btn" v-on:click="register">注册</el-button>
+			</div>
+		</div>
+	</div>
+	<script src="/plugins/jquery.min.js"></script>
+	<script src="/plugins/vue.min.js"></script>
+	<script src="/plugins/element/element.min.js"></script>
+	<script src="/js/common.min.js?v={{ env.version }}"></script>
+	<script src="/js/login.min.js?v={{ env.version }}"></script>
+</body>
+
+</html>
