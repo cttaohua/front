@@ -23,10 +23,11 @@ router.post('/register', function (req, res, next) {
             })
         },
         two: function (callback) {
-            var nowDate = new Date().getTime();
+            var nowDate = (Date.parse(new Date()))/1000;  //转化成秒
             var addSql = "insert into th_user (`account`,`nick`,`password`,`create_time`)" +
                 " values ('" + user_phone + "','" + user_name + "','" + user_password + "','" +
                 nowDate + "')";
+				console.log(addSql);
             query(addSql, function (err, vals, fields) {
                 if (err) {
                     callback('err', 1);
@@ -100,6 +101,12 @@ router.post('/login', function (req, res, next) {
 		}else {
 			data['code'] = 200;
 			data['body'] = result.one;
+			//将用户信息存入cookie中 
+			var user_msg = JSON.stringify(result.one);
+			var user_base = new Buffer(user_msg).toString('base64');
+			res.cookie('userInfo',user_base,{
+				maxAge: 30*24*60*60*1000
+			});
 		}
 		res.json(data);
 	})

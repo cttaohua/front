@@ -47,7 +47,9 @@ new Vue({
 				success: function(res) {
 					var code = res.code;
 					if(code==200) {
-						
+				         _this.login_phone = _this.register_phone;
+						 _this.login_password = _this.register_password;
+						 _this.login();
 					}else {
 						_this.$message.warning(res.body);
 					}

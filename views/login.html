@@ -21,10 +21,10 @@
 				<el-input class="mb_10" v-model="login_phone" placeholder="手机号">
 					<i class="icon" slot="prepend">&#xe616;</i>
 				</el-input>
-				<el-input class="mb_10" type="password" v-model="login_password" placeholder="密码">
+				<el-input class="mb_10" type="password" v-model="login_password" placeholder="密码" @keyup.native.13="login">
 					<i class="icon" slot="prepend">&#xe617;</i>
 				</el-input>
-				<el-button type="primary" class="login_btn" @click="login" @keyup.enter="login">登录</el-button>
+				<el-button type="primary" class="login_btn" @click="login">登录</el-button>
 				<div class="thirdParty clearfix">
 					<div class="top">
 						<div class="line"></div>
@@ -54,10 +54,10 @@
 				<el-input class="mb_10" v-model="register_phone" placeholder="手机号">
 					<i class="icon" slot="prepend">&#xe616;</i>
 				</el-input>
-				<el-input class="mb_10" type="password" v-model="register_password" placeholder="设置密码">
+				<el-input class="mb_10" type="password" v-model="register_password" placeholder="设置密码" @keyup.native.13="register">
 					<i class="icon" slot="prepend">&#xe617;</i>
 				</el-input>
-				<el-button type="success" class="register_btn" @click="register" @keyup.enter="register">注册</el-button>
+				<el-button type="success" class="register_btn" @click="register">注册</el-button>
 			</div>
 		</div>
 	</div>

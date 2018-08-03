@@ -1,11 +1,11 @@
 @import './variable.scss';
 @font-face {
   font-family: 'iconfont';  /* project id 530811 */
-  src: url('//at.alicdn.com/t/font_530811_l92cqj5rav.eot');
-  src: url('//at.alicdn.com/t/font_530811_l92cqj5rav.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_530811_l92cqj5rav.woff') format('woff'),
-  url('//at.alicdn.com/t/font_530811_l92cqj5rav.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_530811_l92cqj5rav.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_530811_gh0bb7c1peo.eot');
+  src: url('//at.alicdn.com/t/font_530811_gh0bb7c1peo.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_530811_gh0bb7c1peo.woff') format('woff'),
+  url('//at.alicdn.com/t/font_530811_gh0bb7c1peo.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_530811_gh0bb7c1peo.svg#iconfont') format('svg');
 }
 
 .icon {
@@ -105,6 +105,14 @@ a {
 ::-webkit-selection {
     background: #FFC0CB;
     color: #000;
+}
+
+.el-select-dropdown__item.selected {
+	color: $themefontColor!important;
+}
+
+.el-message {
+    z-index: 99999999!important;
 }
 
 .none {

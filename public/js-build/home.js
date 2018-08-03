@@ -1,11 +1,16 @@
 new Vue({
-    el: '#homePage',
+    el: '#homeList',
+	data: {
+		page: 1,
+		homeList: []
+	},
     created: function () {
 
     },
     mounted: function () {
-        this.swiper();
 		tagCloud();
+        this.swiper();
+		this.getMsg();
     },
 	methods: {
 		swiper: function() {
@@ -20,6 +25,24 @@ new Vue({
 				navigation: {
 					nextEl: '.swiper-button-next',
 					prevEl: '.swiper-button-prev',
+				}
+			})
+		},
+		getMsg: function() {
+			var _this = this;
+			$.ajax({
+				url: '/api/home',
+				type: 'get',
+				data: {
+					page: this.page
+				},
+				success: function(res) {
+					if(res.code==200) {
+						_this.homeList = res.body;
+					}
+				},
+				error: function() {
+					
 				}
 			})
 		}
