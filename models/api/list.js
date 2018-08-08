@@ -7,10 +7,10 @@ var async = require('async');
 router.get('/home',function(req, res, next){
 	var params = req.query;
 	var page = Number(params.page);
-	var offset = 10*(page-1);
+	var offset = 20*(page-1);
 	async.series({
 		one: function(callback) {
-			var c_sql = "select a.*,b.nick from th_article a left join th_user b on b.id=a.user_id where a.status=1 order by a.create_time desc limit "+offset+", 10";
+			var c_sql = "select a.*,b.nick from th_article a left join th_user b on b.id=a.user_id where a.status=1 order by a.create_time desc limit "+offset+", 20";
 			query(c_sql,function(err, vals, fields){
 				if(err) {
 					callback('err',1);
@@ -30,6 +30,15 @@ router.get('/home',function(req, res, next){
 		res.json(data);
 	})
 	
+})
+
+router.get('/classifyList',function(req, res, next){
+	var params = req.query;
+	var page = Number(params.page);
+	var offset = 10*(page-1);
+	async.series({
+		
+	})
 })
 
 

@@ -62,7 +62,7 @@ new Vue({
                 reader.readAsDataURL(file);
                 reader.onloadend = function () {
                     var dataUrl = reader.result;
-                    _this.imageUrl = dataUrl;
+                    _this.coverUrl = dataUrl;
                 }
             })
         },

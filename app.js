@@ -14,6 +14,9 @@ var app = express();
 app.engine('html', swig.renderFile);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
+
+
+//默认设置
 swig.setDefaults({
     cache: false
 }); //模板设置为不缓存

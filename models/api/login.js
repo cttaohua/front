@@ -23,7 +23,7 @@ router.post('/register', function (req, res, next) {
             })
         },
         two: function (callback) {
-            var nowDate = (Date.parse(new Date()))/1000;  //转化成秒
+            var nowDate = (Date.parse(new Date())); 
             var addSql = "insert into th_user (`account`,`nick`,`password`,`create_time`)" +
                 " values ('" + user_phone + "','" + user_name + "','" + user_password + "','" +
                 nowDate + "')";

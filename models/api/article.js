@@ -37,7 +37,7 @@ router.post('/article', function (req, res, next) {
             coverUrl = "/uploadImg/cover/" + random(8) + ".png";
             fs.writeFile("public" + coverUrl, dataBuffer, function (err) {});
         }
-        var nowDate = (Date.parse(new Date()))/1000; //转化成秒
+        var nowDate = (Date.parse(new Date()));
         async.waterfall([
             function (callback) {
                 if (newclassify) {
@@ -56,7 +56,7 @@ router.post('/article', function (req, res, next) {
             },
             function (c_id, status, callback) {
 				//文章类别加数量
-				var c_sql = "update th_classify set word_num=word_num+1 where id='"+c_id+"'";
+				var c_sql = "update th_classify set article_num=article_num+1 where id='"+c_id+"'";
 				query(c_sql,function(err, vals, fields) {});
 				//添加文章
                 var a_sql = 

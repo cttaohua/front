@@ -1,0 +1,49 @@
+@import './variable.scss';
+#classesPage {
+    .classes_container {
+        width: 100%;
+        padding-right: 320px;
+        padding-top: 30px;
+        position: relative;
+		min-height: 800px;
+		.top {
+			h1 {
+				font-size: 50px;
+				display: inline-block;
+				vertical-align: bottom;
+				line-height: 48px;
+			}
+			p {
+				display: inline-block;
+				vertical-align: bottom;
+				margin-left: 10px;
+			}
+		}
+		.tab_ul {
+			margin-top: 20px;
+			margin-bottom: 20px;
+			border-bottom: 1px solid #f0f0f0;
+			li {
+				float: left;
+				padding: 10px 20px;
+				cursor: pointer;
+				color: #969696;
+				i {
+					margin-right: 5px;
+				}
+			}
+			li.active {
+				color: #646464;
+				border-bottom: 2px solid #646464;
+			}
+		}
+        .sidebar {
+            width: 300px;
+            height: 500px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin-top: 30px;
+        }
+    }
+}
