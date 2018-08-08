@@ -11,9 +11,31 @@
 <body>
 	{% include './layout/header.html' %}
 	<div id="detailsPage" class="container">
-		{% autoescape %}
-		{{ msg.content }}
-		{% endautoescape %}
+		<div class="note_view">
+			<h1 class="title">{{msg.title}}</h1>
+			<div class="author">
+				<a class="avatar" href="#">
+					<img src="/img/head.png" alt="">
+				</a>
+				<div class="info">
+					<span class="name">
+						<a href="#">{{msg.nick}}</a>
+					</span>
+					<div class="meta">
+						<span>{{msg.update_time}}</span>
+						<span>字数 {{msg.word_num}}</span>
+						<span>阅读 {{msg.point_count}}</span>
+						<span>评论 {{msg.comment_count}}</span>
+						<span>喜欢 {{msg.attention_count}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="note_post">
+				{% autoescape %}
+				{{ msg.content }}
+				{% endautoescape %}
+			</div>
+		</div>
 	</div>
 	{% include './layout/footer.html' %}
 	<script src="/plugins/jquery.min.js"></script>

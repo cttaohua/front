@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/plugins/element/element.min.css">
+    <link rel="stylesheet" href="/css/style.min.css?v={{ env.version }}">
+</head>
+
+<body>
+    {% include './layout/header.html' %}
+    <div id="classesPage" class="container">
+		<div class="classes_container">
+			<div class="top">
+				<h1>{{class_msg.value}}</h1>
+				<p>收录了{{class_msg.article_num}}篇文章</p>
+			</div>
+			<ul class="tab_ul clearfix">
+				<li :class="{active:wordFlag==1}" @click="tabCut(1)"><i class="icon">&#xe618;</i>最新文章</li>
+				<li :class="{active:wordFlag==2}" @click="tabCut(2)"><i class="icon">&#xe613;</i>热门文章</li>
+			</ul>
+			<div class="article_post">
+				
+			</div>
+			<div class="sidebar">
+				{% include './layout/sidebar.html' with classify %}
+			</div>
+		</div>
+	</div>
+	<input id="classify_id" type="hidden" value="{{classify_id}}">
+    {% include './layout/footer.html' %}
+    <script src="/plugins/jquery.min.js"></script>
+    <script src="/plugins/vue.min.js"></script>
+	<script src="/plugins/jquery.windstagball.js"></script>
+    <script src="/js/common.min.js?v={{ env.version }}"></script>
+	<script src="/js/classes.min.js?v={{ env.version }}"></script>
+</body>
+
+</html>

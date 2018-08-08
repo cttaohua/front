@@ -1,8 +1,11 @@
 new Vue({
-    el: '#homeList',
+	delimiters: ['${', '}'],
+    el: '#homePage',
 	data: {
 		page: 1,
-		homeList: []
+		homeList: [],
+		noMore: false,
+		loading: true
 	},
     created: function () {
 
@@ -38,7 +41,13 @@ new Vue({
 				},
 				success: function(res) {
 					if(res.code==200) {
-						_this.homeList = res.body;
+						if(typeof (res.body)=='object') {
+							_this.homeList = _this.homeList.concat(res.body);
+						}
+						if(res.body.length<20) {
+							_this.noMore = true;
+							_this.loading = false;
+						}
 					}
 				},
 				error: function() {
