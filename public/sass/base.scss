@@ -1,11 +1,12 @@
 @import './variable.scss';
 @font-face {
-  font-family: 'iconfont';  /* project id 530811 */
-  src: url('//at.alicdn.com/t/font_530811_fvja41nuphn.eot');
-  src: url('//at.alicdn.com/t/font_530811_fvja41nuphn.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_530811_fvja41nuphn.woff') format('woff'),
-  url('//at.alicdn.com/t/font_530811_fvja41nuphn.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_530811_fvja41nuphn.svg#iconfont') format('svg');
+    font-family: 'iconfont';
+    /* project id 530811 */
+    src: url('//at.alicdn.com/t/font_530811_fvja41nuphn.eot');
+    src: url('//at.alicdn.com/t/font_530811_fvja41nuphn.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_530811_fvja41nuphn.woff') format('woff'),
+    url('//at.alicdn.com/t/font_530811_fvja41nuphn.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_530811_fvja41nuphn.svg#iconfont') format('svg');
 }
 
 .icon {
@@ -58,7 +59,7 @@ a {
 .container {
     width: 960px;
     margin: 0 auto;
-		padding-top: 60px;
+    padding-top: 60px;
 }
 
 @media (min-width: 1200px) {
@@ -109,7 +110,7 @@ a {
 }
 
 .el-select-dropdown__item.selected {
-	color: $themefontColor!important;
+    color: $themefontColor!important;
 }
 
 .el-message {
@@ -117,15 +118,15 @@ a {
 }
 
 .none {
-	display: none;
+    display: none;
 }
 
 .mb_10 {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .load-more {
-	  width: 100%;
+    width: 100%;
     border-radius: 20px;
     background-color: #a5a5a5;
     height: 40px;
@@ -135,5 +136,93 @@ a {
     font-size: 15px;
     color: #fff;
     display: block;
-		cursor: pointer;
+    cursor: pointer;
+}
+
+
+/*文章列表*/
+
+.articleItem {
+    width: 100%;
+    border-bottom: 1px solid #f0f0f0;
+    padding: 30px 2px 30px 0;
+    position: relative;
+    .art_img {
+        position: absolute;
+        top: 50%;
+        margin-top: -50px;
+        right: 0;
+        width: 125px;
+        height: 100px;
+        display: block;
+        img {
+            width: 100%;
+            height: 100%;
+            border-radius: 4px;
+            border: 1px solid #f0f0f0;
+        }
+    }
+    .art_title {
+        margin: -7px 0 4px;
+        display: inherit;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.5;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .art_title:hover {
+        text-decoration: underline;
+    }
+    .abstract {
+        margin: 0 0 8px;
+        font-size: 13px;
+        line-height: 24px;
+        color: #999;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+    }
+    .art_bottom {
+        width: 100%;
+        height: 20px;
+        line-height: 20px;
+        font-size: 12px;
+        i {
+            display: block;
+            margin-right: 5px;
+            color: #b4b4b4;
+        }
+        a {
+            margin-right: 10px;
+            color: #b4b4b4;
+            font-size: 12px;
+            transition: all .5s linear;
+        }
+        a:hover {
+            color: #333;
+            i {
+                color: #333;
+            }
+            span {
+                color: #333;
+            }
+        }
+        span {
+            color: #b4b4b4;
+            font-size: 12px;
+        }
+        .item {
+            margin-right: 10px;
+        }
+        .attention {
+            font-size: 12px;
+        }
+    }
+}
+
+.articleItem.haveImg {
+    padding-right: 140px;
 }

@@ -144,8 +144,14 @@
                     line-height: 50px;
                     text-align: left;
                     padding-left: 30px;
-                    color: #333;
                     font-size: $fontLarge;
+					a {
+						display: block;
+						width: 100%;
+						height: 100%;
+						color: #333;
+						font-size: 20px;
+					}
                 }
                 .li1 {
                     background-image: linear-gradient( 135deg, #FFF3B0 10%, #CA26FF 100%);
