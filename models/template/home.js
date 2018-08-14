@@ -7,19 +7,30 @@ var fun = require('../../config/fun.js');
 
 // /* GET home page. */
 router.get('/', function (req, res, next) {
-    
-	async.parallel([
-		function(callback) {
+
+    env['header']['index'] = 1;
+    env['header']['userInfo'] = req.userInfo;
+
+    async.parallel([
+        function (callback) {
             fun.selectClassify(callback);
-		}
-	],function(err,result){
-		res.render('index', {
-			title: '桃花源',
-			env: env,
-			classify: result[0]
-		});
-	})
+        }
+    ], function (err, result) {
+        res.render('index', {
+            title: '桃花源',
+            version: env['version'],
+            classify: result[0],
+            header: env['header']
+        });
+    })
 
 });
+
+//退出登录
+router.get('/layout', function (req, res, next) {
+     res.clearCookie('userInfo');
+	 //页面重定向
+	 res.redirect('/');
+})
 
 module.exports = router;

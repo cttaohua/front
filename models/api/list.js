@@ -54,7 +54,7 @@ router.get('/classifyList',function(req, res, next){
 			})
 		},
 		function(callback) {
-			var t_sql = "select count(*) from th_article where status=1 and classify=" + params.classify_id;
+			var t_sql = "select count(*) as total from th_article where status=1 and classify=" + params.classify_id;
 			query(t_sql,function(err,vals,fields){
 				if(err) {
 					callback('err');
@@ -71,7 +71,7 @@ router.get('/classifyList',function(req, res, next){
 			data['code'] = 200;
 			data['body'] = {
 				list: result[0],
-				count: result[1][0]['count(*)']
+				count: result[1][0]['total']
 			}
 		}
 		res.json(data);

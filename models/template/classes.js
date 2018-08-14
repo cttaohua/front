@@ -9,6 +9,8 @@ var fun = require('../../config/fun.js');
 router.get('/c/:id', function (req, res, next) {
 	
 	var classify_id = req.params.id;
+	env.header['index'] = 0;
+	env.header['userInfo'] = req.userInfo;
 	
 	async.parallel([
 		function(callback) {
@@ -30,7 +32,8 @@ router.get('/c/:id', function (req, res, next) {
 		}else {
 			res.render('classes', {
 				title: result[0][0].value + '-桃花源',
-				env: env,
+				version: env.version,
+				header: env.header,
 				classify: result[1],
 				classify_id: classify_id,
 				class_msg: result[0][0]

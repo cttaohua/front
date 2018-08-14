@@ -9,6 +9,8 @@ var tool = require('../../config/tool.js');
 router.get('/p/:id', function (req, res, next) {
     
     var word_id = req.params.id;
+	env.header['index'] = 0;
+	env.header['userInfo'] = req.userInfo;
 	
 	async.parallel([
 		function(callback) {
@@ -41,7 +43,8 @@ router.get('/p/:id', function (req, res, next) {
 		}else {
 			res.render('details', {
 				title: '桃花源',
-				env: env,
+				version: env.version,
+				header: env.header,
 				msg: result[0][0]
 			});
 		}

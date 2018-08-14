@@ -29,18 +29,21 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function (req, res, next) {
+    var user_msg = {};
+    if (req.cookies.userInfo) {
+        user_msg = JSON.parse(new Buffer(req.cookies.userInfo, 'base64').toString());
+    }else {
+		user_msg = 0;
+	}
+    req.userInfo = user_msg;
+    next();
+})
+
 //路由设置
 indexRouter(app);
 apiRouter(app);
 
-// app.use(function (req, res, next) {
-//     var user_msg = {};
-//     if (req.cookies.userInfo) {
-//         user_msg = JSON.parse(new Buffer(req.cookies.userInfo, 'base64').toString());
-//     }
-//     req.userInfo = user_msg;
-//     next();
-// })
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

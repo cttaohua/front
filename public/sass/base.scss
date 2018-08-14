@@ -1,12 +1,11 @@
 @import './variable.scss';
 @font-face {
-    font-family: 'iconfont';
-    /* project id 530811 */
-    src: url('//at.alicdn.com/t/font_530811_fvja41nuphn.eot');
-    src: url('//at.alicdn.com/t/font_530811_fvja41nuphn.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_530811_fvja41nuphn.woff') format('woff'),
-    url('//at.alicdn.com/t/font_530811_fvja41nuphn.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_530811_fvja41nuphn.svg#iconfont') format('svg');
+  font-family: 'iconfont';  /* project id 530811 */
+  src: url('//at.alicdn.com/t/font_530811_2rolcdxl1n9.eot');
+  src: url('//at.alicdn.com/t/font_530811_2rolcdxl1n9.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_530811_2rolcdxl1n9.woff') format('woff'),
+  url('//at.alicdn.com/t/font_530811_2rolcdxl1n9.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_530811_2rolcdxl1n9.svg#iconfont') format('svg');
 }
 
 .icon {
@@ -28,6 +27,7 @@
 
 body {
     height: 100%;
+	min-width: 1260px;
 }
 
 li {

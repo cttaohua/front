@@ -9,14 +9,14 @@ var fs = require('fs');
 
 router.post('/article', function (req, res, next) {
 
-    if (!req.cookies.userInfo) {
+    if (typeof (req.userInfo.id) == 'undefined') {
         data['code'] = 0;
         data['body'] = '发表文章需要登录，请先登录';
         res.json(data);
         return false;
     }
 
-    var userInfo = JSON.parse(new Buffer(req.cookies.userInfo, 'base64').toString());
+    var userInfo = req.userInfo;
     var title = req.body.title;
     var cover = req.body.cover;
     var content = req.body.content;
