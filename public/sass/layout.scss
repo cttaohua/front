@@ -1,31 +1,28 @@
 @import './variable.scss';
 #headerPage {
+	width: 100%;
+	height: auto;
+	border-bottom: 1px solid #e7e7e7;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 999999;
     @media (min-width: 1280px) {
         .center {
             width: 960px;
         }
     }
-
     @media (max-width: 1279px) {
         .center {
             width: 850px;
         }
     }
-
     header {
-        width: 100%;
-        height: auto;
-        border-bottom: 1px solid #e7e7e7;
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 999999;
         nav {
             width: 100%;
             height: 56px;
             background-color: #fff;
             .center_container {
-                min-width: 1280px;
                 max-width: 1440px;
                 margin: 0 auto;
                 height: 100%;
@@ -60,13 +57,15 @@
                 height: 100%;
                 padding: 0 30px;
             }
-            a.router-link-active {
-                color: $themefontColor;
-            }
         }
         li:hover {
             background-color: #eee;
         }
+		li.active {
+			a {
+				color: $themefontColor;
+			}
+		}
         .search {
             width: 240px;
             height: 38px;
@@ -90,16 +89,90 @@
             border-radius: 19px;
             position: absolute;
             top: 9px;
-            right: 10px;
+            right: 40px;
             border: 1px solid $themeColor;
             a {
                 display: block;
                 width: 100%;
                 height: 100%;
-                color: #333;
                 color: $themefontColor;
             }
         }
+		.login:hover {
+			background-color: #eee;
+		}
+		.user {
+			position: absolute;
+			width: 88px;
+			height: 56px;
+			top: 0px;
+			right: 40px;
+			padding-top: 8px;
+			padding-left: 15px;
+			.avatar {
+				position: relative;
+				width: 40px;
+				height: 40px;
+				display: block;
+				img {
+					width: 100%;
+					height: 100%;
+					display: block;
+					border: 1px solid #ddd;
+					border-radius: 50%;
+				}
+			}
+			.avatar:before {
+				content: "";
+				position: absolute;
+				top: 18px;
+				right: -14px;
+				border-left: 5px solid transparent;
+				border-right: 5px solid transparent;
+				border-top: 6px solid #999;
+			}
+			.dropdown-menu {
+				display: none;
+				position: absolute;
+				top: 55px;
+				left: -50px;
+				border-radius: 0 0 4px 4px;
+				box-shadow: 0 2px 8px rgba(0,0,0,.1);
+				z-index: 1000;
+				width: 160px;
+				padding: 5px 0;
+                margin: 2px 0 0;
+				background-color: #fff;
+				li {
+					width: 100%;
+					height: 50px;
+					a {
+						display: block;
+						padding: 10px 20px;
+						width: 100%;
+						height: 100%;
+						line-height: 30px;
+						text-align: left;
+						i {
+							color: $themefontColor;
+							margin-right: 10px;
+						}
+						span {
+							font-size: 14px;
+						}
+					}
+				}
+			}
+			.dropdown-menu:hover {
+				display: block;
+			}
+		}
+		.user:hover {
+			background-color: #eee;
+			.dropdown-menu {
+				display: block;
+			}
+		}
     }
 }
 
@@ -144,8 +217,14 @@
                     line-height: 50px;
                     text-align: left;
                     padding-left: 30px;
-                    color: #333;
                     font-size: $fontLarge;
+					a {
+						display: block;
+						width: 100%;
+						height: 100%;
+						color: #333;
+						font-size: 20px;
+					}
                 }
                 .li1 {
                     background-image: linear-gradient( 135deg, #FFF3B0 10%, #CA26FF 100%);

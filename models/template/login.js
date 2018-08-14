@@ -5,10 +5,13 @@ var env = require('../../config/env');
 
 /* GET login page. */
 router.get('/login', function (req, res, next) {
+	
+	
     res.render('login', {
         title: '登录-桃花源',
-		env: env
+		version: env.version
     });
+	
 });
 
 module.exports = router;

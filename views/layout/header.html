@@ -1,28 +1,64 @@
 <div id="headerPage">
-	<header>
-		<nav>
-			<div class="center_container">
-			<div class="logo">
-				<img src="/img/logo.png" alt="" />
-			</div>
-			<div class="center">
-				<ul>
-					<li>
-						<a href="/">发现</a>
-					</li>
-					<li>
-						<a href="/write">写文章</a>
-					</li>
-				</ul>
-				<div class="search">
-					<input type="text" placeholder="搜索" />
-					<i class="icon">&#xe60c;</i>
+    <header>
+        <nav>
+            <div class="center_container">
+                <div class="logo">
+                    <img src="/img/logo.png" alt="" />
+                </div>
+                <div class="center">
+                    <ul>
+                        <li {% if header[ 'index']==1 %} class="active" {% endif %}>
+                            <a href="/">发现</a>
+                        </li>
+                        <li {% if header[ 'index']==2 %} class="active" {% endif %}>
+                            {% if header['userInfo']!=0 %}
+                            <a href="/write">写文章</a>
+                            {% else %}
+                            <a href="/login">写文章</a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                    <div class="search">
+                        <input type="text" placeholder="搜索" />
+                        <i class="icon">&#xe60c;</i>
+                    </div>
+                </div>
+				{% if header['userInfo']!=0 %}
+				<div class="user">
+					<a class="avatar" href="#">
+						{% if header.userInfo.head!=null %}
+						<img src="{{header.userInfo.head}}" alt="" onerror="/img/head.png">
+						{% else %}
+						<img src="/img/head.png" alt="">
+						{% endif %}
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="">
+								<i class="icon">&#xe60d;</i>
+								<span>个人主页</span>
+							</a>
+						</li>
+						<li>
+							<a href="">
+								<i class="icon">&#xe643;</i>
+								<span>设置</span>
+							</a>
+						</li>
+						<li>
+							<a href="/layout">
+								<i class="icon">&#xe605;</i>
+								<span>退出登录</span>
+							</a>
+						</li>
+					</ul>
 				</div>
-			</div>
-			<button class="login">
-				<a href="/login">登录</a>
-			</button>
-			</div>
-		</nav>
-	</header>
+				{% else %}
+				<button class="login">
+					<a href="/login">登录</a>
+				</button>
+				{% endif %}
+            </div>
+        </nav>
+    </header>
 </div>

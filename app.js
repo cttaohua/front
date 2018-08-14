@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var compression = require('compression');
 var logger = require('morgan');
 var swig = require('swig');
 
@@ -23,24 +24,28 @@ swig.setDefaults({
 
 app.use(logger('dev'));
 app.use(express.json());
+app.use(compression()); //压缩
 app.use(express.urlencoded({
     extended: false
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function (req, res, next) {
+    var user_msg = {};
+    if (req.cookies.userInfo) {
+        user_msg = JSON.parse(new Buffer(req.cookies.userInfo, 'base64').toString());
+    }else {
+		user_msg = 0;
+	}
+    req.userInfo = user_msg;
+    next();
+})
+
 //路由设置
 indexRouter(app);
 apiRouter(app);
 
-// app.use(function (req, res, next) {
-//     var user_msg = {};
-//     if (req.cookies.userInfo) {
-//         user_msg = JSON.parse(new Buffer(req.cookies.userInfo, 'base64').toString());
-//     }
-//     req.userInfo = user_msg;
-//     next();
-// })
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

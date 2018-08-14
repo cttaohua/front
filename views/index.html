@@ -6,11 +6,11 @@
     <title>{{title}}</title>
     <link rel="stylesheet" href="/plugins/swiper/css/swiper.min.css">
     <link rel="stylesheet" href="/plugins/element/element.min.css">
-    <link rel="stylesheet" href="/css/style.min.css?v={{ env.version }}">
+    <link rel="stylesheet" href="/css/style.min.css?v={{ version }}">
 </head>
 
 <body>
-    {% include './layout/header.html' %}
+    {% include './layout/header.html' with headerr %}
     <div id="homePage" class="container">
         <div class="home_container">
             <div class="banner">
@@ -63,9 +63,9 @@
     <script src="/plugins/jquery.min.js"></script>
     <script src="/plugins/vue.min.js"></script>
     <script src="/plugins/swiper/js/swiper.min.js"></script>
-    <script src="/plugins/jquery.windstagball.js"></script>
-    <script src="/js/common.min.js?v={{ env.version }}"></script>
-    <script src="/js/home.min.js?v={{ env.version }}"></script>
+	<script src="/plugins/tagcloud.js"></script>
+    <script src="/js/common.min.js?v={{ version }}"></script>
+    <script src="/js/home.min.js?v={{ version }}"></script>
 </body>
 
 </html>
