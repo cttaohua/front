@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var compression = require('compression');
 var logger = require('morgan');
 var swig = require('swig');
 
@@ -23,6 +24,7 @@ swig.setDefaults({
 
 app.use(logger('dev'));
 app.use(express.json());
+app.use(compression()); //压缩
 app.use(express.urlencoded({
     extended: false
 }));
