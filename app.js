@@ -17,9 +17,9 @@ app.set('view engine', 'html');
 
 
 //默认设置
-// swig.setDefaults({
-//     cache: false
-// }); //模板设置为不缓存
+swig.setDefaults({
+    cache: false
+}); //模板设置为不缓存
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -30,7 +30,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function (req, res, next) {
-    var user_msg = {};
+    var user_msg;
     if (req.cookies.userInfo) {
         user_msg = JSON.parse(new Buffer(req.cookies.userInfo, 'base64').toString());
     }else {
