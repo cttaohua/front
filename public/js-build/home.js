@@ -5,7 +5,8 @@ new Vue({
 		page: 1,
 		homeList: [],
 		noMore: false,
-		loading: true
+		loading: true,
+		item: '',
 	},
     created: function () {
 
@@ -13,7 +14,6 @@ new Vue({
     mounted: function () {
 		tagCloud();
         this.swiper();
-		this.getMsg();
     },
 	methods: {
 		swiper: function() {
@@ -51,9 +51,13 @@ new Vue({
 					}
 				},
 				error: function() {
-					
+					_this.$message.error('当前网络不佳，请稍后重试');
 				}
 			})
+		},
+		getMore: function() {
+			this.page = this.page + 1;
+			this.getMsg();
 		}
 	}
 })

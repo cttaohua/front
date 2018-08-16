@@ -1,11 +1,11 @@
 @import './variable.scss';
 @font-face {
   font-family: 'iconfont';  /* project id 530811 */
-  src: url('//at.alicdn.com/t/font_530811_2rolcdxl1n9.eot');
-  src: url('//at.alicdn.com/t/font_530811_2rolcdxl1n9.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_530811_2rolcdxl1n9.woff') format('woff'),
-  url('//at.alicdn.com/t/font_530811_2rolcdxl1n9.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_530811_2rolcdxl1n9.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_530811_5cbh3w440o.eot');
+  src: url('//at.alicdn.com/t/font_530811_5cbh3w440o.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_530811_5cbh3w440o.woff') format('woff'),
+  url('//at.alicdn.com/t/font_530811_5cbh3w440o.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_530811_5cbh3w440o.svg#iconfont') format('svg');
 }
 
 .icon {
@@ -168,9 +168,6 @@ a {
         font-size: 18px;
         font-weight: 700;
         line-height: 1.5;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
     }
     .art_title:hover {
         text-decoration: underline;

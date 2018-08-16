@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    {% include './layout/header.html' %}
+    {% include './layout/header.html' with header %}
     <div id="classesPage" class="container">
         <div class="classes_container">
             <div class="top">
@@ -28,7 +28,7 @@
                         <img :src="vals.cover" alt="" />
                     </a>
                     <a :href="'/p/' + vals.id" class="art_title" v-text="vals.title" target="_blank"></a>
-                    <div class="abstract" v-text="vals.abstract"></div>
+                    <div class="abstract" v-html="vals.abstract"></div>
                     <div class="art_bottom">
                         <a class="fl" href="#" target="_blank" v-text="vals.nick"></a>
                         <div class="fl item">

@@ -10,7 +10,7 @@
 
 <body>
 
-    {% include './layout/header.html' %}
+    {% include './layout/header.html' with header %}
     <div id="writePage" class="container">
         <div class="write">
             <input type="text" class="word_title" placeholder="输入文章标题" maxlength="50" autofocus="" v-model="title" />

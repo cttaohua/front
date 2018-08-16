@@ -14,13 +14,17 @@ router.get('/', function (req, res, next) {
     async.parallel([
         function (callback) {
             fun.selectClassify(callback);
-        }
+        },
+		function (callback) {
+			fun.indexList(callback,0);
+		}
     ], function (err, result) {
         res.render('index', {
             title: '桃花源',
             version: env['version'],
+			header: env['header'],
             classify: result[0],
-            header: env['header']
+            list: result[1]
         });
     })
 

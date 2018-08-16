@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    {% include './layout/header.html' with headerr %}
+    {% include './layout/header.html' with header %}
     <div id="homePage" class="container">
         <div class="home_container">
             <div class="banner">
@@ -28,12 +28,42 @@
                 </div>
             </div>
             <div class="articleList">
+				{% for key, item in list %}
+				<div class="articleItem {% if item.cover!='' %} haveImg {% endif %}">
+					{% if item.cover!='' %}
+					<a href="/p/{{item.id}}" class="art_img" target="_blank">
+						<img src="{{item.cover}}" alt="" />
+					</a>
+					{% endif %}
+					<a href="/p/{{item.id}}" class="art_title" target="_blank">{{item.title}}</a>
+					<div class="abstract">
+						{% autoescape %}
+						{{item.abstract}}
+						{% endautoescape %}
+					</div>
+					<div class="art_bottom">
+						<a class="fl" href="#" target="_blank" v-text="item.nick"></a>
+						<div class="fl item">
+							<i class="icon fl point">&#xe614;</i>
+							<span class="fl">{{item.point_count}}</span>
+						</div>
+						<a class="fl" href="/p/{{item.id}}#comments'" target="_blank">
+							<i class="icon fl comment">&#xe64c;</i>
+							<span class="fl">{{item.comment_count}}</span>
+						</a>
+						<div class="fl item">
+							<i class="icon fl attention">&#xe6e7;</i>
+							<span class="fl">{{item.attention_count}}</span>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
                 <div class="articleItem" :class="{haveImg:vals.cover!=''}" v-for="vals in homeList">
                     <a :href="'/p/' + vals.id" class="art_img" v-if="vals.cover!=''" target="_blank">
                         <img :src="vals.cover" alt="" />
                     </a>
                     <a :href="'/p/' + vals.id" class="art_title" v-text="vals.title" target="_blank"></a>
-                    <div class="abstract" v-text="vals.abstract"></div>
+                    <div class="abstract" v-html="vals.abstract"></div>
                     <div class="art_bottom">
 						<a class="fl" href="#" target="_blank" v-text="vals.nick"></a>
                         <div class="fl item">
@@ -51,7 +81,7 @@
                     </div>
                 </div>
 				<p class="noMore" v-show="noMore">没有更多内容了...</p>
-				<div class="load-more" v-show="loading">阅读更多</div>
+				<div class="load-more" v-show="loading" @click="getMore()">阅读更多</div>
             </div>
             <div class="sidebar" >
                 {% include './layout/sidebar.html' with classify %}

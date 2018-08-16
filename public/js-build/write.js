@@ -89,7 +89,9 @@ new Vue({
                 success: function (res) {
                     if (res.code != 200) {
                         _this.$message.warning(res.body);
-                    }
+                    }else {
+						_this.$message.success('发布成功');
+					}
                 },
                 error: function () {
                     _this.$message.error('当前网络不佳，请稍后重试');

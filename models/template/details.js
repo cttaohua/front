@@ -14,7 +14,7 @@ router.get('/p/:id', function (req, res, next) {
 	
 	async.parallel([
 		function(callback) {
-			var s_sql = "select a.*,b.* from th_article a left join th_user b on a.user_id=b.id where a.status=1 and a.id='"+word_id+"'";
+			var s_sql = "select a.*,b.* from th_article a left join th_user b on a.user_id=b.id where a.id='"+word_id+"'";
 		    query(s_sql,function(err, vals, fields){
 				if(err) {
 					callback('err');

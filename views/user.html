@@ -9,7 +9,105 @@
 </head>
 
 <body>
-	
+    {% include './layout/header.html' with header %}
+
+    <div id="userPage" class="container">
+        <div class="userMsg_container">
+            <div class="main-top clearfix">
+                {% if msg.head!=''&&msg.head!=null %}
+                <img class="avatar" src="{{msg.head}}" alt="" onerror="this.src='/img/head.png'"> {% else %}
+                <img class="avatar" src="/img/head.png" alt=""> {% endif %}
+                <div class="title">
+                    <span>{{msg.nick}}</span>
+                </div>
+                <div class="info">
+                    <ul>
+                        <li>
+                            <div class="meta-block">
+                                <p>0</p>
+                                <div>文章</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="meta-block">
+                                <p>0</p>
+                                <div>字数</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="meta-block">
+                                <p>0</p>
+                                <div>收获喜欢</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <ul class="tab_ul clearfix">
+                <li :class="{active:wordFlag==1}" @click="tabCut(1)">
+                    <i class="icon">&#xe618;</i>最新文章</li>
+                <li :class="{active:wordFlag==2}" @click="tabCut(2)">
+                    <i class="icon">&#xe613;</i>热门排行</li>
+                {% if userFlag==1 %}
+                <li :class="{active:wordFlag==3}" @click="tabCut(3)">
+                    <i class="icon">&#xe633;</i>待审核</li>
+                {% endif %}
+            </ul>
+            <div class="word_container">
+                <div class="articleItem" :class="{haveImg:vals.cover!=''}" v-for="vals in wordList">
+                    <a :href="'/p/' + vals.id" class="art_img" v-if="vals.cover!=''" target="_blank">
+                        <img :src="vals.cover" alt="" />
+                    </a>
+                    <a :href="'/p/' + vals.id" class="art_title" v-text="vals.title" target="_blank"></a>
+                    <div class="abstract" v-html="vals.abstract"></div>
+                    <div class="art_bottom">
+                        <a class="fl" href="#" target="_blank" v-text="vals.nick"></a>
+                        <div class="fl item">
+                            <i class="icon fl point">&#xe614;</i>
+                            <span class="fl" v-text="vals.point_count"></span>
+                        </div>
+                        <a class="fl" :href="'/p/' + vals.id + '#comments'" target="_blank">
+                            <i class="icon fl comment">&#xe64c;</i>
+                            <span class="fl" v-text="vals.comment_count"></span>
+                        </a>
+                        <div class="fl item">
+                            <i class="icon fl attention">&#xe6e7;</i>
+                            <span class="fl" v-text="vals.attention_count"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pagination_container" v-show="paginationFlag">
+                    <el-pagination background @current-change="pageChange" :current-page.sync="page" :page-size="10" layout="prev, pager, next, jumper"
+                        :total="total">
+                    </el-pagination>
+                </div>
+            </div>
+            <div class="aside">
+                <div class="user_intro">
+                    <div class="title">个人介绍</div>
+                    {% if userFlag==1 %}
+                    <a class="function-btn" href="javascript:;" @click="editFlag=false">
+                        <i class="icon">&#xe685;</i>编辑</a>
+                    {% endif %}
+                    <div class="description" v-show="editFlag">
+					    <div class="js-intro">{{msg.intro}}</div>
+				    </div>
+                    <div class="textarea_container" v-show="!editFlag">
+                        <textarea class="js-textarea" name="" id="" cols="" rows="" maxlength="100">{{msg.intro}}</textarea>
+                        <el-button type="success" plain round @click="save_userIntro()">保存</el-button>
+                        <el-button type="info" plain round @click="editFlag=true">取消</el-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input id="user_id" type="hidden" value="{{msg.id}}">
+    <input id="word_type" type="hidden" value="{{type}}"> {% include './layout/footer.html' %}
+    <script src="/plugins/jquery.min.js"></script>
+    <script src="/plugins/vue.min.js"></script>
+    <script src="/plugins/element/element.min.js"></script>
+    <script src="/js/common.min.js?v={{ version }}"></script>
+    <script src="/js/user.min.js?v={{ version }}"></script>
 </body>
 
 </html>

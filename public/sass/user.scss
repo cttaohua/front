@@ -1,0 +1,127 @@
+@import './variable.scss';
+#userPage {
+    .userMsg_container {
+        width: 100%;
+        padding-right: 320px;
+        padding-top: 30px;
+        padding-left: 15px;
+        position: relative;
+        min-height: 800px;
+        .main-top {
+            margin-bottom: 20px;
+            .avatar {
+                float: left;
+                width: 80px;
+                height: 80px;
+                margin-left: -2px;
+                border: 1px solid #ddd;
+                border-radius: 50%;
+                display: block;
+            }
+            .title {
+                padding: 5px 0 0 100px;
+				span {
+					font-size: 21px;
+					font-weight: 700;
+					vertical-align: middle;
+				}
+            }
+            .info {
+                margin-top: 5px;
+                padding-left: 100px;
+                font-size: 14px;
+                ul {
+                    li {
+                        display: inline-block;
+                        line-height: 20px;
+                        .meta-block {
+                            font-size: 12px;
+                            margin: 0 7px 6px 0;
+                            padding: 0 10px 0 0;
+                            border-right: 1px solid #f0f0f0;
+                        }
+                        p {
+                            margin-bottom: -3px;
+                            font-size: 15px;
+                            color: #333;
+                        }
+						div {
+						    color: #969696;
+							font-size: 12px;
+						}
+                    }
+                }
+            }
+        }
+		.tab_ul {
+			margin-top: 20px;
+			border-bottom: 1px solid #f0f0f0;
+			li {
+				float: left;
+				padding: 10px 20px;
+				cursor: pointer;
+				color: #969696;
+				i {
+					margin-right: 5px;
+				}
+			}
+			li.active {
+				color: #646464;
+				border-bottom: 2px solid #646464;
+			}
+		}
+		.word_container {
+			.pagination_container {
+				padding: 30px 0 30px 40px;
+			}
+		}
+    }
+	.aside {
+		width: 300px;
+		height: 500px;
+		position: absolute;
+		top: 0;
+		right: 0;
+		margin-top: 30px;
+		.user_intro {
+			padding-bottom: 15px;
+			border-bottom: 1px solid #f0f0f0;
+			.title {
+				float: left;
+				margin-bottom: 10px;
+				font-size: 14px;
+				color: #969696;
+			}
+			.function-btn {
+				float: right;
+				font-size: 13px;
+				color: #969696;
+			}
+			.description {
+				position: relative;
+				text-align: left;
+				clear: both;
+				word-break: break-word!important;
+				.js-intro {
+					line-height: 20px;
+					font-size: 14px;
+				}
+			}
+			.textarea_container {
+				textarea {
+					margin-bottom: 5px;
+					width: 100%;
+					height: 125px;
+					padding: 5px 10px;
+					font-size: 14px;
+					background-color: hsla(0,0%,71%,.1);
+					border: 1px solid #c8c8c8;
+					border-radius: 4px;
+					resize: none;
+					outline: none;
+				}
+			}
+		}
+		
+	}
+}

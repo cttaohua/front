@@ -25,9 +25,13 @@ function dateYmdHis(timestamp) {
     s = date.getSeconds();
     return Y + M + D + h + m + s;
 }
-
+//转义单引号
+function transferredSingle(str) {
+	return str.replace(/'/g,'&apos;');
+}
 module.exports = {
     random: random,
     dateYmd: dateYmd,
-    dateYmdHis: dateYmdHis
+    dateYmdHis: dateYmdHis,
+	transferredSingle: transferredSingle
 }
