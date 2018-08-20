@@ -27,7 +27,6 @@ router.get('/getClassify', function (req, res, next) {
 
 //保存个人介绍
 router.post('/saveIntro', function (req, res, next) {
-    console.log(req.body);
     var params = req.body;
     var user_id = req.userInfo.id;
 	
@@ -43,6 +42,21 @@ router.post('/saveIntro', function (req, res, next) {
 		res.json(data);
     })
 
+})
+
+//保存基础设置
+router.post('/saveMeans', function(req,res,next) {
+	var params = req.body;
+	var user_id = req.userInfo.id;
+	
+	if(params.head!='') {  //更改了头像
+		
+	}else {
+		
+	}
+	
+	var u_sql = "update th_user set nick='"+params.nick+"' where id =" + user_id;
+	
 })
 
 

@@ -1,0 +1,110 @@
+@import './variable.scss';
+#basicPage {
+	padding-bottom: 100px;
+	.top {
+		margin-bottom: 15px;
+		.avatar {
+			width: 100px;
+			height: 100px;
+			float: left;
+			img {
+				width: 100%;
+				height: 100%;
+				border: 1px solid #ddd;
+				border-radius: 50%;
+			}
+		}
+		.change {
+			float: left;
+			margin-left: 50px;
+			margin-top: 32px;
+			span {
+				font-size: 14px;
+			}
+		}
+	}
+    .list-item {
+		padding: 20px 0;
+		padding-left: 150px;
+		border-bottom: 1px solid #f0f0f0;
+		position: relative;
+		.label {
+			position: absolute;
+			left: 0;
+			display: block;
+			line-height: 40px;
+			font-size: 15px;
+            color: #969696;
+		}
+		.nick {
+			width: 200px;
+		}
+		.default {
+			line-height: 40px;
+			font-size: 15px;
+		}
+		.defaultHeight {
+			height: 40px;
+			padding-top: 7px;
+		}
+	}
+	.saveMeans {
+		margin-top: 30px;
+		padding: 12px 40px;
+	}
+}
+
+.setting_container {
+    width: 100%;
+    padding-left: 320px;
+    position: relative;
+}
+
+#s_leftbarPage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0 0 30px;
+    width: 280px;
+    overflow: auto;
+    ul {
+        li {
+            line-height: 20px;
+            a {
+                padding: 10px 15px;
+                font-size: 15px;
+                display: block;
+                .setting-icon {
+                    margin-right: 15px;
+                    width: 32px;
+                    height: 32px;
+                    text-align: center;
+                    color: #fff;
+                    background-color: #a0a0a0;
+                    border-radius: 4px;
+                    display: inline-block;
+                    vertical-align: middle;
+                    i {
+                        margin: 6px 0 0 1px;
+                        font-size: 18px;
+                        display: block;
+                    }
+					.basic {
+						font-size: 20px;
+					}
+					.reward-setting {
+						font-size: 16px;
+					}
+                }
+            }
+			a.active {
+				background-color: #f0f0f0;
+                border-radius: 4px;
+			}
+			a:hover {
+				background-color: #f0f0f0;
+				border-radius: 4px;
+			}
+        }
+    }
+}

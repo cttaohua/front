@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/plugins/element/element.min.css">
+    <link rel="stylesheet" href="/css/style.min.css?v={{ version }}">
+</head>
+
+<body>
+	{% include '../layout/header.html' with header %}
+	
+	<div id="basicPage" class="container">
+		<div class="setting_container">
+			{% include '../layout/s_leftbar.html' %}
+			<div class="top clearfix">
+				<div class="avatar">
+					{% if header.userInfo.head!=null&&header.userInfo.head!='' %}
+					<img class="head" src="{{header.userInfo.head}}" alt="" onerror="/img/head.png">
+					{% else %}
+					<img class="head" src="/img/head.png" alt="">
+					{% endif %}
+				</div>
+				<el-button id="fileSelect" class="change" type="success" plain size="mini" round>更改头像</el-button>
+				<input class="none" accept="image/*" name="upimage" id="upload_file" type="file">
+			</div>
+			<div class="list-item">
+				<span class="label">昵称</span>
+				<el-input class="nick" placeholder="请输入昵称" value="{{header.userInfo.nick}}" maxlength="20"></el-input>
+			</div>
+			<div class="list-item">
+				<span class="label">性别</span>
+				<div class="defaultHeight">
+					<el-radio v-model="gender" label="1">男</el-radio>
+					<el-radio v-model="gender" label="2">女</el-radio>
+					<el-radio v-model="gender" label="3">保密</el-radio>
+				</div>
+			</div>
+			<div class="list-item">
+				<span class="label">手机号</span>
+				<p class="default">{{header.userInfo.account}}</p>
+			</div>
+			<el-button class="saveMeans" type="success" round @click.native="saveMeans()">保存</el-button>
+		</div>
+	</div>
+	
+	{% include '../layout/footer.html' %}
+	<script src="/plugins/jquery.min.js"></script>
+	<script src="/plugins/vue.min.js"></script>
+	<script src="/plugins/element/element.min.js"></script>
+	<script src="/js/common.min.js?v={{ version }}"></script>
+	<script src="/js/setting.min.js?v={{ version }}"></script>
+</body>
+
+</html>
