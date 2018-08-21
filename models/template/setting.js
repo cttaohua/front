@@ -19,8 +19,29 @@ router.get('/basic', function (req, res, next) {
         title: '桃花源',
 		version: env.version,
 		header: env.header,
+		index: 0
     });
     
 });
+
+router.get('/reward', function(req,res,next){
+	
+	//未登录
+	if(req.userInfo==0) {
+		res.redirect('/');
+		return false;
+	}
+	
+	env.header['index'] = 0;
+	env.header['userInfo'] = req.userInfo;
+	
+	res.render('setting/reward', {
+		title: '桃花源',
+		version: env.version,
+		header: env.header,
+		index: 1
+	})
+	
+})
 
 module.exports = router;

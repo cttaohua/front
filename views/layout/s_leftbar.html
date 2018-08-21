@@ -1,7 +1,7 @@
 <div id="s_leftbarPage">
     <ul>
         <li>
-            <a href="" class="active">
+            <a href="/setting/basic" {% if index==0 %} class="active" {% endif %}>
                 <div class="setting-icon">
                     <i class="icon basic">&#xe600;</i>
                 </div>
@@ -9,9 +9,9 @@
             </a>
         </li>
         <li>
-            <a href="">
+            <a href="/setting/reward" {% if index==1 %} class="active" {% endif %}>
                 <div class="setting-icon">
-                    <i class="icon reward-setting">&#xeb03;</i>
+                    <i class="icon reward">&#xeb03;</i>
                 </div>
                 <span>赞赏设置</span>
             </a>

@@ -14,7 +14,7 @@
     <div id="userPage" class="container">
         <div class="userMsg_container">
             <div class="main-top clearfix">
-                {% if msg.head!=''&&msg.head!=null %}
+                {% if msg.head!=0 %}
                 <img class="avatar" src="{{msg.head}}" alt="" onerror="this.src='/img/head.png'"> {% else %}
                 <img class="avatar" src="/img/head.png" alt=""> {% endif %}
                 <div class="title">

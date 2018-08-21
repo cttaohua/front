@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/plugins/element/element.min.css">
+    <link rel="stylesheet" href="/css/style.min.css?v={{ version }}">
+</head>
+
+<body>
+	{% include '../layout/header.html' with header %}
+	
+	<div id="rewardPage" class="container settingPage">
+		<div class="setting_container">
+			{% include '../layout/s_leftbar.html' with index %}
+			<div class="list-item">
+				<span class="label">赞赏功能</span>
+				<div class="defaultHeight">
+					<el-radio v-model="reward" label="1">开启</el-radio>
+					<el-radio v-model="reward" label="0">关闭</el-radio>
+				</div>
+				<p class="explain">开启后赞赏按钮将出现在你的文章底部</p>
+			</div>
+			<div class="list-item">
+				<span class="label">收款二维码</span>
+				{% if header.userInfo.receipt_code!=0 %}
+				<img class="imgcode" src="{{header.userInfo.receipt_code}}" alt="">
+				{% else %}
+				<img class="imgcode" src="/img/receipt_code.png" alt="">
+				{% endif %}
+				<el-button id="fileSelect" class="upcode" type="success" round plain>上传二维码</el-button>
+				<input class="none" accept="image/*" name="upimage" id="upload_file" type="file">
+			</div>
+			<el-button class="save" type="success" round @click.native="saveReward">保存</el-button>
+		</div>
+	</div>
+	<input id="reward" type="hidden" value="{{header.userInfo.reward}}">
+	{% include '../layout/footer.html' %}
+	<script src="/plugins/jquery.min.js"></script>
+	<script src="/plugins/vue.min.js"></script>
+	<script src="/plugins/element/element.min.js"></script>
+	<script src="/js/common.min.js?v={{ version }}"></script>
+	<script src="/js/setting.min.js?v={{ version }}"></script>
+</body>
+
+</html>

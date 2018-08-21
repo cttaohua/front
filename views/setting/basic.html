@@ -11,13 +11,13 @@
 <body>
 	{% include '../layout/header.html' with header %}
 	
-	<div id="basicPage" class="container">
+	<div id="basicPage" class="container settingPage">
 		<div class="setting_container">
-			{% include '../layout/s_leftbar.html' %}
+			{% include '../layout/s_leftbar.html' with index %}
 			<div class="top clearfix">
 				<div class="avatar">
-					{% if header.userInfo.head!=null&&header.userInfo.head!='' %}
-					<img class="head" src="{{header.userInfo.head}}" alt="" onerror="/img/head.png">
+					{% if header.userInfo.head!=0 %}
+					<img class="head" src="{{header.userInfo.head}}" alt="" onerror="this.src='/img/head.png'">
 					{% else %}
 					<img class="head" src="/img/head.png" alt="">
 					{% endif %}
@@ -41,10 +41,10 @@
 				<span class="label">手机号</span>
 				<p class="default">{{header.userInfo.account}}</p>
 			</div>
-			<el-button class="saveMeans" type="success" round @click.native="saveMeans()">保存</el-button>
+			<el-button class="save" type="success" round @click.native="saveMeans()">保存</el-button>
 		</div>
 	</div>
-	
+	<input id="sex" type="hidden" value="{{header.userInfo.sex}}">
 	{% include '../layout/footer.html' %}
 	<script src="/plugins/jquery.min.js"></script>
 	<script src="/plugins/vue.min.js"></script>

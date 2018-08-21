@@ -15,7 +15,7 @@
 			<h1 class="title">{{word_msg.title}}</h1>
 			<div class="author">
 				<a class="avatar" href="/u/{{user_msg.id}}" target="_blank">
-					{% if user_msg.head!=null %}
+					{% if user_msg.head!=0 %}
 					<img src="{{user_msg.head}}" alt="" onerror="this.src='/img/head.png'">
 					{% else %}
 					<img src="/img/head.png" alt="">

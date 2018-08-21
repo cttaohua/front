@@ -26,8 +26,8 @@
 				{% if header['userInfo']!=0 %}
 				<div class="user">
 					<a class="avatar" href="/u/{{header.userInfo.id}}">
-						{% if header.userInfo.head!=null %}
-						<img src="{{header.userInfo.head}}" alt="" onerror="/img/head.png">
+						{% if header.userInfo.head!=0 %}
+						<img src="{{header.userInfo.head}}" alt="" onerror="this.src='/img/head.png'">
 						{% else %}
 						<img src="/img/head.png" alt="">
 						{% endif %}
