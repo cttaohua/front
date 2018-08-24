@@ -90,7 +90,7 @@ new Vue({
                     if (res.code != 200) {
                         _this.$message.warning(res.body);
                     }else {
-						_this.$message.success('发布成功');
+						window.location.href = res.body;
 					}
                 },
                 error: function () {

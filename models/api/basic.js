@@ -52,14 +52,30 @@ router.post('/saveMeans', function (req, res, next) {
     var user_id = req.userInfo.id;
     var headUrl = 0;
 
-    if (params.head != '') { //更改了头像
-        var base64Data = params.head.replace(/^data:image\/\w+;base64,/, "");
-        var dataBuffer = new Buffer(base64Data, 'base64');
-        headUrl = "/uploadImg/head/" + random(8) + ".png";
-        fs.writeFile("public" + headUrl, dataBuffer, function (err) {});
-    }
+    
 
     async.waterfall([
+		function(callback) {
+			if (params.head != '') { //更改了头像
+				var h_sql = "select head from th_user where id=" + user_id;
+				query(h_sql,function(err,vals,filds){
+					if(err) {
+						callback('err',0);
+					}else {
+						if(vals[0].head!=0) {  //之前有头像
+							fs.unlink("public" + vals[0].head,function(err){})
+						}
+						var base64Data = params.head.replace(/^data:image\/\w+;base64,/, "");
+						var dataBuffer = new Buffer(base64Data, 'base64');
+						headUrl = "/uploadImg/head/" + random(8) + ".png";
+						fs.writeFile("public" + headUrl, dataBuffer, function (err) {});
+						callback(null);
+					}
+				})
+			}else {
+				callback(null);
+			}
+		},
         function (callback) {
             if (headUrl != 0) {
                 var u_sql = "update th_user set nick='" + params.nick + "',head='" + headUrl +
@@ -113,15 +129,29 @@ router.post('/savereward', function (req, res, next) {
     var user_id = req.userInfo.id;
     var codeUrl = 0;
 
-    if (params.receipt_code != '') { //上传了二维码
-        var base64Data = params.receipt_code.replace(/^data:image\/\w+;base64,/, "");
-        var dataBuffer = new Buffer(base64Data, 'base64');
-        codeUrl = "/uploadImg/code/" + random(8) + ".png";
-        fs.writeFile("public" + codeUrl, dataBuffer, function (err) {});
-    }
-
-
+    
     async.waterfall([
+		function(callback) {
+			if (params.receipt_code != '') { //上传了二维码
+			    var h_sql = "select receipt_code from th_user where id=" + user_id;
+			    query(h_sql,function(err,vals,filds){
+			    	if(err) {
+			    		callback('err',0);
+			    	}else {
+			    		if(vals[0].head!=0) {  //之前有头像
+			    			fs.unlink("public" + vals[0].receipt_code,function(err){})
+			    		}
+			    		var base64Data = params.receipt_code.replace(/^data:image\/\w+;base64,/, "");
+			    		var dataBuffer = new Buffer(base64Data, 'base64');
+			    		codeUrl = "/uploadImg/code/" + random(8) + ".png";
+			    		fs.writeFile("public" + codeUrl, dataBuffer, function (err) {});
+			    		callback(null);
+			    	}
+			    })
+			}else {
+				callback(null);
+			}
+		},
         function (callback) {
             if (codeUrl != 0) {
                 var u_sql = "update th_user set reward='" + params.reward + "',receipt_code='" +
@@ -149,7 +179,7 @@ router.post('/savereward', function (req, res, next) {
         }
     ], function (err, result) {
         if (err) {
-            data['code'] = 0;
+            data['code'] = result;
             data['body'] = '保存失败';
         } else {
             data['code'] = 200;

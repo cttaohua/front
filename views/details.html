@@ -39,12 +39,50 @@
 				{{ word_msg.content }}
 				{% endautoescape %}
 			</div>
+			<!-- 赞赏按钮 -->
+			{% if user_msg.reward == 1 %}
+			<div class="free-reward-panel">
+				<button class="reward-button" @click.stop="rewardswitch()">赞赏支持</button>
+				<div class="receipt_code">
+					<img src="{{user_msg.receipt_code}}" alt="支付二维码">
+				</div>
+			</div>
+			{% endif %}
+			<!-- 文章底部作者信息 -->
+			<div class="follow-detail">
+				<div class="info">
+					<a class="avatar" href="/u/{{user_msg.id}}">
+						{% if user_msg.head!=0 %}
+						<img src="{{user_msg.head}}" alt="" onerror="this.src='/img/head.png'">
+						{% else %}
+						<img src="/img/head.png" alt="">
+						{% endif %}
+					</a>
+					<a class="title" href="/u/{{user_msg.id}}">{{user_msg.nick}}</a>
+					<p>写了 0 字，有 {{user_msg.word_num}} 篇文章，获得了 0 个喜欢</p>
+				</div>
+				{% if user_msg.intro!=null&&user_msg.intro!='' %}
+				<div class="signature">
+					{{user_msg.intro}}
+				</div>
+				{% endif %}
+			</div>
+			<div class="meta-bottom">
+				<div class="like">
+					<div class="like-group unlike">
+						<span>喜欢</span>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
+	<input id="article_id" type="hidden" value="{{word_msg.id}}">
 	{% include './layout/footer.html' %}
 	<script src="/plugins/jquery.min.js"></script>
 	<script src="/plugins/vue.min.js"></script>
+	<script src="/plugins/element/element.min.js"></script>
 	<script src="/js/common.min.js?v={{ version }}"></script>
+	<script src="/js/details.min.js?v={{ version }}"></script>
 </body>
 
 </html>

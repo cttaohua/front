@@ -77,7 +77,11 @@ router.post('/article', function (req, res, next) {
                 data['body'] = '保存失败，请重试';
             } else {
                 data['code'] = 200;
-                data['body'] = '保存成功';
+				if(newclassify) {
+					data['body'] = '/u/' + userInfo.id + '?type=3';
+				}else {
+					data['body'] = '/u/'+ userInfo.id;
+				}
             }
             res.json(data);
         })
@@ -85,5 +89,7 @@ router.post('/article', function (req, res, next) {
     }
 
 })
+
+
 
 module.exports = router;

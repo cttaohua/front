@@ -18,9 +18,9 @@ app.set('view engine', 'html');
 
 
 //默认设置
-swig.setDefaults({
-    cache: false
-}); //模板设置为不缓存
+// swig.setDefaults({
+//     cache: false
+// }); //模板设置为不缓存
 
 app.use(logger('dev'));
 app.use(express.json());
