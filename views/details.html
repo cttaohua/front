@@ -69,9 +69,36 @@
 			</div>
 			<div class="meta-bottom">
 				<div class="like">
-					<div class="like-group unlike">
+					<div class="like-group {% if islike==1 %} islike {% else %} unlike {% endif %}">
 						<span>喜欢</span>
 					</div>
+				</div>
+			</div>
+			<!-- 写评论 -->
+			<div class="review_container haveAvatar">
+				<div class="avatar">
+					{% if user_msg.head!=0 %}
+					<img src="{{user_msg.head}}" alt="" onerror="this.src='/img/head.png'">
+					{% else %}
+					<img src="/img/head.png" alt="">
+					{% endif %}
+				</div>
+				<textarea placeholder="写下你的评论..." maxlength="200" v-model="review_content" @focus="reviewFlag=true"></textarea>
+				<div class="write-function-block" v-show="reviewFlag">
+					<el-button class="fr send" type="success" round @click.native="review_send()">发送</el-button>
+					<a class="fr cancel" href="javascript:;" @click="reviewFlag=false">取消</a>
+				</div>
+			</div>
+			<!-- 评论锚点 -->
+			<a id="comments" name="comments"></a>
+			<!-- 评论区 -->
+			<div class="normal-comment-list">
+				<div class="top-title">
+					<span>评论</span>
+				</div>
+				<div class="comment-empty">
+					<img src="/img/comment_empty.png" alt="">
+					<p>智慧如你，不想发表一点想法咩~</p>
 				</div>
 			</div>
 		</div>

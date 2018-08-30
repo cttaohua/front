@@ -11,3 +11,28 @@ function tagCloud() {
         keep: false //鼠标移出组件后是否继续随鼠标滚动, 取值: false, true(默认) 对应 减速至初速度滚动, 随鼠标滚动
     });
 }
+//读取cookie函数
+function getCookie(c_name) {
+    if (document.cookie.length > 0) {
+        c_start = document.cookie.indexOf(c_name + "=")
+        if (c_start != -1) {
+            c_start = c_start + c_name.length + 1
+            c_end = document.cookie.indexOf(";", c_start)
+            if (c_end == -1) c_end = document.cookie.length
+            return unescape(document.cookie.substring(c_start, c_end))
+        }
+    }
+    return false;
+}
+//去登陆弹框
+function goLogin(t, str) {
+    t.$confirm(str, '提示', {
+        confirmButtonText: '去登录',
+        cancelButtonText: '暂不登录',
+        type: 'warning'
+    }).then(function () {
+        window.location.href= '/login';
+    }).catch(function () {
+        
+    })
+}

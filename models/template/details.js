@@ -31,7 +31,6 @@ router.get('/p/:id', function (req, res, next) {
 			//用户信息
 			var a_sql = "select * from th_user where id=" + user_id;
 			query(a_sql,function(err,vals,fields){
-				// console.log(vals);
 				if(err) {
 					callback('err');
 				}else {
@@ -40,6 +39,25 @@ router.get('/p/:id', function (req, res, next) {
 			})
 		},
 		function(word_msg,user_msg,callback) {
+			//喜欢不喜欢
+			if(req.userInfo==0) {  //未登录
+				callback(null,word_msg,user_msg,0);
+			}else {
+				var u_sql = "select * from th_like where user_id='"+req.userInfo.id+"' and article_id='"+word_msg[0].id+"' and islike=1";
+				query(u_sql,function(err,vals,fields){
+					if(err) {
+						callback('err');
+					}else {
+						if(vals.length) {
+							callback(null,word_msg,user_msg,1);
+						}else {
+							callback(null,word_msg,user_msg,0);
+						}
+					}
+				})
+			}
+		},
+		function(word_msg,user_msg,islike,callback) {
 			//文章浏览数量更新
 			var x_sql = "update th_article set point_count=point_count+1 where id = '"+word_id+"'";
 			query(x_sql,function(err, vals, fields){
@@ -48,8 +66,10 @@ router.get('/p/:id', function (req, res, next) {
 				}else {
 					var obj = {
 						word_msg: word_msg[0],
-						user_msg: user_msg[0]
+						user_msg: user_msg[0],
+						islike: islike
 					}
+					console.log(obj);
 					callback(null,obj);
 				}
 			})
@@ -63,7 +83,8 @@ router.get('/p/:id', function (req, res, next) {
 				version: env.version,
 				header: env.header,
 				word_msg: result.word_msg,
-				user_msg: result.user_msg
+				user_msg: result.user_msg,
+				islike: result.islike
 			});
 		}
 	})

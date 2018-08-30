@@ -52,8 +52,6 @@ router.post('/saveMeans', function (req, res, next) {
     var user_id = req.userInfo.id;
     var headUrl = 0;
 
-    
-
     async.waterfall([
 		function(callback) {
 			if (params.head != '') { //更改了头像

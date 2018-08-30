@@ -210,6 +210,30 @@
 				}
             }
         }
+		.normal-comment-list {
+			margin-top: 30px;
+			.top-title {
+				padding-bottom: 20px;
+				font-size: 17px;
+				font-weight: 700;
+				border-bottom: 1px solid #f0f0f0;
+			}
+			.comment-empty {
+				padding-bottom: 20px;
+				img {
+					display: block;
+					width: 226px;
+					height: 92px;
+					margin: 30px auto 0;
+				}
+				p {
+					font-size: 12px;
+					text-align: center;
+					color: #969696;
+					margin-top: 10px;
+				}
+			}
+		}
     }
 	@keyframes likeBlast {
 		0% {
