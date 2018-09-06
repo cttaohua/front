@@ -69,7 +69,6 @@ router.get('/p/:id', function (req, res, next) {
 						user_msg: user_msg[0],
 						islike: islike
 					}
-					console.log(obj);
 					callback(null,obj);
 				}
 			})

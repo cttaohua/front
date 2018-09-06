@@ -35,9 +35,6 @@
 				border-bottom: 2px solid #646464;
 			}
 		}
-		.pagination_container {
-			padding: 30px 0 30px 40px;
-		}
         .sidebar {
             width: 300px;
             height: 500px;
@@ -48,6 +45,9 @@
         }
     }
 }
+.pagination_container {
+		padding: 30px 0 30px 40px;
+	}
 .el-pagination.is-background .el-pager li:not(.disabled).active {
 	background-color: $themefontColor;
 }

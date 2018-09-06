@@ -27,7 +27,6 @@ router.post('/register', function (req, res, next) {
             var addSql = "insert into th_user (`account`,`nick`,`password`,`create_time`)" +
                 " values ('" + user_phone + "','" + user_name + "','" + user_password + "','" +
                 nowDate + "')";
-				console.log(addSql);
             query(addSql, function (err, vals, fields) {
                 if (err) {
                     callback('err', 1);

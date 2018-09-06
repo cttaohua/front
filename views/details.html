@@ -12,25 +12,27 @@
 	{% include './layout/header.html' with header %}
 	<div id="detailsPage" class="container">
 		<div class="note_view">
-			<h1 class="title">{{word_msg.title}}</h1>
-			<div class="author">
-				<a class="avatar" href="/u/{{user_msg.id}}" target="_blank">
-					{% if user_msg.head!=0 %}
-					<img src="{{user_msg.head}}" alt="" onerror="this.src='/img/head.png'">
-					{% else %}
-					<img src="/img/head.png" alt="">
-					{% endif %}
-				</a>
-				<div class="info">
-					<span class="name">
-						<a href="/u/{{user_msg.id}}" target="_blank">{{user_msg.nick}}</a>
-					</span>
-					<div class="meta">
-						<span>{{word_msg.update_time}}</span>
-						<span>字数 {{word_msg.word_num}}</span>
-						<span>阅读 {{word_msg.point_count}}</span>
-						<span>评论 {{word_msg.comment_count}}</span>
-						<span>喜欢 {{word_msg.attention_count}}</span>
+			<div class="master">
+				<h1 class="title">{{word_msg.title}}</h1>
+				<div class="author">
+					<a class="avatar" href="/u/{{user_msg.id}}" target="_blank">
+						{% if user_msg.head!=0 %}
+						<img src="{{user_msg.head}}" alt="" onerror="this.src='/img/head.png'">
+						{% else %}
+						<img src="/img/head.png" alt="">
+						{% endif %}
+					</a>
+					<div class="info">
+						<span class="name">
+							<a href="/u/{{user_msg.id}}" target="_blank">{{user_msg.nick}}</a>
+						</span>
+						<div class="meta">
+							<span>{{word_msg.update_time}}</span>
+							<span>字数 {{word_msg.word_num}}</span>
+							<span>阅读 {{word_msg.point_count}}</span>
+							<span>评论 {{word_msg.comment_count}}</span>
+							<span>喜欢 {{word_msg.attention_count}}</span>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -75,6 +77,7 @@
 				</div>
 			</div>
 			<!-- 写评论 -->
+			{% if header.userInfo!=0 %}
 			<div class="review_container haveAvatar">
 				<div class="avatar">
 					{% if user_msg.head!=0 %}
@@ -89,14 +92,65 @@
 					<a class="fr cancel" href="javascript:;" @click="reviewFlag=false">取消</a>
 				</div>
 			</div>
+			{% else %}
+			<div class="review_container haveAvatar">
+				<div class="avatar">
+					<img src="/img/head.png" alt="">
+				</div>
+				<div class="sign-container">
+					<a href="/login">
+						<el-button class="goLogin" type="success" round>登录</el-button>
+					</a>
+					<span class="word">后发表评论</span>
+				</div>
+			</div>
+			{% endif %}
 			<!-- 评论锚点 -->
 			<a id="comments" name="comments"></a>
 			<!-- 评论区 -->
 			<div class="normal-comment-list">
 				<div class="top-title">
-					<span>评论</span>
+					<span v-if="comment_count!=0">${comment_count}条评论</span>
+					<span v-if="comment_count==0">评论</span>
 				</div>
-				<div class="comment-empty">
+				<div class="comment-item" v-for="(item,index) of comment_list">
+					<div class="author">
+						<a :href="'/u/' + item.user_id" class="avatar" target="_blank">
+							<img :src="item.head" alt="" onerror="this.src='/img/head.png'" v-if="item.head!=0">
+							<img src="/img/head.png" alt="" v-if="item.head==0">
+						</a>
+						<div class="info">
+							<a :href="'/u/' + item.user_id" class="name" target="_blank">${item.nick}</a>
+							<div class="meta">
+								<span>${item.floor}楼 · ${item.update_time}</span>
+							</div>
+						</div>
+					</div>
+					<div class="comment-wrap">
+						<div class="content">${item.content}</div>
+						<div class="tool-group">
+							<a href="javascript:;" v-if="!item.isPraise" @click="pointPraise(1,index)">
+								<i class="icon fl black">&#xe634;</i>
+								<span class="fl" v-if="item.praise_count!=0">${item.praise_count}人赞</span>
+								<span class="fl" v-if="item.praise_count==0">赞</span>
+							</a>
+							<a href="javascript:;" v-if="item.isPraise" @click="pointPraise(2,index)">
+								<i class="icon fl over">&#xe602;</i>
+								<span class="fl">${item.praise_count}人赞</span>
+							</a>
+							<a href="javascript:;">
+								<i class="icon fl reply black">&#xe622;</i>
+								<span class="fl">回复</span>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="pagination_container" v-if="comment_count>10">
+					<el-pagination background @current-change="pageChange" :current-page.sync="comment_page" :page-size="10"
+						layout="prev, pager, next, jumper" :total="comment_count">
+					</el-pagination>
+				</div>
+				<div class="comment-empty" v-show="comment_show==0">
 					<img src="/img/comment_empty.png" alt="">
 					<p>智慧如你，不想发表一点想法咩~</p>
 				</div>
