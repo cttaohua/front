@@ -11,6 +11,7 @@ var apiRouter = require('./routes/api');
 
 var app = express();
 
+
 // view engine setup
 app.engine('html', swig.renderFile);
 app.set('views', path.join(__dirname, 'views'));
@@ -23,8 +24,8 @@ app.set('view engine', 'html');
 // }); //模板设置为不缓存
 
 // app.use(logger('dev'));
-app.use(express.json());
 app.use(compression()); //压缩
+app.use(express.json());
 app.use(express.urlencoded({
     extended: false
 }));

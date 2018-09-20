@@ -11,15 +11,11 @@
                             <a href="/">发现</a>
                         </li>
                         <li {% if header[ 'index']==2 %} class="active" {% endif %}>
-                            {% if header['userInfo']!=0 %}
                             <a href="/write">写文章</a>
-                            {% else %}
-                            <a href="/login">写文章</a>
-                            {% endif %}
                         </li>
                     </ul>
                     <div class="search">
-                        <input type="text" placeholder="搜索" />
+                        <input type="text" placeholder="搜索" value="{{header['search']}}" autocomplete="off" maxlength="30"/>
                         <i class="icon">&#xe60c;</i>
                     </div>
                 </div>
@@ -43,6 +39,12 @@
 							<a href="/setting/basic">
 								<i class="icon">&#xe643;</i>
 								<span>设置</span>
+							</a>
+						</li>
+						<li>
+							<a href="/setting/help">
+								<i class="icon">&#xe603;</i>
+								<span>帮助与反馈</span>
 							</a>
 						</li>
 						<li>

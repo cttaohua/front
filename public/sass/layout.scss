@@ -80,7 +80,11 @@
                 background-color: #eee;
                 width: 189px;
                 margin-left: 20px;
+				font-size: 14px;
             }
+			i {
+				cursor: pointer;
+			}
         }
         .login {
             width: 80px;
@@ -91,6 +95,7 @@
             top: 9px;
             right: 40px;
             border: 1px solid $themeColor;
+			font-size: 16px;
             a {
                 display: block;
                 width: 100%;
@@ -258,21 +263,35 @@
 #page404 {
     width: 100%;
     height: 100%;
+	position: relative;
+	.img_logo {
+		position: absolute;
+		top: 30px;
+		left: 50px;
+	}
     .img_404 {
         display: block;
-        margin: 150px auto 0;
+        margin: 0 auto 0;
     }
+	h3 {
+		text-align: center;
+	}
+	p {
+		text-align: center;
+		margin-top: 10px;
+		margin-bottom: 30px;
+	}
     .gohome {
 		display: block;
 		margin: 0 auto;
         a {
             display: block;
-            width: 150px;
+            width: 180px;
             height: 50px;
             line-height: 50px;
             color: #fff;
             border-radius: 50px;
-            font-size: $fontLarge;
+            font-size: 16px;
             background-color: $themefontColor;
         }
     }

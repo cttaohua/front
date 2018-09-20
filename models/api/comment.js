@@ -57,10 +57,25 @@ router.get('/islike', function (req, res, next) {
                 if (err) {
                     callback('err', 2);
                 } else {
-                    callback(null);
+                    callback(null,islike);
                 }
             })
-        }
+        },
+		//用户的喜欢数量加减
+		function(islike,callback) {
+			if(islike==1) {
+				var a_sql = "update th_user set like_num=like_num+1 where id=" + params.author_id;
+			}else {
+				var a_sql = "update th_user set like_num=like_num-1 where id=" + params.author_id;
+			}
+			query(a_sql,function(err,vals,fields){
+				if(err) {
+					callback('err',3);
+				}else {
+					callback(null);
+				}
+			})
+		}
     ], function (err, result) {
         if (err) {
             data['code'] = result;
@@ -98,7 +113,7 @@ router.post('/publish/comment', function (req, res, next) {
         function (num, callback) {
             num = num + 1;
             var c_sql =
-                "insert into th_comment (`article_id`,`user_id`,`content`,`create_time`,`update_time`,`reply`,`floor`)" +
+                "insert into th_comment (`article_id`,`user_id`,`content`,`create_time`,`update_time`,`reply_count`,`floor`)" +
                 " values ('" + params.article_id + "','" + user_id + "','" + params.content + "','" +
                 nowDate + "','" + nowDate + "',0,'" + num + "')";
             query(c_sql, function (err, vals, fields) {
@@ -198,11 +213,20 @@ router.get('/commentList', function (req, res, next) {
 								}else {
 									arrs[key].isPraise = true;
 								}
-								if(arrs[key].reply!=0) {
-									arrs[key].reply = JSON.parse(arrs[key].reply);
+								if(arrs[key].reply_count!=0) {  //这条评论有回复
+									var s_sql = "select *,(select nick from th_user where id = a.user_id) th_user_nick, (select nick from th_user where id = a.reply_person_id) th_reply_nick from th_comment_reply a where comment_id = " + arrs[key].id;
+								    query(s_sql,function(err,vals,fields){
+									    if(err) {
+											turn('err');
+										}else {
+											arrs[key].reply_list = vals;
+											turn();
+										}
+									})
+								}else {  //没有回复
+									arrs[key].reply_list = [];
+									turn();
 								}
-								arrs[key].update_time = tool.dateYmdHis(arrs[key].update_time);
-								turn();
 							}
 						})
 					}, function (err) {
@@ -213,14 +237,29 @@ router.get('/commentList', function (req, res, next) {
 						}
 					});
 				}else {  //未登录
-					for(var i=0;i<arrs.length;i++) {
-						if(arrs[i].reply!=0) {
-							arrs[i].replay = JSON.parse(arrs[i]);
-						}
+					async.forEachOf(arrs,function(obj,key,turn){
 						arrs[i].isPraise = false;
-						arrs[i].update_time = tool.dateYmdHis(arrs[i].update_time);
-					}
-					callback(null,result_obj);
+						if(arrs[i].reply_count!=0) {  //有回复
+							var s_sql = "select *,(select nick from th_user where id = a.user_id) th_user_nick, (select nick from th_user where id = a.reply_person_id) th_reply_nick from th_comment_reply a where comment_id = " + arrs[key].id;
+							query(s_sql,function(err,vals,fields){
+								if(err) {
+									turn('err');
+								}else {
+									arrs[key].reply_list = vals;
+									turn();
+								}
+							})
+						}else {  //没有回复
+							arrs[key].reply_list = [];
+							turn();
+						}
+					},function(err) {
+						if(err) {
+							callback('err',3);
+						}else {
+							callback(null,result_obj);
+						}
+					})
 				}
             } else {  //没数据
                 callback(null, result_obj);
@@ -240,7 +279,7 @@ router.get('/commentList', function (req, res, next) {
 })
 
 
-//点赞
+//给评论点赞
 router.get('/pointPraise',function(req,res,next){
 	
 	var params = req.query;
@@ -300,6 +339,56 @@ router.get('/pointPraise',function(req,res,next){
 	
 	
 })
+
+//回复评论 
+router.post('/publish/reply',function(req,res,next){
+	
+	var params = req.body;
+	var user_id = req.userInfo.id;
+	
+	async.waterfall([
+		//回复表里加回复
+		function(callback) {
+			var nowDate = Date.parse(new Date());
+			var a_sql = "insert into th_comment_reply (`comment_id`,`user_id`,`reply_person_id`,`content`,`create_time`,`update_time`,`status`)" + 
+			" values ('"+params.comment_id+"','"+user_id+"','"+params.reply_id+"','"+params.content+"','"+nowDate+"','"+nowDate+"',1)";
+		    query(a_sql,function(err,vals,fields){
+				if(err) {
+					callback('err',0);
+				}else {
+					callback(null,vals.insertId);
+				}
+			})
+		},
+		//查询添加的回复
+		function(reply_id,callback) {
+			//评论表回复数+1
+			var a_sql = "update th_comment set reply_count=reply_count+1 where id="+params.comment_id;
+			query(a_sql,function(err,vals,fields){});
+			//查询回复信息
+			var s_sql = "select a.*,b.nick as th_reply_nick from th_comment_reply a left join th_user b on b.id = a.user_id where a.id=" + reply_id;
+			query(s_sql,function(err,vals,fields){
+				if(err) {
+					callback('err',1);
+				}else {
+					vals[0].th_user_nick = req.userInfo.nick;
+					callback(null,vals[0]);
+				}
+			})
+		}
+	],function(err,result){
+		if(err) {
+			data['code'] = result;
+			data['body'] = '回复失败，请重试';
+		}else {
+			data['code'] = 200;
+			data['body'] = result;
+		}
+		res.json(data);
+	})
+	
+})
+
 
 
 module.exports = router;

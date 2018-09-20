@@ -3,19 +3,24 @@ new Vue({
 	delimiters: ['${', '}'],
 	data: {
 		gender: '',
-		reward: ''
+		reward: '',
+		helpObj: {
+			issue: '',
+			contact: ''
+		}
 	},
 	created: function () {
 		
 	},
 	mounted: function () {
-		//basic页面
-		if($('#sex').length) {
+		if($('#sex').length) {   //basic页面
 			this.init();
 			this.transformImg();
-		}else {  //reward页面
+		}else if($('#reward').length){  //reward页面
 		    this.init2();
 			this.transformImg2();
+		}else {  //help页面
+			
 		}
 	},
 	methods: {
@@ -142,6 +147,35 @@ new Vue({
 				}
 			})
 			
+		},
+		//意见与反馈
+		submitIssue: function() {
+			var _this = this;
+			if(!this.helpObj.issue.length) {
+				this.$message.warning('请填写您的意见反馈');
+				return false;
+			}
+			
+			$.ajax({
+				url: '/api/submit/issue',
+				type: 'post',
+				data: {
+					problem: this.helpObj.issue,
+					contact: this.helpObj.contact
+				},
+				success: function(res) {
+					if(res.code==200) {
+						_this.helpObj.issue = '';
+						_this.helpObj.contact = '';
+						_this.$message.success('提交成功，我们会尽快给您反馈');
+					}else {
+						_this.$message.warning(res.body);
+					}
+				},
+				error: function() {
+					_this.$message.error('当前网络不佳，请稍后重试');
+				}
+			})
 			
 		}
 	}

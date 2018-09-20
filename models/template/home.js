@@ -2,15 +2,15 @@ var express = require('express');
 var router = express.Router();
 var query = require('../../config/node-mysql.js');
 var async = require('async');
-var env = require('../../config/env.js');
 var fun = require('../../config/fun.js');
 
 // /* GET home page. */
 router.get('/', function (req, res, next) {
-
+    delete require.cache[require.resolve('../../config/env.js')];
+    var env = require('../../config/env.js');
     env['header']['index'] = 1;
     env['header']['userInfo'] = req.userInfo;
-
+    
     async.parallel([
         function (callback) {
             fun.selectClassify(callback);
@@ -20,9 +20,8 @@ router.get('/', function (req, res, next) {
 		}
     ], function (err, result) {
         res.render('index', {
-            title: '桃花源',
-            version: env['version'],
 			header: env['header'],
+			meta: env['meta'],
             classify: result[0],
             list: result[1]
         });

@@ -2,168 +2,235 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>{{title}}</title>
+    {% include './layout/meta.html' with meta %}
     <link rel="stylesheet" href="/plugins/element/element.min.css">
-    <link rel="stylesheet" href="/css/style.min.css?v={{ version }}">
+    <link rel="stylesheet" href="../public/css/style.min.css?v=6920f253e9ce0dc5c612993028e2ed6d">
 </head>
 
 <body>
-	{% include './layout/header.html' with header %}
-	<div id="detailsPage" class="container">
-		<div class="note_view">
-			<div class="master">
-				<h1 class="title">{{word_msg.title}}</h1>
-				<div class="author">
-					<a class="avatar" href="/u/{{user_msg.id}}" target="_blank">
-						{% if user_msg.head!=0 %}
-						<img src="{{user_msg.head}}" alt="" onerror="this.src='/img/head.png'">
-						{% else %}
-						<img src="/img/head.png" alt="">
-						{% endif %}
-					</a>
-					<div class="info">
-						<span class="name">
-							<a href="/u/{{user_msg.id}}" target="_blank">{{user_msg.nick}}</a>
-						</span>
-						<div class="meta">
-							<span>{{word_msg.update_time}}</span>
-							<span>字数 {{word_msg.word_num}}</span>
-							<span>阅读 {{word_msg.point_count}}</span>
-							<span>评论 {{word_msg.comment_count}}</span>
-							<span>喜欢 {{word_msg.attention_count}}</span>
-						</div>
+    {% include './layout/header.html' with header %}
+    <div id="detailsPage">
+        <div class="article_part container">
+            <div class="note_view">
+                <div class="master">
+                    <h1 class="title">{{word_msg.title}}</h1>
+                    <div class="author">
+                        <a class="avatar" href="/u/{{user_msg.id}}" target="_blank">
+                            {% if user_msg.head!=0 %}
+                            <img src="{{user_msg.head}}" alt="" onerror="this.src='/img/head.png'"> {% else %}
+                            <img src="/img/head.png" alt=""> {% endif %}
+                        </a>
+                        <div class="info">
+                            <span class="name">
+                                <a href="/u/{{user_msg.id}}" target="_blank">{{user_msg.nick}}</a>
+                            </span>
+                            <div class="meta">
+                                <span>{{word_msg.update_time}}</span>
+                                <span>字数 {{word_msg.word_num}}</span>
+                                <span>阅读 {{word_msg.point_count}}</span>
+                                <span>评论 {{word_msg.comment_count}}</span>
+                                <span>喜欢 {{word_msg.attention_count}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="note_post">
+                    {% autoescape %} {{ word_msg.content }} {% endautoescape %}
+                </div>
+                <!-- 赞赏按钮 -->
+                {% if user_msg.reward == 1 %}
+                <div class="free-reward-panel">
+                    <button class="reward-button" @click.stop="rewardswitch()">赞赏支持</button>
+                    <div class="receipt_code">
+                        <img src="{{user_msg.receipt_code}}" alt="支付二维码">
+                    </div>
+                </div>
+                {% endif %}
+                <!-- 文章底部作者信息 -->
+                <div class="follow-detail">
+                    <div class="info">
+                        <a class="avatar" href="/u/{{user_msg.id}}">
+                            {% if user_msg.head!=0 %}
+                            <img src="{{user_msg.head}}" alt="" onerror="this.src='/img/head.png'"> {% else %}
+                            <img src="/img/head.png" alt=""> {% endif %}
+                        </a>
+                        <a class="title" href="/u/{{user_msg.id}}">{{user_msg.nick}}</a>
+                        <p>写了 {{user_msg.word_num}} 字，有 {{user_msg.article_num}} 篇文章，获得了 {{user_msg.like_num}} 个喜欢</p>
+                    </div>
+                    {% if user_msg.intro!=null&&user_msg.intro!='' %}
+                    <div class="signature">
+                        {{user_msg.intro}}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="meta-bottom">
+                    <div class="like">
+                        <div class="like-group {% if islike==1 %} islike {% else %} unlike {% endif %}">
+                            <span>喜欢</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 写评论 -->
+                {% if header.userInfo!=0 %}
+                <div class="review_container haveAvatar">
+                    <div class="avatar">
+                        {% if user_msg.head!=0 %}
+                        <img src="{{user_msg.head}}" alt="" onerror="this.src='/img/head.png'"> {% else %}
+                        <img src="/img/head.png" alt=""> {% endif %}
+                    </div>
+                    <textarea placeholder="写下你的评论..." maxlength="200" v-model="review_content" @focus="reviewFlag=true"></textarea>
+                    <div class="write-function-block" v-show="reviewFlag">
+                        <el-button class="fr send" type="success" round @click.native="review_send()">发送</el-button>
+                        <a class="fr cancel" href="javascript:;" @click="reviewFlag=false">取消</a>
+                    </div>
+                </div>
+                {% else %}
+                <div class="review_container haveAvatar">
+                    <div class="avatar">
+                        <img src="/img/head.png" alt="">
+                    </div>
+                    <div class="sign-container">
+                        <a href="/login">
+                            <el-button class="goLogin" type="success" round>登录</el-button>
+                        </a>
+                        <span class="word">后发表评论</span>
+                    </div>
+                </div>
+                {% endif %}
+                <!-- 评论锚点 -->
+                <a id="comments" name="comments"></a>
+                <!-- 评论区 -->
+                <div class="normal-comment-list">
+                    <div class="top-title">
+                        <span v-if="comment_count!=0">${comment_count}条评论</span>
+                        <span v-if="comment_count==0">评论</span>
+                    </div>
+                    <div class="comment-item" v-for="(item,index) of comment_list">
+                        <div class="author">
+                            <a :href="'/u/' + item.user_id" class="avatar" target="_blank">
+                                <img :src="item.head" alt="" onerror="this.src='/img/head.png'" v-if="item.head!=0">
+                                <img src="/img/head.png" alt="" v-if="item.head==0">
+                            </a>
+                            <div class="info">
+                                <a :href="'/u/' + item.user_id" class="name" target="_blank">${item.nick}</a>
+                                <div class="meta">
+                                    <span>${item.floor}楼 · ${item.update_time | date}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comment-wrap">
+                            <div class="content">${item.content}</div>
+                            <div class="tool-group">
+                                <a href="javascript:;" v-if="!item.isPraise" @click="pointPraise(1,index)">
+                                    <i class="icon fl black">&#xe634;</i>
+                                    <span class="fl" v-if="item.praise_count!=0">${item.praise_count}人赞</span>
+                                    <span class="fl" v-if="item.praise_count==0">赞</span>
+                                </a>
+                                <a href="javascript:;" v-if="item.isPraise" @click="pointPraise(2,index)">
+                                    <i class="icon fl over">&#xe602;</i>
+                                    <span class="fl">${item.praise_count}人赞</span>
+                                </a>
+                                <a href="javascript:;">
+                                    <i class="icon fl reply black">&#xe622;</i>
+                                    <span class="fl" @click="replyctrl(1,index)">回复</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="sub-comment-list" v-if="item.reply_list.length">
+                            <div class="sub-comment" v-for="(vals,cur) of item.reply_list">
+                                <p class="matter">
+                                    <a :href="'/u/'+vals.user_id" target="_blank">${vals.th_user_nick}：</a>
+                                    <a :href="'/u/'+vals.reply_person_id" target="_blank">@${vals.th_reply_nick}</a>
+                                    <span>${vals.content}</span>
+                                </p>
+                                <div class="sub-tool-group">
+                                    <span>${vals.create_time | date}</span>
+                                    <a href="javascript:;" @click="replyctrl(2,cur)">
+                                        <i class="icon">&#xe622;</i>
+                                        <span>回复</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="more-comment">
+                                <a href="javascript:;" @click="replyctrl(1,index)">
+                                    <i class="icon">&#xe603;</i>
+                                    <span>添加新评论</span>
+                                </a>
+                            </div>
+                            <div class="review_container mt_20" v-show="item.comment_reply.flag">
+                                <textarea placeholder="写下你的评论..." maxlength="200" v-model="item.comment_reply.content"></textarea>
+                                <div class="write-function-block">
+                                    <el-button class="fr send" type="success" round @click="reply_send(index)">发送</el-button>
+                                    <a class="fr cancel" href="javascript:;" @click="cancel_reply(index)">取消</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sub-comment-list" v-if="!item.reply_list.length&&item.comment_reply.flag">
+                            <div class="review_container mt_20" v-show="item.comment_reply.flag">
+                                <textarea placeholder="写下你的评论..." maxlength="200" v-model="item.comment_reply.content"></textarea>
+                                <div class="write-function-block">
+                                    <el-button class="fr send" type="success" round @click="reply_send(index)">发送</el-button>
+                                    <a class="fr cancel" href="javascript:;" @click="cancel_reply(index)">取消</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pagination_container" v-if="comment_count>10">
+                        <el-pagination background @current-change="pageChange" :current-page.sync="comment_page" :page-size="10" layout="prev, pager, next, jumper"
+                            :total="comment_count">
+                        </el-pagination>
+                    </div>
+                    <div class="comment-empty" v-show="comment_show==0">
+                        <img src="/img/comment_empty.png" alt="">
+                        <p>智慧如你，不想发表一点想法咩~</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<div class="note-bottom" v-if="recommendList.length!=0">
+			<div class="recommend-note clearfix">
+				<div class="meta">
+					<div class="title">
+						推荐阅读
 					</div>
+					<a href="/" class="more" target="_blank">更多精彩内容<i class="icon">&#xe630;</i></a>
 				</div>
-			</div>
-			<div class="note_post">
-				{% autoescape %}
-				{{ word_msg.content }}
-				{% endautoescape %}
-			</div>
-			<!-- 赞赏按钮 -->
-			{% if user_msg.reward == 1 %}
-			<div class="free-reward-panel">
-				<button class="reward-button" @click.stop="rewardswitch()">赞赏支持</button>
-				<div class="receipt_code">
-					<img src="{{user_msg.receipt_code}}" alt="支付二维码">
-				</div>
-			</div>
-			{% endif %}
-			<!-- 文章底部作者信息 -->
-			<div class="follow-detail">
-				<div class="info">
-					<a class="avatar" href="/u/{{user_msg.id}}">
-						{% if user_msg.head!=0 %}
-						<img src="{{user_msg.head}}" alt="" onerror="this.src='/img/head.png'">
-						{% else %}
-						<img src="/img/head.png" alt="">
-						{% endif %}
-					</a>
-					<a class="title" href="/u/{{user_msg.id}}">{{user_msg.nick}}</a>
-					<p>写了 0 字，有 {{user_msg.word_num}} 篇文章，获得了 0 个喜欢</p>
-				</div>
-				{% if user_msg.intro!=null&&user_msg.intro!='' %}
-				<div class="signature">
-					{{user_msg.intro}}
-				</div>
-				{% endif %}
-			</div>
-			<div class="meta-bottom">
-				<div class="like">
-					<div class="like-group {% if islike==1 %} islike {% else %} unlike {% endif %}">
-						<span>喜欢</span>
-					</div>
-				</div>
-			</div>
-			<!-- 写评论 -->
-			{% if header.userInfo!=0 %}
-			<div class="review_container haveAvatar">
-				<div class="avatar">
-					{% if user_msg.head!=0 %}
-					<img src="{{user_msg.head}}" alt="" onerror="this.src='/img/head.png'">
-					{% else %}
-					<img src="/img/head.png" alt="">
-					{% endif %}
-				</div>
-				<textarea placeholder="写下你的评论..." maxlength="200" v-model="review_content" @focus="reviewFlag=true"></textarea>
-				<div class="write-function-block" v-show="reviewFlag">
-					<el-button class="fr send" type="success" round @click.native="review_send()">发送</el-button>
-					<a class="fr cancel" href="javascript:;" @click="reviewFlag=false">取消</a>
-				</div>
-			</div>
-			{% else %}
-			<div class="review_container haveAvatar">
-				<div class="avatar">
-					<img src="/img/head.png" alt="">
-				</div>
-				<div class="sign-container">
-					<a href="/login">
-						<el-button class="goLogin" type="success" round>登录</el-button>
-					</a>
-					<span class="word">后发表评论</span>
-				</div>
-			</div>
-			{% endif %}
-			<!-- 评论锚点 -->
-			<a id="comments" name="comments"></a>
-			<!-- 评论区 -->
-			<div class="normal-comment-list">
-				<div class="top-title">
-					<span v-if="comment_count!=0">${comment_count}条评论</span>
-					<span v-if="comment_count==0">评论</span>
-				</div>
-				<div class="comment-item" v-for="(item,index) of comment_list">
-					<div class="author">
-						<a :href="'/u/' + item.user_id" class="avatar" target="_blank">
-							<img :src="item.head" alt="" onerror="this.src='/img/head.png'" v-if="item.head!=0">
-							<img src="/img/head.png" alt="" v-if="item.head==0">
+				<div class="articleList">
+					<div class="articleItem" :class="{haveImg:vals.cover!=''}" v-for="vals in recommendList">
+						<a :href="'/p/' + vals.id" class="art_img" v-if="vals.cover!=''" target="_blank">
+							<img :src="vals.cover" alt="" />
 						</a>
-						<div class="info">
-							<a :href="'/u/' + item.user_id" class="name" target="_blank">${item.nick}</a>
-							<div class="meta">
-								<span>${item.floor}楼 · ${item.update_time}</span>
+						<a :href="'/p/' + vals.id" class="art_title" v-text="vals.title" target="_blank"></a>
+						<div class="abstract" v-html="vals.abstract"></div>
+						<div class="art_bottom">
+							<a class="fl" href="#" target="_blank" v-text="vals.nick"></a>
+							<div class="fl item">
+								<i class="icon fl point">&#xe614;</i>
+								<span class="fl" v-text="vals.point_count"></span>
+							</div>
+							<a class="fl" :href="'/p/' + vals.id + '#comments'" target="_blank">
+								<i class="icon fl comment">&#xe64c;</i>
+								<span class="fl" v-text="vals.comment_count"></span>
+							</a>
+							<div class="fl item">
+								<i class="icon fl attention">&#xe6e7;</i>
+								<span class="fl" v-text="vals.attention_count"></span>
 							</div>
 						</div>
 					</div>
-					<div class="comment-wrap">
-						<div class="content">${item.content}</div>
-						<div class="tool-group">
-							<a href="javascript:;" v-if="!item.isPraise" @click="pointPraise(1,index)">
-								<i class="icon fl black">&#xe634;</i>
-								<span class="fl" v-if="item.praise_count!=0">${item.praise_count}人赞</span>
-								<span class="fl" v-if="item.praise_count==0">赞</span>
-							</a>
-							<a href="javascript:;" v-if="item.isPraise" @click="pointPraise(2,index)">
-								<i class="icon fl over">&#xe602;</i>
-								<span class="fl">${item.praise_count}人赞</span>
-							</a>
-							<a href="javascript:;">
-								<i class="icon fl reply black">&#xe622;</i>
-								<span class="fl">回复</span>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="pagination_container" v-if="comment_count>10">
-					<el-pagination background @current-change="pageChange" :current-page.sync="comment_page" :page-size="10"
-						layout="prev, pager, next, jumper" :total="comment_count">
-					</el-pagination>
-				</div>
-				<div class="comment-empty" v-show="comment_show==0">
-					<img src="/img/comment_empty.png" alt="">
-					<p>智慧如你，不想发表一点想法咩~</p>
 				</div>
 			</div>
 		</div>
-	</div>
-	<input id="article_id" type="hidden" value="{{word_msg.id}}">
+    </div>
+    <input id="article_id" type="hidden" value="{{word_msg.id}}"> 
+	<input id="classify_id" type="hidden" value="{{word_msg.classify_id}}">
+	<input id="author_id" type="hidden" value="{{word_msg.user_id}}">
 	{% include './layout/footer.html' %}
 	<script src="/plugins/jquery.min.js"></script>
-	<script src="/plugins/vue.min.js"></script>
-	<script src="/plugins/element/element.min.js"></script>
-	<script src="/js/common.min.js?v={{ version }}"></script>
-	<script src="/js/details.min.js?v={{ version }}"></script>
+    <script src="/plugins/vue.min.js"></script>
+    <script src="/plugins/element/element.min.js"></script>
+    <script src="../public/js/common.min.js?v=83c9b59639a243af718ab835cfb33883"></script>
+    <script src="../public/js/details.min.js?v=fe04d4b838d0043cb1ed1bdb25eb3b05"></script>
 </body>
 
 </html>

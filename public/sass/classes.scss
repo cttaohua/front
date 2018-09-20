@@ -4,56 +4,52 @@
         width: 100%;
         padding-right: 320px;
         position: relative;
-		min-height: 800px;
-		.top {
-			h1 {
-				font-size: 50px;
-				display: inline-block;
-				vertical-align: bottom;
-				line-height: 48px;
-			}
-			p {
-				display: inline-block;
-				vertical-align: bottom;
-				margin-left: 10px;
-			}
-		}
-		.tab_ul {
-			margin-top: 20px;
-			border-bottom: 1px solid #f0f0f0;
-			li {
-				float: left;
-				padding: 10px 20px;
-				cursor: pointer;
-				color: #969696;
-				i {
-					margin-right: 5px;
-				}
-			}
-			li.active {
-				color: #646464;
-				border-bottom: 2px solid #646464;
-			}
-		}
-        .sidebar {
-            width: 300px;
-            height: 500px;
-            position: absolute;
-            top: 0;
-            right: 0;
-            margin-top: 30px;
+        min-height: 800px;
+        .top {
+            h1 {
+                font-size: 50px;
+                display: inline-block;
+                vertical-align: bottom;
+                line-height: 48px;
+            }
+            p {
+                display: inline-block;
+                vertical-align: bottom;
+                margin-left: 10px;
+            }
+        }
+        .tab_ul {
+            margin-top: 20px;
+            border-bottom: 1px solid #f0f0f0;
+            li {
+                float: left;
+                padding: 10px 20px;
+                cursor: pointer;
+                color: #969696;
+                i {
+                    margin-right: 5px;
+                }
+            }
+            li.active {
+                color: #646464;
+                border-bottom: 2px solid #646464;
+            }
         }
     }
 }
+
 .pagination_container {
-		padding: 30px 0 30px 40px;
-	}
+    padding: 30px 0 30px 40px;
+}
+
 .el-pagination.is-background .el-pager li:not(.disabled).active {
-	background-color: $themefontColor;
+    background-color: $themefontColor;
 }
+
 .el-pager li.active {
-	background-color: $themefontColor;
+    background-color: $themefontColor;
 }
+
 .el-pager li:hover {
-	color: $themefontColor;
+    color: $themefontColor;
 }

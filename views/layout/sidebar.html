@@ -1,28 +1,28 @@
 <div id="sidebarPage">
     <div class="sidebar_li">
-        <div class="classify">推荐分类</div>
+        <div class="classify">{{classify.month}}月最热</div>
         <div class="tag">
             <ul>
 				<li class="li1">
-					<a href="/c/{{classify[0].id}}" target="_blank">{{classify[0].value}}</a>
+					<a href="/c/{{classify.list[0].id}}" target="_blank">{{classify.list[0].value}}</a>
 				</li>
                 <li class="li2">
-					<a href="/c/{{classify[1].id}}" target="_blank">{{classify[1].value}}</a>
+					<a href="/c/{{classify.list[1].id}}" target="_blank">{{classify.list[1].value}}</a>
 				</li>
                 <li class="li3">
-					<a href="/c/{{classify[2].id}}" target="_blank">{{classify[2].value}}</a>
+					<a href="/c/{{classify.list[2].id}}" target="_blank">{{classify.list[2].value}}</a>
 				</li>
                 <li class="li4">
-					<a href="/c/{{classify[3].id}}" target="_blank">{{classify[3].value}}</a>
+					<a href="/c/{{classify.list[3].id}}" target="_blank">{{classify.list[3].value}}</a>
 				</li>
                 <li class="li5">
-					<a href="/c/{{classify[4].id}}" target="_blank">{{classify[4].value}}</a>
+					<a href="/c/{{classify.list[4].id}}" target="_blank">{{classify.list[4].value}}</a>
 				</li>
             </ul>
         </div>
         <div class="classify">热门分类</div>
         <div class="cloud">
-			{% for cloud in classify %}
+			{% for cloud in classify.list %}
 			<a href="/c/{{cloud.id}}" target="_blank">{{cloud.value}}</a>
 			{% endfor %}
         </div>

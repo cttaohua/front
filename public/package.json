@@ -4,19 +4,22 @@
   "description": "",
   "main": "gulpfile.js",
   "dependencies": {
+    "event-stream": "^4.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "chentan",
+  "license": "ISC",
+  "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-clean": "^0.4.0",
     "gulp-concat": "^2.6.1",
     "gulp-minify-css": "^1.2.4",
     "gulp-notify": "^3.2.0",
     "gulp-rename": "^1.2.2",
+    "gulp-rev-append-all": "^0.1.8",
     "gulp-sass": "^3.1.0",
     "gulp-uglify": "^3.0.0"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "chentan",
-  "license": "ISC"
+  }
 }

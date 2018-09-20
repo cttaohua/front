@@ -60,7 +60,6 @@ new Vue({
 			})
 		},
 		login: function() {
-			
 			var _this = this;
 			$.ajax({
 				url: '/api/login',
@@ -72,7 +71,13 @@ new Vue({
 				dataType: 'json',
 				success: function(res) {
 					if(res.code==200) {
-						window.location.href = '/';
+						var href = window.localStorage.getItem('loginHref');
+						if(href!=''&&href!=null) {
+							window.location.href = href;
+						}else {
+							window.location.href = '/';
+						}
+						window.localStorage.setItem('loginHref','');
 					}else {
 						if(res.code==1) {
 							_this.cut_flag = 2;

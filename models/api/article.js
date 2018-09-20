@@ -55,22 +55,28 @@ router.post('/article', function (req, res, next) {
                 }
             },
             function (c_id, status, callback) {
-				//文章类别加数量
-				var c_sql = "update th_classify set article_num=article_num+1 where id='"+c_id+"'";
-				query(c_sql,function(err, vals, fields) {});
 				//添加文章
 				var a_sql = 
-                    "insert into th_article (`title`,`cover`,`content`,`create_time`,`user_id`,`update_time`,`status`,`classify`,`point_count`,`attention_count`,`comment_count`,`abstract`,`word_num`)" +
+                    "insert into th_article (`title`,`cover`,`content`,`create_time`,`user_id`,`update_time`,`status`,`classify_id`,`point_count`,`attention_count`,`comment_count`,`abstract`,`word_num`)" +
                     " values ('" + title + "','" + coverUrl + "','" + content + "','" + nowDate + "','" +
                     userInfo.id + "','" + nowDate + "','" + status + "','" + c_id + "','0','0','0','"+abs+"','"+word_num+"')";
 				query(a_sql, function (err, vals, fields) {
                     if (err) {
                         callback('err', 2);
                     } else {
-                        callback(null,c_id);
+                        callback(null);
                     }
                 })
-            }
+            },
+			function (callback) {
+				//文章类别加数量
+				var c_sql = "update th_classify set article_num=article_num+1 where id='"+c_id+"'";
+				query(c_sql,function(err, vals, fields) {});
+				//用户字数，文章加数量
+				var s_sql = "update th_user set word_num=word_num+'"+word_num+"',article_num=article_num+1 where id=" + userInfo.id;
+				query(s_sql,function(err, vals, fields) {});
+				callback(null);
+			}
         ], function (err, result) {
             if (err) {
                 data['code'] = result;

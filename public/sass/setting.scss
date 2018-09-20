@@ -54,6 +54,13 @@
 	}
 }
 
+.setting_container {
+    width: 100%;
+    padding-left: 320px;
+	min-height: 400px;
+    position: relative;
+}
+
 #rewardPage {
 	.list-item {
 		.explain {
@@ -75,10 +82,15 @@
 	}
 }
 
-.setting_container {
-    width: 100%;
-    padding-left: 320px;
-    position: relative;
+#helpPage {
+	.setting_container {
+		.brief {
+			margin-top: 20px;
+		}
+		.el-textarea__inner {
+			height: 80px;
+		}
+	}
 }
 
 #s_leftbarPage {
@@ -114,6 +126,9 @@
 						font-size: 24px;
 					}
 					.reward {
+						font-size: 17px;
+					}
+					.help {
 						font-size: 16px;
 					}
                 }

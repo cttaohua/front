@@ -2,15 +2,15 @@ var express = require('express');
 var router = express.Router();
 var query = require('../../config/node-mysql.js');
 var async = require('async');
-var env = require('../../config/env.js');
 var fun = require('../../config/fun.js');
 
 /* GET classes page. */
 router.get('/c/:id', function (req, res, next) {
-	
+	delete require.cache[require.resolve('../../config/env.js')];
+	var env = require('../../config/env.js');
 	var classify_id = req.params.id;
-	env.header['index'] = 0;
 	env.header['userInfo'] = req.userInfo;
+	
 	
 	async.parallel([
 		function(callback) {
@@ -30,9 +30,9 @@ router.get('/c/:id', function (req, res, next) {
 		if(err) {
 			res.render('error/error');
 		}else {
+			env.meta['title'] = result[0][0].value + ' - 桃花源';
 			res.render('classes', {
-				title: result[0][0].value + '-桃花源',
-				version: env.version,
+				meta: env.meta,
 				header: env.header,
 				classify: result[1],
 				classify_id: classify_id,

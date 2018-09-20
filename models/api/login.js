@@ -3,13 +3,14 @@ var router = express.Router();
 var query = require('../../config/node-mysql.js');
 var data = require('../../config/env.js').data;
 var async = require('async');
+var fun = require('../../config/fun.js');
 
 //注册接口
 router.post('/register', function (req, res, next) {
 
     var user_name = req.body['user_name'];
     var user_phone = req.body['user_phone'];
-    var user_password = req.body['user_password'];
+    var user_password = fun.encodeStr(req.body['user_password']);
 
     async.series({
         one: function (callback) {
@@ -72,13 +73,13 @@ router.post('/login', function (req, res, next) {
 		return false;
 	}
 	
-	
 	async.series({
 		one: function(callback) {
 			var s_sql = "select * from th_user where account='" + user_phone + "'";
 			query(s_sql,function(err, vals, fields){
 				if(vals.length) { //用户存在
-					if(user_password == vals[0].password) {  //密码正确
+				    var password = fun.decodeStr(vals[0].password);  //解密
+					if(user_password == password) {  //密码正确
 						callback(null,vals[0]);
 					}else {   //密码错误
 						callback('err',2);

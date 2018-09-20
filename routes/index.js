@@ -5,6 +5,7 @@ module.exports = function(app) {
 	var details = require('../models/template/details.js');
 	var classes = require('../models/template/classes.js');
 	var user = require('../models/template/user.js');
+	var search = require('../models/template/searchPage.js');
 	var setting = require('../models/template/setting.js');
 	app.use('/',home);
 	app.use('/',write);
@@ -12,5 +13,6 @@ module.exports = function(app) {
 	app.use('/',details);
 	app.use('/',classes);
 	app.use('/',user);
+	app.use('/',search);
 	app.use('/setting',setting);
 }

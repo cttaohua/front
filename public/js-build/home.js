@@ -34,7 +34,7 @@ new Vue({
 		getMsg: function() {
 			var _this = this;
 			$.ajax({
-				url: '/api/home',
+				url: '/api/homeList',
 				type: 'get',
 				data: {
 					page: this.page

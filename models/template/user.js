@@ -1,16 +1,15 @@
 var express = require('express');
 var router = express.Router();
 var query = require('../../config/node-mysql.js');
-var env = require('../../config/env.js');
 var async = require('async');
 
 
 
 /* GET user page. */
 router.get('/u/:id', function (req, res, next) {
-	
+	delete require.cache[require.resolve('../../config/env.js')];
+	var env = require('../../config/env.js');
     var user_id = req.params.id;
-    env.header['index'] = 0;
     env.header['userInfo'] = req.userInfo;
 	var type = req.query.type;
 	//当前类型
@@ -39,12 +38,15 @@ router.get('/u/:id', function (req, res, next) {
         if (err) {
             res.render('error/error');
         } else {
+			env['meta']['title'] = result[0][0].nick + ' - 桃花源';
+			if(result[0][0].intro!=null&&result[0][0].intro!='null') {
+				env['meta']['description'] = result[0][0].intro;
+			}
             res.render('user', {
-                title: result[0][0].nick + ' - 桃花源',
-                version: env.version,
+                meta: env.meta,
                 header: env.header,
                 msg: result[0][0],
-				type: type,
+				type: type,   //列表类型 1最新文章 2热门排行 3待审核
 				userFlag: userFlag  //为1是当前用户，为0是其它用户
             });
         }

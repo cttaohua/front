@@ -1,0 +1,94 @@
+<html>
+	
+	<head>
+		{% include './layout/meta.html' with meta %}
+		<link rel="stylesheet" href="/plugins/element/element.min.css">
+		<link rel="stylesheet" href="../public/css/style.min.css?v=6920f253e9ce0dc5c612993028e2ed6d">
+	</head>
+	
+	<body>
+		{% include './layout/header.html' with header %}
+		
+		<div id="searchPage" class="container">
+			<div class="main_container">
+				<div class="search-content">
+					<div class="sort-type">
+						<a :class="{active:type==1}" href="javascript:;" @click="sequence(1)">综合排序 · </a>
+						<a :class="{active:type==2}" href="javascript:;" @click="sequence(2)">热门文章 · </a>
+						<a :class="{active:type==3}" href="javascript:;" @click="sequence(3)">最新发布</a>
+						<div class="result_num">${total} 个结果</div>
+					</div>
+					<div class="articleList" v-if="searchList.length">
+						<div class="articleItem" :class="{haveImg:vals.cover!=''}" v-for="vals in searchList">
+							<a :href="'/p/' + vals.id" class="art_img" v-if="vals.cover!=''" target="_blank">
+								<img :src="vals.cover" alt="" />
+							</a>
+							<a :href="'/p/' + vals.id" class="art_title" v-text="vals.title" target="_blank"></a>
+							<div class="abstract" v-html="vals.abstract"></div>
+							<div class="art_bottom">
+								<a class="fl" href="#" target="_blank" v-text="vals.nick"></a>
+								<div class="fl item">
+									<i class="icon fl point">&#xe614;</i>
+									<span class="fl" v-text="vals.point_count"></span>
+								</div>
+								<a class="fl" :href="'/p/' + vals.id + '#comments'" target="_blank">
+									<i class="icon fl comment">&#xe64c;</i>
+									<span class="fl" v-text="vals.comment_count"></span>
+								</a>
+								<div class="fl item">
+									<i class="icon fl attention">&#xe6e7;</i>
+									<span class="fl" v-text="vals.attention_count"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="result_empty" v-if="!searchList.length">
+						<img src="/img/search_empty.png" alt="">
+						<p>未找到相关内容</p>
+					</div>
+					<div class="pagination_container" v-if="total!=0">
+						<el-pagination background @current-change="pageChange" :current-page.sync="page" :page-size="10"
+							layout="prev, pager, next, jumper" :total="total">
+						</el-pagination>
+					</div>
+				</div>
+				<div class="main_sidebar search_sidebar">
+					<div class="search-trending">
+						<div class="search-trending-header clearfix">
+							<span>热门搜索</span>
+						</div>
+						<ul class="search-trending-tag-wrap">
+							{% for key, vals in hotkey %}
+							<li>
+								<a href="/search?key={{vals.content}}" target="_blank">{{vals.content}}</a>
+							</li>
+							{% endfor %}
+						</ul>
+					</div>
+					<div class="search-trending" v-if="latelyKey.length">
+						<div class="search-trending-header clearfix">
+							<span>最近搜索</span>
+							<a href="javascript:;" @click="clearAll()">清空</a>
+						</div>
+						<ul class="search-recent-item-wrap">
+							<li v-for="(vals,index) in latelyKey">
+								<a :href="'/search?key='+vals" target="_blank">
+									<i class="icon history">&#xe683;</i>
+									<span>${vals}</span>
+								</a>
+								<i class="icon unfollow" @click="clearThis(index)">&#xe63e;</i>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<input id="key" type="hidden" value="{{key}}">
+		{% include './layout/footer.html' %}
+		<script src="/plugins/jquery.min.js"></script>
+		<script src="/plugins/vue.min.js"></script>
+		<script src="/plugins/element/element.min.js"></script>
+		<script src="../public/js/common.min.js?v=83c9b59639a243af718ab835cfb33883"></script>
+		<script src="../public/js/search.min.js?v=038faa4133bc83db45917634635e2c8c"></script>
+	</body>
+</html>

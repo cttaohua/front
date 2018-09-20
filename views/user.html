@@ -2,10 +2,9 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>{{title}}</title>
+    {% include './layout/meta.html' with meta %}
     <link rel="stylesheet" href="/plugins/element/element.min.css">
-    <link rel="stylesheet" href="/css/style.min.css?v={{ version }}">
+    <link rel="stylesheet" href="../public/css/style.min.css?v=6920f253e9ce0dc5c612993028e2ed6d">
 </head>
 
 <body>
@@ -24,19 +23,19 @@
                     <ul>
                         <li>
                             <div class="meta-block">
-                                <p>0</p>
+                                <p>{{msg.article_num}}</p>
                                 <div>文章</div>
                             </div>
                         </li>
                         <li>
                             <div class="meta-block">
-                                <p>0</p>
+                                <p>{{msg.word_num}}</p>
                                 <div>字数</div>
                             </div>
                         </li>
                         <li>
                             <div class="meta-block">
-                                <p>0</p>
+                                <p>{{msg.like_num}}</p>
                                 <div>收获喜欢</div>
                             </div>
                         </li>
@@ -106,8 +105,8 @@
     <script src="/plugins/jquery.min.js"></script>
     <script src="/plugins/vue.min.js"></script>
     <script src="/plugins/element/element.min.js"></script>
-    <script src="/js/common.min.js?v={{ version }}"></script>
-    <script src="/js/user.min.js?v={{ version }}"></script>
+    <script src="../public/js/common.min.js?v=83c9b59639a243af718ab835cfb33883"></script>
+    <script src="../public/js/user.min.js?v=a0d73a4ab6c7acd164836e2c143291f4"></script>
 </body>
 
 </html>

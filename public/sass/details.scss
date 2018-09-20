@@ -51,6 +51,7 @@
 			}
 		}
         .note_post {
+			font-size: 16px;
             p {
                 word-break: break-word!important;
                 margin: 0 0 25px;
@@ -104,6 +105,7 @@
                 text-align: center;
                 display: block;
                 margin: 0 auto;
+				font-size: 16px;
             }
             .receipt_code {
                 width: 80%;
@@ -287,6 +289,59 @@
 						}
 					}
 				}
+				.sub-comment-list {
+					margin-top: 20px;
+					padding: 5px 0 5px 20px;
+					border-left: 2px solid #d9d9d9;
+					.sub-comment {
+						margin-bottom: 15px;
+						padding-bottom: 15px;
+						border-bottom: 1px dashed #f0f0f0;
+						.matter {
+							margin: 0 0 5px;
+							font-size: 14px;
+							line-height: 1.5;
+							a {
+								color: #3194d0;
+								font-size: 14px;
+							}
+							span {
+								font-size: 14px;
+							}
+						}
+						.sub-tool-group {
+							color: #969696;
+							span {
+								font-size: 12px;
+							}
+							a {
+								margin-left: 5px;
+								color: #969696;
+								i {
+									font-size: 12px;
+								}
+							}
+							a:hover {
+								color: #333;
+							}
+						}
+					}
+					.more-comment {
+						margin-bottom: 5px;
+						a {
+							color: #969696;
+							i {
+								margin-right: 5px;
+							}
+							span {
+								font-size: 14px;
+							}
+						}
+						a:hover {
+							color: #333;
+						}
+					}
+				}
 			}
 			.comment-empty {
 				padding-bottom: 20px;
@@ -305,6 +360,33 @@
 			}
 		}
     }
+	.note-bottom {
+		min-height: 213px;
+		background-color: #f5f5f5;
+		padding-top: 40px;
+		padding-bottom: 40px;
+		.recommend-note {
+			width: 620px;
+            margin: 0 auto;
+			.meta {
+				.title {
+					padding-left: 8px;
+					border-left: 3px solid #EA6F5A;
+					line-height: 1;
+					font-size: 15px;
+					float: left;
+				}
+				.more {
+					float: right;
+					font-size: 14px;
+					color: #A0A0A0;
+				}
+			}
+			.articleList {
+				margin-top: 40px;
+			}
+		}
+	}
 	@keyframes likeBlast {
 		0% {
 			background-position: left;

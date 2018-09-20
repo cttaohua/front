@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% include '../layout/meta.html' with meta %}
+    <link rel="stylesheet" href="/plugins/element/element.min.css">
+    <link rel="stylesheet" href="../../public/css/style.min.css?v=6920f253e9ce0dc5c612993028e2ed6d">
+</head>
+
+<body>
+	{% include '../layout/header.html' with header %}
+	
+	<div id="helpPage" class="container settingPage">
+		<div class="setting_container">
+			{% include '../layout/s_leftbar.html' with index %}
+			<h2>帮助与反馈</h2>
+			<p class="brief">您在使用桃花源的过程中，不管是有什么问题，或者是有什么想对小桃说的，小桃都会认真对待，问题小桃会在第一时间解决，意见小桃也会仔细思考并改正，希望您能提出宝贵的意见呢。</p>
+		    <div class="list-item mt_20">
+				<span class="label">意见反馈</span>
+				<el-input type="textarea" :row="3" placeholder="填写意见反馈" v-model="helpObj.issue" maxlength="200"></el-input>
+			</div>
+			<div class="list-item">
+				<span class="label">联系方式</span>
+				<el-input placeholder="微信号/手机号/QQ/邮箱" v-model="helpObj.contact" maxlength="30"></el-input>
+			</div>
+			<el-button class="save" type="success" round @click.native="submitIssue()">提交</el-button>
+		</div>	
+	</div>
+	
+	{% include '../layout/footer.html' %}
+	<script src="/plugins/jquery.min.js"></script>
+	<script src="/plugins/vue.min.js"></script>
+	<script src="/plugins/element/element.min.js"></script>
+	<script src="../../public/js/common.min.js?v=83c9b59639a243af718ab835cfb33883"></script>
+	<script src="../../public/js/setting.min.js?v=d728fa1dff7d683bd43549a4fa3fd263"></script>
+</body>
+
+</html>

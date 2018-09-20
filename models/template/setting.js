@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var env = require('../../config/env.js');
+
 
 
 router.get('/basic', function (req, res, next) {
@@ -11,13 +11,12 @@ router.get('/basic', function (req, res, next) {
 		res.redirect('/');
 		return false;
 	}
-	
-	env.header['index'] = 0;
+	delete require.cache[require.resolve('../../config/env.js')];
+	var env = require('../../config/env.js');
 	env.header['userInfo'] = req.userInfo;
-	
+	env.meta['title'] = '基础设置 - 桃花源';
     res.render('setting/basic', {
-        title: '桃花源',
-		version: env.version,
+        meta: env.meta,
 		header: env.header,
 		index: 0
     });
@@ -31,15 +30,28 @@ router.get('/reward', function(req,res,next){
 		res.redirect('/');
 		return false;
 	}
-	
-	env.header['index'] = 0;
+	delete require.cache[require.resolve('../../config/env.js')];
+	var env = require('../../config/env.js');
 	env.header['userInfo'] = req.userInfo;
-	
+	env.meta['title'] = '赞赏设置 - 桃花源';
 	res.render('setting/reward', {
-		title: '桃花源',
-		version: env.version,
+		meta: env.meta,
 		header: env.header,
 		index: 1
+	})
+	
+})
+
+router.get('/help',function(req,res,next){
+	
+	delete require.cache[require.resolve('../../config/env.js')];
+	var env = require('../../config/env.js');
+	env.header['userInfo'] = req.userInfo;
+	env.meta['title'] = '帮助与反馈 - 桃花源';
+	res.render('setting/help', {
+		meta: env.meta,
+		header: env.header,
+		index: 2
 	})
 	
 })

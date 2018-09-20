@@ -2,17 +2,16 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>{{title}}</title>
+	{% include './layout/meta.html' with meta %}
     <link rel="stylesheet" href="/plugins/swiper/css/swiper.min.css">
     <link rel="stylesheet" href="/plugins/element/element.min.css">
-    <link rel="stylesheet" href="/css/style.min.css?v={{ version }}">
+    <link rel="stylesheet" href="../public/css/style.min.css?v=fa3007a6f93fcec5b73296d105c63ace">
 </head>
 
 <body>
     {% include './layout/header.html' with header %}
     <div id="homePage" class="container">
-        <div class="home_container">
+        <div class="home_container main_container">
             <div class="banner">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
@@ -83,7 +82,7 @@
 				<p class="noMore" v-show="noMore">没有更多内容了...</p>
 				<div class="load-more" v-show="loading" @click="getMore()">阅读更多</div>
             </div>
-            <div class="sidebar" >
+            <div class="main_sidebar" >
                 {% include './layout/sidebar.html' with classify %}
             </div>
         </div>
@@ -94,8 +93,8 @@
     <script src="/plugins/vue.min.js"></script>
     <script src="/plugins/swiper/js/swiper.min.js"></script>
 	<script src="/plugins/tagcloud.js"></script>
-    <script src="/js/common.min.js?v={{ version }}"></script>
-    <script src="/js/home.min.js?v={{ version }}"></script>
+    <script src="../public/js/common.min.js?v=83c9b59639a243af718ab835cfb33883"></script>
+    <script src="../public/js/home.min.js?v=5808c837f998482e759c9b95f06fbc09"></script>
 </body>
 
 </html>

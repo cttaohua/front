@@ -31,8 +31,38 @@ function goLogin(t, str) {
         cancelButtonText: '暂不登录',
         type: 'warning'
     }).then(function () {
+		var href = window.location.href;
+		window.localStorage.setItem('loginHref',href);
         window.location.href= '/login';
     }).catch(function () {
         
     })
 }
+//vue时间过滤器 输出年月日时分秒
+function dateYmdHis(timestamp) {
+    var date = new Date(Number(timestamp));
+    Y = date.getFullYear() + '.';
+    M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '.';
+    D = date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate() + ' ';
+    h = ' ' + date.getHours() + ':';
+    m = date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes();
+    return Y + M + D + h + m;
+}
+//搜索相关脚本
+function searchMonitor() {
+	var main = $('#headerPage');
+	if(!main.length) {
+		return false;
+	}
+	var input = main.find('.search input');
+	var btn = main.find('.search i');
+	btn.on('click',function(){
+		window.location.href = '/search?key=' + input.val();
+	})
+	input.keypress(function(e){
+		if(e.which == 13) {
+			window.location.href = '/search?key=' + input.val();
+		}
+	})
+}
+searchMonitor();

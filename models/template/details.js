@@ -2,14 +2,13 @@ var express = require('express');
 var router = express.Router();
 var query = require('../../config/node-mysql.js');
 var async = require('async');
-var env = require('../../config/env.js');
 var tool = require('../../config/tool.js');
 
 // /* GET details page. */
 router.get('/p/:id', function (req, res, next) {
-    
+	delete require.cache[require.resolve('../../config/env.js')];
+    var env = require('../../config/env.js');
     var word_id = req.params.id;
-	env.header['index'] = 0;
 	env.header['userInfo'] = req.userInfo;
 	
 	async.waterfall([
@@ -69,6 +68,8 @@ router.get('/p/:id', function (req, res, next) {
 						user_msg: user_msg[0],
 						islike: islike
 					}
+					env['meta']['title'] = obj.word_msg.title + ' - 桃花源';
+					env['meta']['description'] = obj.word_msg.abstract;
 					callback(null,obj);
 				}
 			})
@@ -79,8 +80,8 @@ router.get('/p/:id', function (req, res, next) {
 		}else {
 			res.render('details', {
 				title: '桃花源',
-				version: env.version,
 				header: env.header,
+				meta: env.meta,
 				word_msg: result.word_msg,
 				user_msg: result.user_msg,
 				islike: result.islike
