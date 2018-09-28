@@ -3,8 +3,8 @@
 
 <head>
     {% include '../layout/meta.html' with meta %}
-    <link rel="stylesheet" href="/plugins/element/element.min.css">
-    <link rel="stylesheet" href="../../public/css/style.min.css?v=6920f253e9ce0dc5c612993028e2ed6d">
+    <link rel="stylesheet" href="/plugins/element/element.min.css?v=60bfa99704ded437ebd59ce5b4b00252">
+    <link rel="stylesheet" href="/css/style.min.css?v=9e559a818630476fd46c5157dcf1141c">
 </head>
 
 <body>
@@ -26,7 +26,7 @@
 				{% if header.userInfo.receipt_code!=0 %}
 				<img class="imgcode" src="{{header.userInfo.receipt_code}}" alt="">
 				{% else %}
-				<img class="imgcode" src="/img/receipt_code.png" alt="">
+				<img class="imgcode" src="/img/receipt_code.png?v=746a35da0bb035e0b9df55f8037876ec" alt="">
 				{% endif %}
 				<el-button id="fileSelect" class="upcode" type="success" round plain>上传二维码</el-button>
 				<input class="none" accept="image/*" name="upimage" id="upload_file" type="file">
@@ -36,11 +36,11 @@
 	</div>
 	<input id="reward" type="hidden" value="{{header.userInfo.reward}}">
 	{% include '../layout/footer.html' %}
-	<script src="/plugins/jquery.min.js"></script>
-	<script src="/plugins/vue.min.js"></script>
-	<script src="/plugins/element/element.min.js"></script>
-	<script src="../../public/js/common.min.js?v=83c9b59639a243af718ab835cfb33883"></script>
-	<script src="../../public/js/setting.min.js?v=d728fa1dff7d683bd43549a4fa3fd263"></script>
+	<script src="/plugins/jquery.min.js?v=e0e0559014b222245deb26b6ae8bd940"></script>
+	<script src="/plugins/vue.min.js?v=6f0a53f55512dcfe993ed7977a6fc539"></script>
+	<script src="/plugins/element/element.min.js?v=1ad579b4e2bb516a98d063b5871a3878"></script>
+	<script src="/js/common.min.js?v=83c9b59639a243af718ab835cfb33883"></script>
+	<script src="/js/setting.min.js?v=5478feb91cfd2a33ac82e8d4d5166440"></script>
 </body>
 
 </html>

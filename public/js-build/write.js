@@ -66,10 +66,8 @@ new Vue({
                 }
             })
         },
-        publish: function () {
-            var html = this.editor.txt.html();
-			var text = this.editor.txt.text();
-			var abs = text.substring(0,70) + '...';  //摘要
+        publish: function (html,text) {
+			var abs = text.substring(0,100) + '...';  //摘要
             var params = {
                 word_id: '',
                 title: this.title,
@@ -77,6 +75,7 @@ new Vue({
                 classify_id: this.classifyValue,
                 newclassify: this.new_classify,
                 content: html,
+				text: text,
 				abs: abs,
 				word_num: text.length
             }
@@ -107,8 +106,9 @@ new Vue({
                 });
                 return false;
             }
-            var text = this.editor.txt.html();
-            if (text == '<p><br></p>') {
+            var html = this.editor.txt.html();
+			var text = this.editor.txt.text();
+            if (html == '<p><br></p>') {
                 this.$message({
                     message: '请输入文章内容',
                     type: 'warning'
@@ -121,7 +121,7 @@ new Vue({
                     cancelButtonText: '暂不发布',
                     type: 'info'
                 }).then(function () {
-                    _this.publish();
+                    _this.publish(html,text);
                 });
             } else { //无新增分类
                 if (!this.classifyValue) {
@@ -131,7 +131,7 @@ new Vue({
                     });
                     return false;
                 }
-                this.publish();
+                this.publish(html,text);
             }
         }
     }

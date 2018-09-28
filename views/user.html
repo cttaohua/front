@@ -3,8 +3,8 @@
 
 <head>
     {% include './layout/meta.html' with meta %}
-    <link rel="stylesheet" href="/plugins/element/element.min.css">
-    <link rel="stylesheet" href="../public/css/style.min.css?v=6920f253e9ce0dc5c612993028e2ed6d">
+    <link rel="stylesheet" href="/plugins/element/element.min.css?v=60bfa99704ded437ebd59ce5b4b00252">
+    <link rel="stylesheet" href="/css/style.min.css?v=9e559a818630476fd46c5157dcf1141c">
 </head>
 
 <body>
@@ -15,7 +15,7 @@
             <div class="main-top clearfix">
                 {% if msg.head!=0 %}
                 <img class="avatar" src="{{msg.head}}" alt="" onerror="this.src='/img/head.png'"> {% else %}
-                <img class="avatar" src="/img/head.png" alt=""> {% endif %}
+                <img class="avatar" src="/img/head.png?v=a6091bb2c45580b4a7ede77ee6d73de2" alt=""> {% endif %}
                 <div class="title">
                     <span>{{msg.nick}}</span>
                 </div>
@@ -102,11 +102,11 @@
     </div>
     <input id="user_id" type="hidden" value="{{msg.id}}">
     <input id="word_type" type="hidden" value="{{type}}"> {% include './layout/footer.html' %}
-    <script src="/plugins/jquery.min.js"></script>
-    <script src="/plugins/vue.min.js"></script>
-    <script src="/plugins/element/element.min.js"></script>
-    <script src="../public/js/common.min.js?v=83c9b59639a243af718ab835cfb33883"></script>
-    <script src="../public/js/user.min.js?v=a0d73a4ab6c7acd164836e2c143291f4"></script>
+    <script src="/plugins/jquery.min.js?v=e0e0559014b222245deb26b6ae8bd940"></script>
+    <script src="/plugins/vue.min.js?v=6f0a53f55512dcfe993ed7977a6fc539"></script>
+    <script src="/plugins/element/element.min.js?v=1ad579b4e2bb516a98d063b5871a3878"></script>
+    <script src="/js/common.min.js?v=83c9b59639a243af718ab835cfb33883"></script>
+    <script src="/js/user.min.js?v=a0d73a4ab6c7acd164836e2c143291f4"></script>
 </body>
 
 </html>

@@ -9,13 +9,10 @@ var sass = require('gulp-sass'),
     rename = require('gulp-rename'), // 重命名
     clean = require('gulp-clean'); // 清空文件夹
 	
-var rev = require('gulp-rev-append-all');
+var rev = require('gulp-rev-all-revise');
 
-var cssPath = './public/css',
-    jsPath = './public/js';
-
-// var cssPath = './css',
-//     jsPath = './js';
+var cssPath = './css',
+    jsPath = './js';
 
 //sass解析
 gulp.task('stylesheets', function () {
@@ -40,17 +37,21 @@ gulp.task('javascripts', function () {
 });
 
 //静态资源加哈希值
-gulp.task('rev-hash', function () {
+gulp.task('rev', function () {
     gulp.src('../views/**.html')
-        .pipe(rev())
+        .pipe(rev({
+			assets: '../public'
+		}))
         .pipe(gulp.dest('../views'));
 });
-//静态资源加哈希值
-gulp.task('rev-hash-setting', function () {
-    gulp.src('../views/setting/**.html')
-        .pipe(rev())
-        .pipe(gulp.dest('../views/setting'));
-});
+
+gulp.task('rev-catalog',function() {
+	gulp.src('../views/**/**.html')
+		.pipe(rev({
+			assets: '../../public'
+		}))
+		.pipe(gulp.dest('../views/'));
+})
 
 // clean
 gulp.task('clean', function () {
