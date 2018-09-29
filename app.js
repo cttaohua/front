@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var compression = require('compression');
 // var logger = require('morgan');
 var swig = require('swig');
+var bodyParser = require('body-parser');
 
 var indexRouter = require('./routes/index');
 var apiRouter = require('./routes/api');
@@ -24,13 +25,19 @@ app.set('view engine', 'html');
 // }); //模板设置为不缓存
 
 // app.use(logger('dev'));
-app.use(compression()); //压缩
-app.use(express.json());
-app.use(express.urlencoded({
-    extended: false
-}));
+// app.use(express.json());
+// app.use(express.urlencoded({
+//     extended: false
+// }));
+//压缩
+app.use(compression()); 
+//处理大请求
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'),{
+	maxAge: '30d'
+}));
 
 app.use(function (req, res, next) {
     var user_msg;
