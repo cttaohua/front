@@ -6,6 +6,7 @@ var random = require('../../config/tool.js').random;
 var transferredSingle = require('../../config/tool.js').transferredSingle;
 var async = require('async');
 var fs = require('fs');
+var multiparty = require('multiparty');
 
 
 router.post('/article', function(req, res, next) {
@@ -99,6 +100,91 @@ router.post('/article', function(req, res, next) {
 
 })
 
+//文章上传图片
+router.post('/upload/acticle', function(req, res, next) {
+	var date = new Date(),
+		Y = date.getFullYear(),
+	M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1),
+	D = date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate();
+	var nowDate = Y + M + D;
+	var filePath = "public/uploadImg/article/" + nowDate + "/";
 
+	async.waterfall([
+		function(callback) {
+			//检查文件目录是否存在
+			fs.exists(filePath, function(exists) {
+				if (exists) { //文件夹已存在
+					callback(null, 1)
+				} else { //文件夹不存在
+					callback(null, 2);
+				}
+			})
+		},
+		function(type, callback) {
+			if (type == 1) {
+				callback(null);
+			} else {
+				fs.mkdir(filePath, function(err) {
+					callback(null);
+				})
+			}
+		},
+		function(callback) {
+			var form = new multiparty.Form(); //新建表单
+			//设置
+			form.encoding = 'utf-8';
+			form.uploadDir = filePath;
+			form.keepExtensions = true; //保留后缀
+			form.maxFieldsSize = 2 * 1024 * 1024; //内存大小
+			form.maxFilesSize = 5 * 1024 * 1024; //文件字节大小限制，超出会报错err 5M
+
+			//表单解析
+			form.parse(req, function(err, fields, files) {
+				//报错处理
+				if (err) {
+					callback('err','请上传5M以内的图片');
+				}
+				var imgName;
+				//获取路径
+				Object.keys(files).forEach(function(name){
+					imgName = name;
+				})
+				var oldpath = files[imgName][0].path;
+				//文件后缀处理格式
+				if (oldpath.indexOf('.jpg') >= 0) {
+					var suffix = '.jpg';
+				} else if (oldpath.indexOf('.png') >= 0) {
+					var suffix = '.png';
+				} else if (oldpath.indexOf('.gif') >= 0) {
+					var suffix = '.gif';
+				} else {
+					callback('err','请上传正确格式');
+				}
+
+				var url = filePath + Date.now() + suffix;
+				fs.renameSync(oldpath, url);
+				url = url.slice(6,url.length);
+				callback(null,url);
+			})
+		}
+	], function(err, result) {
+         if(err) {
+			 var info = {
+			 	"error": 1,
+			 	"body": result
+			 }
+		 }else {
+			 var info = {
+			 	"errno": 0,
+			 	"data": [
+			 		result
+			 	]
+			 }
+		 }
+		 res.json(info);
+	})
+
+
+})
 
 module.exports = router;

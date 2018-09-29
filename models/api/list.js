@@ -88,7 +88,7 @@ router.get('/userList', function (req, res, next) {
 		    status = 1;
     } else if(params.type == 3){ //待审核
 		var paixu = 'a.create_time',
-		    status = 2;
+		    status = 0;
 	}
     async.parallel([
         function (callback) {
