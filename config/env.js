@@ -16,9 +16,29 @@ var meta = {  // title keywords description
 	keywords: '桃花源,桃花源官网,图文创作,创作软件,原创社区,博客,IT,技术'
 }
 
+//正式
+var port = '80'; 
+var mysqlConfig = {
+	host: 'localhost',
+	user: 'root',
+	password: '123456',
+	database: 'taohua'
+}
+
+//测试
+// var port = '3000'; 
+// var mysqlConfig = {
+// 	host: '47.94.227.198',
+// 	user: 'root',
+// 	password: 'Lh456123',
+// 	database: 'taohua'
+// }
+
 module.exports = {
 	secret: secret,
 	data: data,
 	header: header,
-	meta: meta
+	meta: meta,
+	port: port,
+	mysqlConfig: mysqlConfig
 }

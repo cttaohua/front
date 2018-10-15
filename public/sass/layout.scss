@@ -183,18 +183,22 @@
 
 #footerPage {
     footer {
-        background-color: #f6f6f6;
-        height: 100px;
+        background-color: #333;
+		color: #fff;
+		padding: 15px 0;
     }
-    .txt {
-        text-align: center;
-        color: #9e9e9e;
+	.container {
+		padding-top: 0;
+	}
+    .msg {
+        text-align: left;
+        color: #fff;
         font-size: 12px;
-        line-height: 100px;
+		margin-top: 10px;
     }
     a {
         font-size: 12px;
-        color: #9e9e9e;
+        color: #fff;
     }
 }
 
