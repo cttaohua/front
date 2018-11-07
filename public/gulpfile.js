@@ -45,7 +45,7 @@ gulp.task('rev', function () {
         .pipe(gulp.dest('../views'));
 });
 
-gulp.task('rev-catalog',function() {
+gulp.task('rev-2',function() {
 	gulp.src('../views/**/**.html')
 		.pipe(rev({
 			assets: '../../public'

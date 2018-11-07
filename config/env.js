@@ -26,7 +26,7 @@ var mysqlConfig = {
 }
 
 //测试
-// var port = '3000'; 
+// var port = '3001'; 
 // var mysqlConfig = {
 // 	host: '47.94.227.198',
 // 	user: 'root',

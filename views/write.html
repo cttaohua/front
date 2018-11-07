@@ -17,14 +17,18 @@
             <div id="editor"></div>
             <div class="bottom_ctrl">
                 <el-row>
-                    <el-col :span="8" class="classify">文章分类：
-                        <el-select v-model="classifyValue" placeholder="请选择">
-                            <el-option v-for="item in classify" :key="item.value" :label="item.label" :value="item.value">
+                    <el-col :span="13" class="classify">文章分类：
+                        <el-select v-model="c_first_value" placeholder="请选择一级分类" @change="c_first_callback">
+                            <el-option v-for="item in c_first" :key="item.value" :label="item.label" :value="item.value">
+                            </el-option>
+                        </el-select>
+                        <el-select v-model="c_second_value" placeholder="请选择二级分类">
+                            <el-option v-for="item in c_second" :key="item.value" :label="item.label" :value="item.value">
                             </el-option>
                         </el-select>
                     </el-col>
-					<el-col :span="8" class="create_classify">
-						<span @click="show_create" v-show="!create_flag">没有适合的分类？点击创建</span> 
+					<el-col :span="6" class="create_classify">
+						<span @click="show_create" v-show="!create_flag">没有适合的二级分类？点击创建</span> 
 						<el-input placeholder="最多15个字符" v-show="create_flag" maxlength="15" v-model="new_classify"></el-input>
 					</el-col>
 					<el-col :span="24">
@@ -46,7 +50,7 @@
     <script src="/plugins/element/element.min.js?v=1ad579b4e2bb516a98d063b5871a3878"></script>
     <script src="/plugins/wangeditor/wangEditor.min.js?v=84ed219ca7a74501634b12a0364e3721"></script>
     <script src="/js/common.min.js?v=83c9b59639a243af718ab835cfb33883"></script>
-    <script src="/js/write.min.js?v=aa3e5253b2695f5551fad40eaaa322db"></script>
+    <script src="/js/write.min.js?v=4668f6dae86fc58fd6f313a106dc4f5a"></script>
 </body>
 
 </html>

@@ -6,11 +6,13 @@ new Vue({
 		editor: '',
 		create_flag: false,
 		new_classify: '',
-		classify: [],
-		classifyValue: ''
+		c_first: [],
+		c_first_value: '',
+		c_second: [],
+		c_second_value: ''
 	},
 	created: function() {
-		this.getClassify();
+		this.getC_first();
 	},
 	mounted: function() {
 		this.createEditor();
@@ -20,20 +22,43 @@ new Vue({
 		show_create: function() {
 			this.create_flag = true;
 		},
-		getClassify: function() {
+		getC_first: function() {
 			var _this = this;
 			$.ajax({
-				url: '/api/getClassify',
+				url: '/api/getC_first',
 				type: 'get',
 				dataType: 'json',
 				success: function(res) {
 					if (res.code == 200) {
 						for (var i = 0; i < res.body.length; i++) {
-							_this.classify.push({
+							_this.c_first.push({
 								value: res.body[i].id,
 								label: res.body[i].value
 							})
 						}
+					}
+				}
+			})
+		},
+		c_first_callback: function(id) {
+            var _this = this;
+            $.ajax({
+				url: '/api/getC_second',
+				type: 'get',
+				data: {
+                   parent_id: id
+				},
+				dataType: 'json',
+				success: function(res) {
+					if (res.code == 200) {
+						for (var i = 0; i < res.body.length; i++) {
+							_this.c_second.push({
+								value: res.body[i].id,
+								label: res.body[i].value
+							})
+						}
+					}else {
+						_this.c_second = [];
 					}
 				}
 			})
@@ -100,7 +125,8 @@ new Vue({
 				word_id: '',
 				title: this.title,
 				cover: this.coverUrl,
-				classify_id: this.classifyValue,
+				c_first_id: this.c_first_value,
+				c_second_id: this.c_second_value,
 				newclassify: this.new_classify,
 				content: html,
 				text: text,
@@ -143,6 +169,14 @@ new Vue({
 				});
 				return false;
 			}
+
+			if(this.c_first_value=='') {
+                this.$message({
+                	message: '请选择一级分类',
+                	type: 'warning'
+                })
+                return false;
+			}
 			if (this.new_classify) { //有新增分类
 				this.$confirm('新增分类的文章不会立即发布，通过审核后才会发布', '提示', {
 					confirmButtonText: '继续发布',
@@ -152,9 +186,9 @@ new Vue({
 					_this.publish(html, text);
 				});
 			} else { //无新增分类
-				if (!this.classifyValue) {
+				if (!this.c_second_value) {
 					this.$message({
-						message: '请选择文章分类',
+						message: '请选择二级分类',
 						type: 'warning'
 					});
 					return false;

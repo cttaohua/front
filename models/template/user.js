@@ -30,7 +30,7 @@ router.get('/u/:id', function (req, res, next) {
                 if (err) {
                     callback('err');
                 } else {
-                    callback(null, vals);
+                    callback(null, vals[0]);
                 }
             })
         }
@@ -38,17 +38,21 @@ router.get('/u/:id', function (req, res, next) {
         if (err) {
             res.render('error/error');
         } else {
-			env['meta']['title'] = result[0][0].nick + ' - 桃花源';
-			if(result[0][0].intro!=null&&result[0][0].intro!='null') {
-				env['meta']['description'] = result[0][0].intro;
-			}
-            res.render('user', {
-                meta: env.meta,
-                header: env.header,
-                msg: result[0][0],
-				type: type,   //列表类型 1最新文章 2热门排行 3待审核
-				userFlag: userFlag  //为1是当前用户，为0是其它用户
-            });
+            if(result[0].hasOwnProperty('id')) {
+                env['meta']['title'] = result[0].nick + ' - 桃花源';
+                if(result[0].intro!=null&&result[0].intro!='null') {
+                    env['meta']['description'] = result[0].intro;
+                }
+                res.render('user', {
+                    meta: env.meta,
+                    header: env.header,
+                    msg: result[0],
+                    type: type,   //列表类型 1最新文章 2热门排行 3待审核
+                    userFlag: userFlag  //为1是当前用户，为0是其它用户
+                });
+            }else {
+                res.render('error/error');
+            }
         }
     })
 

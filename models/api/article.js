@@ -25,7 +25,8 @@ router.post('/article', function(req, res, next) {
 	var text = transferredSingle(req.body.text); //转义单引号
 	var word_id = req.body.word_id;
 	var newclassify = req.body.newclassify;
-	var classify_id = req.body.classify_id;
+	var c_first_id = req.body.c_first_id;
+	var c_second_id = req.body.c_second_id;
 	var abs = transferredSingle(req.body.abs); //转义单引号
 	var word_num = req.body.word_num;
 
@@ -43,8 +44,8 @@ router.post('/article', function(req, res, next) {
 		async.waterfall([
 			function(callback) {
 				if (newclassify) {
-					var c_sql = "insert into th_classify (`value`,`status`,`article_num`)" +
-						" values ('" + newclassify + "','0','0')";
+					var c_sql = "insert into th_classify (`value`,`status`,`article_num`,`parent_id`,`create_time`)" +
+						" values ('" + newclassify + "','0','0','"+c_first_id+"','"+nowDate+"')";
 					query(c_sql, function(err, vals, fields) {
 						if (err) {
 							callback('err', 1);
@@ -53,7 +54,7 @@ router.post('/article', function(req, res, next) {
 						}
 					})
 				} else {
-					callback(null, classify_id, 1);
+					callback(null, c_second_id, 1);
 				}
 			},
 			function(c_id, status, callback) {

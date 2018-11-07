@@ -6,14 +6,35 @@ var random = require('../../config/tool.js').random;
 var async = require('async');
 var fs = require('fs');
 
-//查询所有分类
-router.get('/getClassify', function (req, res, next) {
-    var c_sql = "select * from th_classify where status=1";
+//查询一级分类
+router.get('/getC_first', function (req, res, next) {
+    var c_sql = "select * from th_classify_first where status=1";
     query(c_sql, function (err, vals, filds) {
         if (err) {
             data['code'] = 0;
             data['body'] = '查询失败';
         } else {
+            if (vals.length) {
+                data['code'] = 200;
+                data['body'] = vals;
+            } else {
+                data['code'] = 1;
+                data['body'] = '没有分类';
+            }
+        }
+        res.json(data);
+    })
+})
+
+//查询二级分类
+router.get('/getC_second',function(req,res,next){
+    var params = req.query;
+    var c_sql = "select * from th_classify where status=1 and parent_id = " + params.parent_id;
+    query(c_sql,function(err,vals,filds){
+        if(err) {
+            data['code'] = 0;
+            data['body'] = '查询失败';
+        }else {
             if (vals.length) {
                 data['code'] = 200;
                 data['body'] = vals;
