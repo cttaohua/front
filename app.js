@@ -22,7 +22,9 @@ app.set('view engine', 'html');
 
 
 //默认设置
-swig.setDefaults(env.setDefaults); //模板设置为缓存/不缓存
+if(!env.setDefaults.cache) {
+    swig.setDefaults(env.setDefaults); //模板设置为缓存/不缓存
+}
 
 // app.use(logger('dev'));
 
