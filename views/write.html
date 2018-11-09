@@ -4,7 +4,7 @@
 <head>
     {% include './layout/meta.html' with meta %}
     <link rel="stylesheet" href="/plugins/element/element.min.css?v=60bfa99704ded437ebd59ce5b4b00252">
-    <link rel="stylesheet" href="/css/style.min.css?v=9cc6f1eba4ab9ca36937e7e22593035d">
+    <link rel="stylesheet" href="/css/style.min.css?v=ec53d006eecb27c7660881b394a1f013">
 </head>
 
 <body>
@@ -14,7 +14,7 @@
         <div class="write">
             <input type="text" class="word_title" placeholder="输入文章标题" maxlength="50" autofocus="" v-model="title" />
             <!--编辑器-->
-            <div id="editor"></div>
+            <div id="editor">{% autoescape %} {{ content }} {% endautoescape %}</div>
             <div class="bottom_ctrl">
                 <el-row>
                     <el-col :span="13" class="classify">文章分类：
@@ -40,6 +40,7 @@
 					</el-col>
                 </el-row>
             </div>
+            <input type="hidden" name="word_msg" value="{{word_msg}}">
             <button class="publish" v-on:click="comfirm()">发布文章</button>
         </div>
     </div>
@@ -50,7 +51,7 @@
     <script src="/plugins/element/element.min.js?v=1ad579b4e2bb516a98d063b5871a3878"></script>
     <script src="/plugins/wangeditor/wangEditor.min.js?v=84ed219ca7a74501634b12a0364e3721"></script>
     <script src="/js/common.min.js?v=83c9b59639a243af718ab835cfb33883"></script>
-    <script src="/js/write.min.js?v=4668f6dae86fc58fd6f313a106dc4f5a"></script>
+    <script src="/js/write.min.js?v=03b10f908e94fcdcd8ccc283b2a825f6"></script>
 </body>
 
 </html>

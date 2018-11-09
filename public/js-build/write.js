@@ -1,6 +1,7 @@
 new Vue({
 	el: '#writePage',
 	data: {
+		word_id: '',
 		title: '',
 		coverUrl: '',
 		editor: '',
@@ -15,10 +16,22 @@ new Vue({
 		this.getC_first();
 	},
 	mounted: function() {
+		this.init();
 		this.createEditor();
 		this.transformImg();
 	},
 	methods: {
+		init: function() { 
+            var word_msg = $('input[name="word_msg"]').val();
+            if(word_msg.length) {  //编辑
+               word_msg = JSON.parse(word_msg);
+               this.word_id = word_msg.id;
+               this.title = word_msg.title;
+               this.coverUrl = word_msg.cover;
+               this.c_first_value = word_msg.first_id;
+               this.c_first_callback(this.c_first_value,word_msg.classify_id);
+            }
+		},
 		show_create: function() {
 			this.create_flag = true;
 		},
@@ -40,8 +53,9 @@ new Vue({
 				}
 			})
 		},
-		c_first_callback: function(id) {
+		c_first_callback: function(id,second_id) {
             var _this = this;
+            _this.c_second_value = '';
             $.ajax({
 				url: '/api/getC_second',
 				type: 'get',
@@ -51,11 +65,15 @@ new Vue({
 				dataType: 'json',
 				success: function(res) {
 					if (res.code == 200) {
+						_this.c_second = [];
 						for (var i = 0; i < res.body.length; i++) {
 							_this.c_second.push({
 								value: res.body[i].id,
 								label: res.body[i].value
 							})
+						}
+						if(second_id!=undefined) {
+							_this.c_second_value = second_id;
 						}
 					}else {
 						_this.c_second = [];
@@ -122,9 +140,9 @@ new Vue({
 		publish: function(html, text) {
 			var abs = text.substring(0, 100) + '...'; //摘要
 			var params = {
-				word_id: '',
+				word_id: this.word_id,
 				title: this.title,
-				cover: this.coverUrl,
+				cover: this.coverUrl ? this.coverUrl : '',
 				c_first_id: this.c_first_value,
 				c_second_id: this.c_second_value,
 				newclassify: this.new_classify,

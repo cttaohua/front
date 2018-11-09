@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var query = require('../../config/node-mysql.js');
+const db = require('../../db/package.js');
 var data = require('../../config/env.js').data;
 var random = require('../../config/tool.js').random;
 var transferredSingle = require('../../config/tool.js').transferredSingle;
@@ -30,8 +31,89 @@ router.post('/article', function(req, res, next) {
 	var abs = transferredSingle(req.body.abs); //转义单引号
 	var word_num = req.body.word_num;
 
+    var nowDate = (Date.parse(new Date()));
 	if (word_id) { //编辑
+		async.waterfall([
+			function(callback) {
+				var coverUrl = "";
+				if(cover.length<100) {  //没更新封面图
+                    callback(null,cover);
+                }else {  //更新了封面图
+                	let s_sql = "select cover from th_article where id=" + word_id;
+                	query(s_sql,function(err,vals){
+                		if(err) {
+                			callback('err',0);
+                		}else {
+                			if(vals[0].cover.length) {
+                                fs.unlink("public" + vals[0].cover,function(err) {});  
+                			}
+                			var base64Data = cover.replace(/^data:image\/\w+;base64,/, "");
+							var dataBuffer = new Buffer(base64Data, 'base64');
+							coverUrl = "/uploadImg/cover/" + random(8) + ".png";
+							fs.writeFile("public" + coverUrl, dataBuffer, function(err) {});
+							callback(null,coverUrl);
+                		}
+                	})
+                }
+			},
+			function(coverUrl,callback) {
+				if (newclassify) {
+					var c_sql = "insert into th_classify (`value`,`status`,`article_num`,`parent_id`,`create_time`)" +
+						" values ('" + newclassify + "','0','0','"+c_first_id+"','"+nowDate+"')";
+					query(c_sql, function(err, vals, fields) {
+						if (err) {
+							callback('err', 1);
+						} else {
+							callback(null, vals.insertId, coverUrl);
+						}
+					})
+				} else {
+					callback(null, c_second_id, coverUrl);
+				}
+			},
+			function(c_id, coverUrl, callback) {
+				//修改文章
+				if(newclassify) {
+					var status = 0;
+				}else {
+					var status = 1;
+				}
 
+				let setObj = {
+					title: title,
+					cover: coverUrl,
+					content: content,
+					text: text,
+					update_time: nowDate,
+					status: status,
+					first_id : c_first_id,
+					classify_id: c_id,
+                    abstract: abs,
+                    word_num: word_num
+				}
+				let whereObj = {
+					id: word_id
+				}
+				
+                db.update('th_article',setObj,whereObj,function(err,vals){
+                	if(err) {
+                        callback('err',2);
+                    }else {
+                        callback(null);
+                    }
+                })
+			}
+		],function(err,result){
+             if (err) {
+				data['code'] = result;
+				data['body'] = '保存失败，请重试';
+			} else {
+				data['code'] = 200;
+			    data['body'] = '/p/' + word_id;
+			}
+			res.json(data);
+		})
+        
 	} else { //新增
 		var coverUrl = "";
 		if (cover) { //有封面图
@@ -40,7 +122,6 @@ router.post('/article', function(req, res, next) {
 			coverUrl = "/uploadImg/cover/" + random(8) + ".png";
 			fs.writeFile("public" + coverUrl, dataBuffer, function(err) {});
 		}
-		var nowDate = (Date.parse(new Date()));
 		async.waterfall([
 			function(callback) {
 				if (newclassify) {
@@ -60,9 +141,9 @@ router.post('/article', function(req, res, next) {
 			function(c_id, status, callback) {
 				//添加文章
 				var a_sql =
-					"insert into th_article (`title`,`cover`,`content`,`text`,`create_time`,`user_id`,`update_time`,`status`,`classify_id`,`point_count`,`attention_count`,`comment_count`,`abstract`,`word_num`)" +
+					"insert into th_article (`title`,`cover`,`content`,`text`,`create_time`,`user_id`,`update_time`,`status`,`first_id`,`classify_id`,`point_count`,`attention_count`,`comment_count`,`abstract`,`word_num`)" +
 					" values ('" + title + "','" + coverUrl + "','" + content + "', '" + text + "', '" + nowDate + "','" +
-					userInfo.id + "','" + nowDate + "','" + status + "','" + c_id + "','0','0','0','" + abs + "','" + word_num +
+					userInfo.id + "','" + nowDate + "','" + status + "','"+c_first_id+"','" + c_id + "','0','0','0','" + abs + "','" + word_num +
 					"')";
 				query(a_sql, function(err, vals, fields) {
 					if (err) {

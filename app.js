@@ -6,9 +6,11 @@ var compression = require('compression');
 // var logger = require('morgan');
 var swig = require('swig');
 var bodyParser = require('body-parser');
+const env = require('./config/env.js');
 
 var indexRouter = require('./routes/index');
 var apiRouter = require('./routes/api');
+
 
 var app = express();
 
@@ -20,9 +22,7 @@ app.set('view engine', 'html');
 
 
 //默认设置
-// swig.setDefaults({
-//     cache: false
-// }); //模板设置为不缓存
+swig.setDefaults(env.setDefaults); //模板设置为缓存/不缓存
 
 // app.use(logger('dev'));
 

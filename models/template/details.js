@@ -79,11 +79,11 @@ router.get('/p/:id', function (req, res, next) {
 			res.render('error/error');
 		}else {
 			res.render('details', {
-				title: '桃花源',
 				header: env.header,
 				meta: env.meta,
 				word_msg: result.word_msg,
 				user_msg: result.user_msg,
+				self_msg: req.userInfo,
 				islike: result.islike
 			});
 		}
