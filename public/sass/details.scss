@@ -106,6 +106,12 @@
                 border-radius: 0;
                 font-family: Menlo, Monaco, Consolas, Courier New, monospace;
             }
+            a {
+            	color: #3194d0;
+            	&:hover {
+            		text-decoration: underline;
+            	}
+            }
         }
         .free-reward-panel {
             position: relative;
