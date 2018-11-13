@@ -16,9 +16,21 @@
 			color: #4f4f4f;
 			margin-bottom: 20px;
 		}
-		#editor {
+		.w-e-toolbar {
+			background-color: #f1f1f1;
+            border: 1px solid #ccc;
+		}
+		.w-e-toolbar.fixed {
+			position: fixed;
+			width: 960px;
+			z-index: 20;
+			top: 56px;
+		}
+		#editor-content {
 			width: 100%;
 			min-height: 630px;
+			border: 1px solid #ccc;
+            border-top: none;
 		}
 		.bottom_ctrl {
 			margin-top: 20px;

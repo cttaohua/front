@@ -38,7 +38,11 @@ new Vue({
 				if (fileElem) {
 					fileElem.click();
 				}
-				e.preventDefault(); // prevent navigation to "#"
+				if (e && e.preventDefault) { 
+                    e.preventDefault();
+                } else {
+                    window.event.returnValue = false;
+                }
 			}, false);
 			//将上传的图片转化为base64格式
 			$('#upload_file').on('change', function (e) {
@@ -59,7 +63,11 @@ new Vue({
 				if (fileElem) {
 					fileElem.click();
 				}
-				e.preventDefault(); // prevent navigation to "#"
+				if (e && e.preventDefault) { 
+                    e.preventDefault();
+                } else {
+                    window.event.returnValue = false;
+                }
 			}, false);
 			//将上传的图片转化为base64格式
 			$('#upload_file').on('change', function (e) {
