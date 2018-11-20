@@ -11,7 +11,7 @@ var header = {  //头部导航
 	}
 }
 var meta = {  // title keywords description
-	title: '桃花源 - 最清新的倾听社区',
+	title: '桃花源 - 最清新的IT技术社区',
 	description: '桃花源是一个优质的技术创作社区，在这里，你可以任性地创作，写专业的文章，我们相信，每个人都有自己强大的一面',
 	keywords: '桃花源,桃花源官网,图文创作,创作软件,原创社区,博客,IT,技术'
 }

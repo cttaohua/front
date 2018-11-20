@@ -5,7 +5,7 @@
 	{% include './layout/meta.html' with meta %}
     <link rel="stylesheet" href="/plugins/swiper/css/swiper.min.css?v=21b70942d56c99faef25bec8db671e10">
     <link rel="stylesheet" href="/plugins/element/element.min.css?v=60bfa99704ded437ebd59ce5b4b00252">
-    <link rel="stylesheet" href="/css/style.min.css?v=b933b694881f1a89c8a9d85eca0aeb4c">
+    <link rel="stylesheet" href="/css/style.min.css?v=299c5ed4e137a5997add485515342c89">
 </head>
 
 <body>
@@ -15,9 +15,13 @@
             <div class="banner">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide bgi1"></div>
-                        <div class="swiper-slide bgi2"></div>
-                        <div class="swiper-slide bgi3"></div>
+                    	{% for key,item in carousel %}
+                        <div class="swiper-slide">
+                        	<a href="{% if item.ad_link!=null %} item.ad_link {% else %}javascript:;{% endif %}" {% if item.blank==0 %} target="_blank" {% endif %}>
+                        		<img src="{{item.ad_img}}">
+                        	</a>
+                        </div>
+                        {% endfor %}
                     </div>
                     <!-- 如果需要导航按钮 -->
                     <div class="swiper-button-prev"></div>

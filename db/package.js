@@ -11,10 +11,16 @@ var find = function(table, where, callback) { //查找一条;
 		}
 	});
 }
-var select = function(table, where, callback) { //查找所有;
+var select = function(table, where, condition, callback) { //查找所有;
   var obj = objdefine(where);
-	var sql = "SELECT * FROM " + table + ' ' + obj._where;
+  if(typeof condition=='function') {
+    var sql = "SELECT * FROM " + table + ' ' + obj._where;
+	query(sql, obj._arr, condition);
+  }else {
+  	var sql = "SELECT * FROM " + table + ' ' + obj._where + ' ' + condition;
 	query(sql, obj._arr, callback);
+  }
+	
 }
 var insert = function(table, obj, callback) {
 	var fields = 'set ';
@@ -24,8 +30,9 @@ var insert = function(table, obj, callback) {
 		values.push(obj[k]);
 	}
 	fields = fields.slice(0,fields.length-1); 
-	var sql = "INSERT INTO " + table + ' ' + fields;
-	query(sql, values, callback);
+   var sql = "INSERT INTO " + table + ' ' + fields;
+   query(sql, values, condition);
+	
 }
 /**
   sets is object；

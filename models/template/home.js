@@ -17,13 +17,24 @@ router.get('/', function (req, res, next) {
         },
 		function (callback) {
 			fun.indexList(callback,0);
-		}
+		},
+        function(callback) {
+            let sql = "select * from th_ad_img where position_id=? and status=? order by sort ASC, create_time DESC";
+            query(sql,[1,1],function(err,vals){
+                if(err) {
+                    callback('err',3);
+                }else {
+                    callback(null,vals);
+                }
+            })
+        }
     ], function (err, result) {
         res.render('index', {
 			header: env['header'],
 			meta: env['meta'],
             classify: result[0],
-            list: result[1]
+            list: result[1],
+            carousel: result[2]
         });
     })
 
