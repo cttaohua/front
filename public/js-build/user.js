@@ -50,10 +50,12 @@ new Vue({
 						}
 						_this.total = res.body.count;
 					}else {
+						_this.paginationFlag = false;
 						_this.$message.warning(res.body);
 					}
 				},
 				error: function() {
+					_this.paginationFlag = false;
 					_this.$message.error('当前网络不佳，请稍后重试');
 				}
 			})

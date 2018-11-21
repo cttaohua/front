@@ -55,7 +55,13 @@ function searchMonitor() {
 		return false;
 	}
 	var input = main.find('.search input');
-	var btn = main.find('.search i');
+	var btn = main.find('.search .magnifying');
+    input.on('focus',function(){
+        input.parent('.search').addClass('active');
+    })
+    input.on('blur',function(){
+        input.parent('.search').removeClass('active');
+    })
 	btn.on('click',function(){
 		window.location.href = '/search?key=' + input.val();
 	})

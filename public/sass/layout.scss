@@ -67,24 +67,50 @@
 			}
 		}
         .search {
-            width: 240px;
+            width: 160px;
             height: 38px;
             float: left;
             background-color: #eee;
             border-radius: 19px;
             margin-top: 9px;
-            margin-left: 100px;
+            margin-left: 30px;
+            transition: all .4s linear;
             input {
                 height: 38px;
                 line-height: 38px;
                 background-color: #eee;
-                width: 189px;
+                width: 105px;
                 margin-left: 20px;
 				font-size: 14px;
+                transition: all .4s linear;
+            }
+            .magnifying {
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                background-color: #eee;
+                float: right;
+                margin-top: 5px;
+                margin-right: 5px;
+                text-align: center;
+                line-height: 28px;
             }
 			i {
 				cursor: pointer;
+                color: #999;
 			}
+        }
+        .search.active {
+            width: 250px;
+            input {
+                width: 190px; 
+            }
+            .magnifying {
+                background-color: #999;
+            }
+            i {
+                color: #fff;
+            }
         }
         .login {
             width: 80px;

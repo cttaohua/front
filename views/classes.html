@@ -4,7 +4,7 @@
 <head>
     {% include './layout/meta.html' with meta %}
     <link rel="stylesheet" href="/plugins/element/element.min.css?v=60bfa99704ded437ebd59ce5b4b00252">
-    <link rel="stylesheet" href="/css/style.min.css?v=299c5ed4e137a5997add485515342c89">
+    <link rel="stylesheet" href="/css/style.min.css?v=3a10278623f3d8d080a81bfb0d6c7485">
 </head>
 
 <body>
@@ -44,7 +44,7 @@
                         </div>
                     </div>
                 </div>
-				<div class="pagination_container">
+				<div class="pagination_container" v-show="paginationFlag">
 					<el-pagination background @current-change="pageChange" :current-page.sync="page" :page-size="10"
 						layout="prev, pager, next, jumper" :total="total">
 					</el-pagination>
@@ -60,8 +60,8 @@
     <script src="/plugins/vue.min.js?v=6f0a53f55512dcfe993ed7977a6fc539"></script>
 	<script src="/plugins/element/element.min.js?v=1ad579b4e2bb516a98d063b5871a3878"></script>
     <script src="/plugins/tagcloud.js?v=20bf195cc349b25c53ffcbc4ff5b9409"></script>
-    <script src="/js/common.min.js?v=83c9b59639a243af718ab835cfb33883"></script>
-    <script src="/js/classes.min.js?v=cdd39aae341b6a1b19aa12b877d6e885"></script>
+    <script src="/js/common.min.js?v=bd74cadd7f3717aa8fa5f89010513bdd"></script>
+    <script src="/js/classes.min.js?v=616a0356e90cd68b5187a405c6b706ea"></script>
     {% include './layout/count.html' %}
 </body>
 

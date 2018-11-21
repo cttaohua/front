@@ -6,7 +6,8 @@ new Vue({
 		wordFlag: 1,
 		page: 1,
 		wordList: [],
-		total: 0
+		total: 0,
+		paginationFlag: true
 	},
     created: function () {
 
@@ -41,15 +42,19 @@ new Vue({
 					if(res.code==200) {
 						if(res.body.list.length) {
 							_this.wordList = res.body.list;
+							_this.paginationFlag = true;
 						}else {
 							_this.wordList = [];
+							_this.paginationFlag = false;
 						}
 						_this.total = res.body.count;
 					}else {
+						_this.paginationFlag = false;
 						_this.$message.warning(res.body);
 					}
 				},
 				error: function() {
+					_this.paginationFlag = false;
 					_this.$message.error('当前网络不佳，请稍后重试');
 				}
 			})
