@@ -4,7 +4,7 @@
 <head>
     {% include './layout/meta.html' with meta %}
     <link rel="stylesheet" href="/plugins/element/element.min.css?v=60bfa99704ded437ebd59ce5b4b00252">
-    <link rel="stylesheet" href="/css/style.min.css?v=3a10278623f3d8d080a81bfb0d6c7485">
+    <link rel="stylesheet" href="/css/style.min.css?v=39f8909f667dc7885153228400137d3b">
 </head>
 
 <body>
@@ -12,8 +12,11 @@
     <div id="classesPage" class="container">
         <div class="classes_container">
             <div class="top">
-                <h1>{{class_msg.value}}</h1>
-                <p>收录了{{class_msg.article_num}}篇文章</p>
+                <img src="{{class_msg.cover}}" class="class_img">
+                <div class="info">
+                    <h1>{{class_msg.value}}</h1>
+                    <p>收录了{{class_msg.article_num}}篇文章</p>
+                </div>
             </div>
             <ul class="tab_ul clearfix">
                 <li :class="{active:wordFlag==1}" @click="tabCut(1)">

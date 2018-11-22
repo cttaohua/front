@@ -4,7 +4,7 @@
 <head>
     {% include './layout/meta.html' with meta %}
     <link rel="stylesheet" href="/plugins/element/element.min.css?v=60bfa99704ded437ebd59ce5b4b00252">
-    <link rel="stylesheet" href="/css/style.min.css?v=3a10278623f3d8d080a81bfb0d6c7485">
+    <link rel="stylesheet" href="/css/style.min.css?v=39f8909f667dc7885153228400137d3b">
 </head>
 
 <body>
@@ -77,8 +77,8 @@
                 {% if header.userInfo!=0 %}
                 <div class="review_container haveAvatar">
                     <div class="avatar">
-                        {% if user_msg.head!=0 %}
-                        <img src="{{user_msg.head}}" alt="" onerror="this.src='/img/head.png'"> {% else %}
+                        {% if header.userInfo.head!=0 %}
+                        <img src="{{header.userInfo.head}}" alt="" onerror="this.src='/img/head.png'"> {% else %}
                         <img src="/img/head.png?v=a6091bb2c45580b4a7ede77ee6d73de2" alt=""> {% endif %}
                     </div>
                     <textarea placeholder="写下你的评论..." maxlength="200" v-model="review_content" @focus="reviewFlag=true"></textarea>
