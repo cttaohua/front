@@ -20,6 +20,15 @@ new Vue({
         this.init();
         this.delayload();
     },
+    directives: {
+        focus: {
+            update: function(el,{value}){
+                if(value) {
+                    el.focus();
+                }
+            }
+        }
+    },
     filters: {
         date: dateYmdHis
     },
@@ -222,7 +231,7 @@ new Vue({
             if (type == 1) { //回复的评论
                 var reply_id = current.user_id;
             } else { //回复的回复
-                var reply_id = current.replay_list[index].user_id;
+                var reply_id = current.reply_list[index].user_id;
             }
             current.reply_person_id = reply_id;
         },

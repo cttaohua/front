@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-
+var babel = require('gulp-babel');
 // 引入组件
 var sass = require('gulp-sass'),
     notify = require('gulp-notify'),
@@ -29,6 +29,9 @@ gulp.task('stylesheets', function () {
 // 合并、压缩、重命名文件
 gulp.task('javascripts', function () {
     gulp.src('./js-build/*.js')
+        .pipe(babel({
+            presets: ['es2015']
+        }))
         .pipe(uglify())
         .pipe(rename({
             suffix: '.min'

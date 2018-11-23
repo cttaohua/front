@@ -5,6 +5,7 @@ var data = require('../../config/env.js').data;
 var async = require('async');
 var tool = require('../../config/tool.js');
 
+/* 文章喜欢/不喜欢 */
 router.get('/islike', function (req, res, next) {
 
     var params = req.query;
@@ -366,7 +367,7 @@ router.post('/publish/reply',function(req,res,next){
 			var a_sql = "update th_comment set reply_count=reply_count+1 where id="+params.comment_id;
 			query(a_sql,function(err,vals,fields){});
 			//查询回复信息
-			var s_sql = "select a.*,b.nick as th_reply_nick from th_comment_reply a left join th_user b on b.id = a.user_id where a.id=" + reply_id;
+			var s_sql = "select a.*,b.nick as th_reply_nick from th_comment_reply a left join th_user b on b.id = a.reply_person_id where a.id=" + reply_id;
 			query(s_sql,function(err,vals,fields){
 				if(err) {
 					callback('err',1);

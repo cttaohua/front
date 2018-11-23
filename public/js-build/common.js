@@ -14,7 +14,7 @@ function tagCloud() {
 //读取cookie函数
 function getCookie(c_name) {
     if (document.cookie.length > 0) {
-        c_start = document.cookie.indexOf(c_name + "=")
+        var c_start = document.cookie.indexOf(c_name + "=");
         if (c_start != -1) {
             c_start = c_start + c_name.length + 1
             c_end = document.cookie.indexOf(";", c_start)
@@ -40,11 +40,11 @@ function goLogin(t, str) {
 }
 //vue时间过滤器 输出年月日时分秒
 function dateYmdHis(timestamp) {
-    var date = new Date(Number(timestamp));
-    Y = date.getFullYear() + '.';
-    M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '.';
-    D = date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate() + ' ';
-    h = ' ' + date.getHours() + ':';
+    var date = new Date(Number(timestamp)),
+    Y = date.getFullYear() + '.',
+    M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '.',
+    D = date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate() + ' ',
+    h = ' ' + date.getHours() + ':',
     m = date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes();
     return Y + M + D + h + m;
 }

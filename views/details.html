@@ -161,7 +161,7 @@
                                 </a>
                             </div>
                             <div class="review_container mt_20" v-show="item.comment_reply.flag">
-                                <textarea placeholder="写下你的评论..." maxlength="200" v-model="item.comment_reply.content"></textarea>
+                                <textarea placeholder="写下你的评论..." maxlength="200" v-model="item.comment_reply.content" v-focus="item.comment_reply.flag"></textarea>
                                 <div class="write-function-block">
                                     <el-button class="fr send" type="success" round @click="reply_send(index)">发送</el-button>
                                     <a class="fr cancel" href="javascript:;" @click="cancel_reply(index)">取消</a>
@@ -170,7 +170,7 @@
                         </div>
                         <div class="sub-comment-list" v-if="!item.reply_list.length&&item.comment_reply.flag">
                             <div class="review_container mt_20" v-show="item.comment_reply.flag">
-                                <textarea placeholder="写下你的评论..." maxlength="200" v-model="item.comment_reply.content"></textarea>
+                                <textarea placeholder="写下你的评论..." maxlength="200" v-model="item.comment_reply.content" v-focus="item.comment_reply.flag"></textarea>
                                 <div class="write-function-block">
                                     <el-button class="fr send" type="success" round @click="reply_send(index)">发送</el-button>
                                     <a class="fr cancel" href="javascript:;" @click="cancel_reply(index)">取消</a>
@@ -230,10 +230,10 @@
 	<input id="author_id" type="hidden" value="{{word_msg.user_id}}">
 	{% include './layout/footer.html' %}
 	<script src="/plugins/jquery.min.js?v=e0e0559014b222245deb26b6ae8bd940"></script>
-    <script src="/plugins/vue.min.js?v=6f0a53f55512dcfe993ed7977a6fc539"></script>
+    <script src="/plugins/vue.min.js?v=be4c25a10b8ae99067f58011f992adba"></script>
     <script src="/plugins/element/element.min.js?v=1ad579b4e2bb516a98d063b5871a3878"></script>
-    <script src="/js/common.min.js?v=bd74cadd7f3717aa8fa5f89010513bdd"></script>
-    <script src="/js/details.min.js?v=fe04d4b838d0043cb1ed1bdb25eb3b05"></script>
+    <script src="/js/common.min.js?v=89537aa78e06cb953440b161cc45caef"></script>
+    <script src="/js/details.min.js?v=ac1552ae17794f3aaf306f6c304e5477"></script>
     {% include './layout/count.html' %}
 </body>
 
