@@ -1,5 +1,5 @@
 var mysql = require('mysql');
-var mysqlConfig = require('./env.js').mysqlConfig;
+var mysqlConfig = require('../bin/config.js').mysqlConfig;
 
 var pool = mysql.createPool(mysqlConfig);
 
