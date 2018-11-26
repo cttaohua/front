@@ -19,7 +19,7 @@ new Vue({
 			this.cut_flag = flag;
 		},
 		thirdParty: function() {
-			this.$message('暂不支持第三方登录');
+			this.$message.warning('暂不支持第三方登录');
 		},
 		register: function() {
 			if(this.register_name.length<2) {

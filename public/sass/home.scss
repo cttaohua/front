@@ -19,28 +19,32 @@
         }
     }
     .banner:hover {
-        .swiper-button-prev {
+        .arrows {
             display: block;
         }
-        .swiper-button-next {
-            display: block;
+    }
+    .arrows {
+        background-color: rgba(0, 0, 0, .4);
+        width: 40px;
+        height: 50px;
+        display: none;
+        background-image: none;
+        text-align: center;
+        line-height: 50px;
+        color: #fff;
+        i {
+            font-size: 25px;
         }
     }
     .swiper-button-prev {
-        background-color: rgba(255, 255, 255, .4);
         left: 0;
-        width: 40px;
-        height: 50px;
-        background-size: 20px 25px;
-        display: none;
+        border-top-right-radius: 6px;
+        border-bottom-right-radius: 6px;
     }
     .swiper-button-next {
-        background-color: rgba(255, 255, 255, .4);
         right: 0;
-        width: 40px;
-        height: 50px;
-        background-size: 20px 25px;
-        display: none;
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
     }
 	.swiper-pagination-bullet-active {
 		background-color: $themefontColor;

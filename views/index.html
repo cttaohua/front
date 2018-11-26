@@ -5,7 +5,7 @@
 	{% include './layout/meta.html' with meta %}
     <link rel="stylesheet" href="/plugins/swiper/css/swiper.min.css?v=21b70942d56c99faef25bec8db671e10">
     <link rel="stylesheet" href="/plugins/element/element.min.css?v=60bfa99704ded437ebd59ce5b4b00252">
-    <link rel="stylesheet" href="/css/style.min.css?v=39f8909f667dc7885153228400137d3b">
+    <link rel="stylesheet" href="/css/style.min.css?v=9f2864d6de363028ab847172f101065f">
 </head>
 
 <body>
@@ -24,8 +24,12 @@
                         {% endfor %}
                     </div>
                     <!-- 如果需要导航按钮 -->
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev arrows">
+                        <i class="icon">&#xeb04;</i>
+                    </div>
+                    <div class="swiper-button-next arrows">
+                        <i class="icon">&#xe630;</i>
+                    </div>
                     <!-- Add Pagination -->
                     <div class="swiper-pagination"></div>
                 </div>
