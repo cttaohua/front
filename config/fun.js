@@ -21,7 +21,7 @@ function selectClassify(callback) {
 }
 //首页文章列表函数
 function indexList(callback,offset) {
-	var c_sql = "select a.*,b.nick from th_article a left join th_user b on b.id=a.user_id where a.status=1 order by a.create_time desc limit "+offset+", 20";
+	var c_sql = "select a.id,a.title,a.cover,a.abstract,a.point_count,a.comment_count,a.attention_count,b.nick from th_article a left join th_user b on b.id=a.user_id where a.status=1 order by a.create_time desc limit "+offset+", 20";
 	query(c_sql,function(err, vals, fields){
 		if(err) {
 			callback('err',1);

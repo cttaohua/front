@@ -12,52 +12,51 @@ function execTrans(sqlparamsEntities, callback) {
         if (err) {
             return callback(err, null);
         }
+        
         connection.beginTransaction((err) => {
             if (err) {
                 return callback(err, null);
             }
-            let funcAry = [];
+            var funcAry = [];
             //开始执行
             sqlparamsEntities.forEach((sql_param) => {
                 let temp = function(cb) {
                     let sql = sql_param.sql;
                     let params = sql_param.params;
-                    connection.query(sql, params, (err, rows, fields) => {
-                        if (err) {
+                    connection.query(sql, params, (tErr, rows, fields) => {
+                        if (tErr) {
                             connection.rollback(() => {
-                                console.log('事务失败');
-                                throw err;
+                                throw tErr;
                             })
                         } else {
                             return cb(null, 'ok');
                         }
                     })
                 }
+                funcAry.push(temp);
             })
-            funcAry.push(temp);
-        });
 
-        async.series(funcAry, (err, result) => {
-            if (err) {
-                connection.rollback((err) => {
-                    connection.release();
-                    return callback(err, null);
-                })
-            } else {
-                connection.commit((err, info) => {
-                    if (err) {
-                        connection.rollback((err) => {
+            async.series(funcAry, (err, result) => {
+                if (err) {
+                    connection.rollback((err) => {
+                        connection.release();
+                        return callback(err, null);
+                    })
+                } else {
+                    connection.commit((err, info) => {
+                        if (err) {
+                            connection.rollback((err) => {
+                                connection.release();
+                                return callback(err, null);
+                            })
+                        } else {
                             connection.release();
-                            return callback(err, null);
-                        })
-                    }else {
-                    	connection.release();
-                    	return callback(null, info);
-                    }
-                })
-            }
-        })
-
+                            return callback(null, info);
+                        }
+                    })
+                }
+            })
+        });
     })
 }
 

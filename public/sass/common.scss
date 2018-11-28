@@ -18,6 +18,24 @@
     .write-function-block {
         height: 50px;
         padding-top: 10px;
+        .face {
+            color: #969696;
+            cursor: pointer;
+            line-height: 25px;
+            &:hover {
+                color: #333;
+            }
+            i {
+                font-size: 25px;
+                display: block;
+                float: left;
+            }
+            span {
+                display: block;
+                float: left;
+                margin-left: 5px;
+            }
+        }
         .cancel {
             display: block;
             width: 80px;
@@ -161,4 +179,20 @@
 	position: absolute;
 	top: 0;
 	right: 0;
+}
+//qq表情样式
+#facebox {
+    margin-top: 4px;
+    background: #fff;
+    padding: 5px;
+    border: 1px #dfe6f6 solid;
+    border-radius: 5px;
+    table td {
+        padding: 5px;
+        border-radius: 3px;
+        cursor: pointer;
+        &:hover {
+            background-color: #dfe6f6;
+        }
+    }
 }

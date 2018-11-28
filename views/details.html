@@ -4,7 +4,7 @@
 <head>
     {% include './layout/meta.html' with meta %}
     <link rel="stylesheet" href="/plugins/element/element.min.css?v=60bfa99704ded437ebd59ce5b4b00252">
-    <link rel="stylesheet" href="/css/style.min.css?v=9f2864d6de363028ab847172f101065f">
+    <link rel="stylesheet" href="/css/style.min.css?v=fede79b9722afbf8001585da3985c39d">
 </head>
 
 <body>
@@ -81,8 +81,12 @@
                         <img src="{{header.userInfo.head}}" alt="" onerror="this.src='/img/head.png'"> {% else %}
                         <img src="/img/head.png?v=a6091bb2c45580b4a7ede77ee6d73de2" alt=""> {% endif %}
                     </div>
-                    <textarea placeholder="写下你的评论..." maxlength="200" v-model="review_content" @focus="reviewFlag=true"></textarea>
+                    <textarea id="main_comment_area" name="main_comment_area" placeholder="写下你的评论..." maxlength="200" v-model="review_content" @focus="reviewFlag=true"></textarea>
                     <div class="write-function-block" v-show="reviewFlag">
+                        <div class="fl face main_emotion">
+                            <i class="icon">&#xe67a;</i>
+                            <span>表情</span>
+                        </div>
                         <el-button class="fr send" type="success" round @click.native="review_send()">发送</el-button>
                         <a class="fr cancel" href="javascript:;" @click="reviewFlag=false">取消</a>
                     </div>
@@ -122,7 +126,7 @@
                             </div>
                         </div>
                         <div class="comment-wrap">
-                            <div class="content">${item.content}</div>
+                            <div class="content" v-html="$options.filters.rtQQ(item.content)"></div>
                             <div class="tool-group">
                                 <a href="javascript:;" v-if="!item.isPraise" @click="pointPraise(1,index)">
                                     <i class="icon fl black">&#xe634;</i>
@@ -139,39 +143,34 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="sub-comment-list" v-if="item.reply_list.length">
-                            <div class="sub-comment" v-for="(vals,cur) of item.reply_list">
+                        <div class="sub-comment-list" v-bind:class="{'havereply':item.reply_list.length}">
+                            <div class="sub-comment" v-for="(vals,cur) of item.reply_list" >
                                 <p class="matter">
                                     <a :href="'/u/'+vals.user_id" target="_blank">${vals.th_user_nick}：</a>
                                     <a :href="'/u/'+vals.reply_person_id" target="_blank">@${vals.th_reply_nick}</a>
-                                    <span>${vals.content}</span>
+                                    <span v-html="$options.filters.rtQQ(vals.content)"></span>
                                 </p>
                                 <div class="sub-tool-group">
                                     <span>${vals.create_time | date}</span>
-                                    <a href="javascript:;" @click="replyctrl(2,cur)">
+                                    <a href="javascript:;" @click="replyctrl(2,index,cur)">
                                         <i class="icon">&#xe622;</i>
                                         <span>回复</span>
                                     </a>
                                 </div>
                             </div>
-                            <div class="more-comment">
+                            <div class="more-comment" v-if="item.reply_list.length">
                                 <a href="javascript:;" @click="replyctrl(1,index)">
                                     <i class="icon">&#xe603;</i>
                                     <span>添加新评论</span>
                                 </a>
                             </div>
                             <div class="review_container mt_20" v-show="item.comment_reply.flag">
-                                <textarea placeholder="写下你的评论..." maxlength="200" v-model="item.comment_reply.content" v-focus="item.comment_reply.flag"></textarea>
+                                <textarea :id="'minor_comment_area_' + index" name="minor_comment_area" placeholder="写下你的评论..." maxlength="200" v-model="item.comment_reply.content" v-focus="item.comment_reply.flag"></textarea>
                                 <div class="write-function-block">
-                                    <el-button class="fr send" type="success" round @click="reply_send(index)">发送</el-button>
-                                    <a class="fr cancel" href="javascript:;" @click="cancel_reply(index)">取消</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sub-comment-list" v-if="!item.reply_list.length&&item.comment_reply.flag">
-                            <div class="review_container mt_20" v-show="item.comment_reply.flag">
-                                <textarea placeholder="写下你的评论..." maxlength="200" v-model="item.comment_reply.content" v-focus="item.comment_reply.flag"></textarea>
-                                <div class="write-function-block">
+                                    <div class="fl face minor_emotion" :class="'minor_emotion_'+index">
+                                        <i class="icon">&#xe67a;</i>
+                                        <span>表情</span>
+                                    </div>
                                     <el-button class="fr send" type="success" round @click="reply_send(index)">发送</el-button>
                                     <a class="fr cancel" href="javascript:;" @click="cancel_reply(index)">取消</a>
                                 </div>
@@ -226,14 +225,16 @@
 		</div>
     </div>
     <input id="article_id" type="hidden" value="{{word_msg.id}}"> 
+    <input id="first_id" type="hidden" value="{{word_msg.first_id}}">
 	<input id="classify_id" type="hidden" value="{{word_msg.classify_id}}">
 	<input id="author_id" type="hidden" value="{{word_msg.user_id}}">
 	{% include './layout/footer.html' %}
 	<script src="/plugins/jquery.min.js?v=e0e0559014b222245deb26b6ae8bd940"></script>
     <script src="/plugins/vue.min.js?v=be4c25a10b8ae99067f58011f992adba"></script>
     <script src="/plugins/element/element.min.js?v=1ad579b4e2bb516a98d063b5871a3878"></script>
+    <script src="/plugins/jquery.qqFace.js?v=bc13303757add229321be36e359a574f"></script>
     <script src="/js/common.min.js?v=89537aa78e06cb953440b161cc45caef"></script>
-    <script src="/js/details.min.js?v=ac1552ae17794f3aaf306f6c304e5477"></script>
+    <script src="/js/details.min.js?v=de7f82b3c102a854265733d177c3b0c2"></script>
     {% include './layout/count.html' %}
 </body>
 

@@ -241,7 +241,7 @@
 				border-bottom: 1px solid #f0f0f0;
 			}
 			.comment-item {
-				padding: 20px 0 30px;
+				padding: 20px 0;
                 border-bottom: 1px solid #f0f0f0;
 				.author {
 					margin-bottom: 15px;
@@ -274,6 +274,9 @@
 					line-height: 1.5;
 					font-size: 16px;
 					word-break: break-word;
+					img {
+						vertical-align: bottom;
+					}
 				}
 				.tool-group {
 					a {
@@ -308,9 +311,12 @@
 					}
 				}
 				.sub-comment-list {
-					margin-top: 20px;
-					padding: 5px 0 5px 20px;
 					border-left: 2px solid #d9d9d9;
+					padding-left: 20px;
+					&.havereply {
+						margin-top: 20px;
+					    padding: 5px 0 5px 20px;
+					}
 					.sub-comment {
 						margin-bottom: 15px;
 						padding-bottom: 15px;
@@ -325,6 +331,9 @@
 							}
 							span {
 								font-size: 14px;
+								img {
+									vertical-align: bottom;
+								}
 							}
 						}
 						.sub-tool-group {

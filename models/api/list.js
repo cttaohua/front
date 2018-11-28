@@ -39,7 +39,7 @@ router.get('/classifyList', function (req, res, next) {
     async.parallel([
         function (callback) {
             var c_sql =
-                "select a.*,b.nick from th_article a left join th_user b on b.id=a.user_id where a.status=1 and a.classify_id='" +
+                "select a.id,a.title,a.cover,a.abstract,a.point_count,a.comment_count,a.attention_count,b.nick from th_article a left join th_user b on b.id=a.user_id where a.status=1 and a.classify_id='" +
                 params.classify_id + "' order by " + paixu + " desc limit " + offset + ", 10";
             query(c_sql, function (err, vals, fields) {
                 if (err) {
@@ -93,7 +93,7 @@ router.get('/userList', function (req, res, next) {
     async.parallel([
         function (callback) {
             var c_sql =
-                "select a.*,b.nick from th_article a left join th_user b on b.id=a.user_id where a.status='"+status+"' and a.user_id='" +
+                "select a.id,a.title,a.cover,a.abstract,a.point_count,a.comment_count,a.attention_count,b.nick from th_article a left join th_user b on b.id=a.user_id where a.status='"+status+"' and a.user_id='" +
                 params.user_id + "' order by " + paixu + " desc limit " + offset + ", 10";
             query(c_sql, function (err, vals, fields) {
                 if (err) {
@@ -135,9 +135,9 @@ router.get('/article/recommendList',function(req,res,next){
 	
 	var params = req.query;
 	
-	async.parallel([
+	async.waterfall([
 		function(callback) {
-			var s_sql = "select * from th_article where id!='"+params.article_id+"' and classify_id = '"+params.classify_id+"' order by point_count desc limit 0,10";
+			var s_sql = "select id,title,cover,abstract,point_count,comment_count,attention_count from th_article where id!='"+params.article_id+"' and classify_id = '"+params.classify_id+"' order by point_count desc limit 0,10";
 			query(s_sql,function(err,vals,fields){
 				if(err) {
 					callback('err',0);
@@ -145,14 +145,29 @@ router.get('/article/recommendList',function(req,res,next){
 					callback(null,vals);
 				}
 			})
-		}
+		},
+        function(list,callback) {
+           if(list.length<10) {  //数据少于10条
+              let a_sql = "select id,title,cover,abstract,point_count,comment_count,attention_count from th_article where id!='"+params.article_id+"' and first_id = '"+params.first_id+"' and classify_id!='"+params.classify_id+"' order by point_count desc limit 0,10";
+              query(a_sql,function(err,vals,fields){
+                if(err) {
+                   callback('err',1);
+                }else {
+                   list = list.concat(vals);
+                   callback(null,list);
+                }
+              })
+           }else {
+              callback(null,list);
+           }
+        }
 	],function(err,result){
 		if(err) {
 			data['code'] = result;
 			data['body'] = '推荐文章列表请求失败';
 		}else {
 			data['code'] = 200;
-			data['body'] = result[0];
+			data['body'] = result;
 		}
 		res.json(data);
 	})
