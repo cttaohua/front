@@ -81,11 +81,13 @@ new Vue({
         },
         //表情初始化
         qqFace: function() {
-            $('.main_emotion').qqFace({
-                id: 'facebox',
-                assign: 'main_comment_area',
-                path: '../img/arclist/' //表情存放的路径
-            });
+            if($('.main_emotion').length) {
+                $('.main_emotion').qqFace({
+                    id: 'facebox',
+                    assign: 'main_comment_area',
+                    path: '../img/arclist/' //表情存放的路径
+                });
+            }
         },
         //赞赏按钮
         rewardswitch: function() {

@@ -239,8 +239,8 @@ router.get('/commentList', function (req, res, next) {
 					});
 				}else {  //未登录
 					async.forEachOf(arrs,function(obj,key,turn){
-						arrs[i].isPraise = false;
-						if(arrs[i].reply_count!=0) {  //有回复
+						arrs[key].isPraise = false;
+						if(arrs[key].reply_count!=0) {  //有回复
 							var s_sql = "select *,(select nick from th_user where id = a.user_id) th_user_nick, (select nick from th_user where id = a.reply_person_id) th_reply_nick from th_comment_reply a where comment_id = " + arrs[key].id;
 							query(s_sql,function(err,vals,fields){
 								if(err) {
