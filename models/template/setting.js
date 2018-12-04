@@ -8,7 +8,7 @@ router.get('/basic', function (req, res, next) {
 	
 	//未登录
 	if(req.userInfo==0) {  
-		res.redirect('/');
+		res.redirect('/login');
 		return false;
 	}
 	delete require.cache[require.resolve('../../config/env.js')];
@@ -27,7 +27,7 @@ router.get('/reward', function(req,res,next){
 	
 	//未登录
 	if(req.userInfo==0) {
-		res.redirect('/');
+		res.redirect('/login');
 		return false;
 	}
 	delete require.cache[require.resolve('../../config/env.js')];
