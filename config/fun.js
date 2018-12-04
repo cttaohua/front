@@ -4,14 +4,16 @@ var secret = require('./env.js').secret;
 var tool = require('./tool.js');
 //查询分类函数
 function selectClassify(callback) {
-	var c_sql = 'select * from th_classify where status=1 order by article_num desc limit 30';
+	var c_sql = 'select a.*,b.cover as img from th_classify a left join th_classify_first b on b.id=a.parent_id where a.status=1 order by a.article_num desc limit 30';
 	query(c_sql,function(err, vals, fields){
 		if(err) {
 			callback('err');
 		}else {
 			var m = new Date().getMonth() + 1;
 			var month = tool.returnMonth(m);
+			let commend = vals.slice(0,6);
 			var obj = {
+				commend: commend,
 				list: vals,
 				month: month
 			}

@@ -2,22 +2,15 @@
     <div class="sidebar_li">
         <div class="classify">{{classify.month}}月最热</div>
         <div class="tag">
-            <ul>
-				<li class="li1">
-					<a href="/c/{{classify.list[0].id}}">{{classify.list[0].value}}</a>
+            <ul class="clearfix">
+				{% for item in classify.commend %}
+				<li>
+					<a href="/c/{{item.id}}">
+					    <img {% if item.cover!=''&&item.cover!=null %} src="{{item.cover}}" {% else %} src="{{item.img}}" {% endif %}>
+					    <p>{{item.value}}</p>
+					</a>
 				</li>
-                <li class="li2">
-					<a href="/c/{{classify.list[1].id}}">{{classify.list[1].value}}</a>
-				</li>
-                <li class="li3">
-					<a href="/c/{{classify.list[2].id}}">{{classify.list[2].value}}</a>
-				</li>
-                <li class="li4">
-					<a href="/c/{{classify.list[3].id}}">{{classify.list[3].value}}</a>
-				</li>
-                <li class="li5">
-					<a href="/c/{{classify.list[4].id}}">{{classify.list[4].value}}</a>
-				</li>
+				{% endfor %}
             </ul>
         </div>
         <div class="classify">热门分类</div>
