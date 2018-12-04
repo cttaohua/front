@@ -11,6 +11,7 @@
         position: absolute;
         top: 30px;
         left: 30px;
+        height: 50px;
     }
     .login_center {
         width: 400px;
@@ -79,7 +80,7 @@
 				}
 				i {
 					font-size: 30px;
-					color: #eee!important;
+					color: $wireframe!important;
 				}
 				.microblog {
 					color: #e05244;
