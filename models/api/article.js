@@ -212,8 +212,8 @@ router.post('/article', function(req, res, next) {
 //文章上传图片
 router.post('/upload/acticle', function(req, res, next) {
     var date = new Date(),
-        Y = date.getFullYear(),
-        M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1),
+        Y = date.getFullYear().toString(),
+        M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1).toString(),
         D = date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate();
     var nowDate = Y + M + D;
     var filePath = "public/uploadImg/article/" + nowDate + "/";
