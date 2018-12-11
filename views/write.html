@@ -4,7 +4,7 @@
 <head>
     {% include './layout/meta.html' with meta %}
     <link rel="stylesheet" href="/plugins/element/element.min.css?v=60bfa99704ded437ebd59ce5b4b00252">
-    <link rel="stylesheet" href="/css/style.min.css?v=8a593d03c8f7a58beb02fc97cf13d5f4">
+    <link rel="stylesheet" href="/css/style.min.css?v=97fedcfdedbe04537d79f5d22d153c4a">
 </head>
 
 <body>
@@ -18,7 +18,7 @@
             <div id="editor-content">{% autoescape %} {{ content }} {% endautoescape %}</div>
             <div class="bottom_ctrl">
                 <el-row>
-                    <el-col :span="13" class="classify">文章分类：
+                    <el-col :span="14" class="classify">文章分类：
                         <el-select v-model="c_first_value" placeholder="请选择一级分类" @change="c_first_callback">
                             <el-option v-for="item in c_first" :key="item.value" :label="item.label" :value="item.value">
                             </el-option>
