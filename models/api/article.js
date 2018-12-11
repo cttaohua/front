@@ -273,9 +273,9 @@ router.post('/upload/acticle', function(req, res, next) {
 
                 var url = filePath + Date.now() + suffix;
                 fs.renameSync(oldpath, url);
-                
+
                 //压缩图片
-                if (images(name).width() > 2000) { //如果图片过大，则强行压缩
+                if (images(url).width() > 2000) { //如果图片过大，则强行压缩
                     images(url)
                         .size(1000)
                         .save(url, {
