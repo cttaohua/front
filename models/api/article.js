@@ -8,7 +8,7 @@ var transferredSingle = require('../../config/tool.js').transferredSingle;
 var async = require('async');
 var fs = require('fs');
 var multiparty = require('multiparty');
-const images = require("images");
+// const images = require("images");
 
 
 router.post('/article', function(req, res, next) {
@@ -275,18 +275,18 @@ router.post('/upload/acticle', function(req, res, next) {
                 fs.renameSync(oldpath, url);
 
                 //压缩图片
-                if (images(url).width() > 2000) { //如果图片过大，则强行压缩
-                    images(url)
-                        .size(1000)
-                        .save(url, {
-                            quality: 50
-                        });
-                } else {
-                    images(url)
-                        .save(url, {
-                            quality: 50
-                        });
-                }
+                // if (images(url).width() > 2000) { //如果图片过大，则强行压缩
+                //     images(url)
+                //         .size(1000)
+                //         .save(url, {
+                //             quality: 50
+                //         });
+                // } else {
+                //     images(url)
+                //         .save(url, {
+                //             quality: 50
+                //         });
+                // }
 
                 //截取URL
                 url = url.slice(6, url.length);
