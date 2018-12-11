@@ -8,6 +8,7 @@ var transferredSingle = require('../../config/tool.js').transferredSingle;
 var async = require('async');
 var fs = require('fs');
 var multiparty = require('multiparty');
+const images = require("images");
 
 
 router.post('/article', function(req, res, next) {
@@ -71,18 +72,18 @@ router.post('/article', function(req, res, next) {
                     callback(null, c_second_id, coverUrl);
                 }
             },
-            function(c_id,coverUrl,callback) {
+            function(c_id, coverUrl, callback) {
                 //查询现有文章字数
                 let f_sql = "select word_num from th_article where id=?";
-                query(f_sql,[word_id],function(err,vals,fields){
-                	if(err) {
-                       callback('err',2);
-                	}else {
-                       callback(null,vals[0].word_num,c_id,coverUrl);
-                	}
+                query(f_sql, [word_id], function(err, vals, fields) {
+                    if (err) {
+                        callback('err', 2);
+                    } else {
+                        callback(null, vals[0].word_num, c_id, coverUrl);
+                    }
                 })
             },
-            function(origin_num,c_id, coverUrl, callback) {
+            function(origin_num, c_id, coverUrl, callback) {
                 //修改文章
                 if (newclassify) {
                     var status = 0;
@@ -113,18 +114,18 @@ router.post('/article', function(req, res, next) {
                         callback(null);
                     }
                 })
-                
+
                 let gap = Number(origin_num) - Number(word_num);
-                if(Number(gap)>0) {  //比之前字数多
-                   var changeNum = 'word_num=word_num+'+Math.abs(gap);
-                }else if(Number(gap)<0) {  //比之前字数少
-                   var changeNum = 'word_num=word_num-'+Math.abs(gap);
-                }else {  //不变
-                   var changeNum = 0;
+                if (Number(gap) > 0) { //比之前字数多
+                    var changeNum = 'word_num=word_num+' + Math.abs(gap);
+                } else if (Number(gap) < 0) { //比之前字数少
+                    var changeNum = 'word_num=word_num-' + Math.abs(gap);
+                } else { //不变
+                    var changeNum = 0;
                 }
-                if(changeNum!=0) {
-                	let a_sql = "update th_user set "+ changeNum + " where id=?";
-                	query(a_sql,[userInfo.id],function(err,vals,fields){});
+                if (changeNum != 0) {
+                    let a_sql = "update th_user set " + changeNum + " where id=?";
+                    query(a_sql, [userInfo.id], function(err, vals, fields) {});
                 }
             }
         ], function(err, result) {
@@ -272,6 +273,22 @@ router.post('/upload/acticle', function(req, res, next) {
 
                 var url = filePath + Date.now() + suffix;
                 fs.renameSync(oldpath, url);
+                
+                //压缩图片
+                if (images(name).width() > 2000) { //如果图片过大，则强行压缩
+                    images(url)
+                        .size(1000)
+                        .save(url, {
+                            quality: 50
+                        });
+                } else {
+                    images(url)
+                        .save(url, {
+                            quality: 50
+                        });
+                }
+
+                //截取URL
                 url = url.slice(6, url.length);
                 callback(null, url);
             })

@@ -19,5 +19,7 @@
     "mysql": "^2.16.0",
     "swig": "^1.4.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "images": "^3.0.1"
+  }
 }

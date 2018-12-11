@@ -38,6 +38,9 @@
 			}
 		}
 		.login_module {
+			input {
+				line-height: initial!important;
+			}
 			.thirdParty {
 				position: relative;
 				margin-top: 40px;
