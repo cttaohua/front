@@ -20,6 +20,7 @@ new Vue({
         this.init();
         this.delayload();
         this.qqFace();
+        hljs.initHighlightingOnLoad();
     },
     directives: {
         focus: {
