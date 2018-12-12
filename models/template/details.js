@@ -3,6 +3,7 @@ var router = express.Router();
 var query = require('../../config/node-mysql.js');
 var async = require('async');
 var tool = require('../../config/tool.js');
+const fun = require('../../config/fun.js');
 
 // /* GET details page. */
 router.get('/p/:id', function (req, res, next) {
@@ -70,6 +71,7 @@ router.get('/p/:id', function (req, res, next) {
 					}
 					env['meta']['title'] = obj.word_msg.title + ' - 桃花源';
 					env['meta']['description'] = obj.word_msg.abstract;
+					obj.word_msg.content = fun.imgReplace(obj.word_msg.content);
 					callback(null,obj);
 				}
 			})

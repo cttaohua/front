@@ -47,9 +47,17 @@ function decodeStr(str) {
 	dec += decipher.final('utf8'); 
 	return dec;
 }
+//img正则替换
+function imgReplace(str) {
+    var reg = /<img\b.*?(?:\>|\/>)/gi;
+    return str.replace(reg,function(match,pos,orginText){
+    	return '<div style="width:700px;margin-left:-40px;">'+match+'</div>';
+    })
+}
 module.exports = {
 	selectClassify: selectClassify,
 	indexList: indexList,
 	encodeStr: encodeStr,
-	decodeStr: decodeStr
+	decodeStr: decodeStr,
+	imgReplace: imgReplace
 }
