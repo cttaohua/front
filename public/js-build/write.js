@@ -87,9 +87,11 @@ new Vue({
             var E = window.wangEditor;
             var _this = this;
             this.editor = new E('#editor-title', '#editor-content');
-            //this.editor.customConfig.uploadImgShowBase64 = true;
             this.editor.customConfig.uploadImgServer = '/api/upload/acticle';
             this.editor.customConfig.uploadTimeout = 100000000; //上传大图片
+            this.editor.customConfig.customAlert = function(info) {
+                 _this.$message.error(info);
+            }
             this.editor.create();
             //监听上传图片
             this.editor.customConfig.uploadImgHooks = {

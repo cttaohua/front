@@ -54,7 +54,7 @@ function imgReplace(str) {
     return str.replace(reg,function(match,pos,orginText){
     	var src1 = match.match(regSrc)[0];
     	var src2 = src1.slice(5,src1.length-1);
-    	var img = '<img class="lazy" data-original="'+src2+'">';
+    	var img = '<img class="lazy" data-original="'+src2+'" src="'+src2+'">';
     	return '<div style="width:700px;margin-left:-40px;">'+img+'</div>';
     })
 }
