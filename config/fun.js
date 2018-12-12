@@ -47,11 +47,16 @@ function decodeStr(str) {
 	dec += decipher.final('utf8'); 
 	return dec;
 }
-//img正则替换
+//img正则替换+懒加载
 function imgReplace(str) {
-    var reg = /<img\b.*?(?:\>|\/>)/gi;
+    var reg = /<img\b.*?(?:\>|\/>)/gi,
+        regSrc = /\bsrc\b\s*=\s*[\'\"]?([^\'\"]*)[\'\"]?/i;
     return str.replace(reg,function(match,pos,orginText){
-    	return '<div style="width:700px;margin-left:-40px;">'+match+'</div>';
+    	var src1 = match.match(regSrc)[0];
+    	var src2 = src1.slice(5,src1.length-1);
+    	console.log(src2);
+    	var img = '<img class="lazy" data-original="'+src2+'">';
+    	return '<div style="width:700px;margin-left:-40px;">'+img+'</div>';
     })
 }
 module.exports = {

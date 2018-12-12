@@ -20,7 +20,7 @@ new Vue({
         this.init();
         this.delayload();
         this.qqFace();
-        hljs.initHighlightingOnLoad();
+
     },
     directives: {
         focus: {
@@ -48,6 +48,12 @@ new Vue({
             this.article_id = $('#article_id').val();
             this.classify_id = $('#classify_id').val();
             this.author_id = $('#author_id').val();
+            //代码高亮显示
+            hljs.initHighlightingOnLoad();
+            //图片懒加载
+            $("img.lazy").lazyload({
+                effect : "fadeIn"
+            });
             $('body').on('click', function() {
                 $('.receipt_code').hide(500);
             })
