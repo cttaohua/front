@@ -48,6 +48,14 @@ function dateYmdHis(timestamp) {
     m = date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes();
     return Y + M + D + h + m;
 }
+//输出年月日
+function dateYmd(timestamp) {
+    var date = new Date(Number(timestamp)),
+    Y = date.getFullYear() + '.',
+    M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '.',
+    D = date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate();
+    return Y + M + D;
+}
 //搜索相关脚本
 function searchMonitor() {
 	var main = $('#headerPage');

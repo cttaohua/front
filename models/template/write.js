@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const query = require('../../config/node-mysql.js');
 const async = require('async');
+const fun = require('../../config/fun.js');
 
 /* GET write page. */
 router.get('/write', function (req, res, next) {
@@ -21,7 +22,8 @@ router.get('/write', function (req, res, next) {
         meta: env.meta,
 		header: env.header,
 		word_msg: '',
-		content: ''
+		content: '',
+		type: '1'
     });
     
 });
@@ -61,12 +63,14 @@ router.get('/writeEdit/:id',function(req,res,next) {
         	res.render('error/error');
         }else {
         	if(result[0]!=0) {
-                if(result[0].user_id==req.userInfo.id) {  //是作者本人
+				if(result[0].user_id==req.userInfo.id) {  //是作者本人
+					 result[0].type = 'edit';
                      res.render('write', {
 				        meta: env.meta,
 						header: env.header,
 						word_msg: JSON.stringify(result[0]),
-                        content: result[0].content
+						content: result[0].content,
+						type: '2'
 				    })
                 }else {
                     res.render('error/error');
@@ -74,9 +78,63 @@ router.get('/writeEdit/:id',function(req,res,next) {
         	}else {
         		res.render('error/error');
         	}
-        	
         }
 	})
+
+})
+
+/* GET write draft page */
+router.get('/writeDraft/:id', async function(req,res,next) {
+	
+    //未登录
+	if(req.userInfo==0) {  
+		res.redirect('/login');
+		return false;
+	}
+	delete require.cache[require.resolve('../../config/env.js')];
+	const env = require('../../config/env.js');
+	env.header['index'] = 0;
+	env.header['userInfo'] = req.userInfo;
+	env.meta['title'] = '桃花源 - 写文章';
+	const word_sign = req.params.id;
+	
+	function findMsg() {
+		return new Promise((resolve,reject)=>{
+			let s_sql = "select * from th_draft where draft_sign=? and status = 1";
+           query(s_sql,[word_sign],function(err,vals){
+           	  if(err) {
+           	  	reject(err);
+           	  }else {
+           	  	if(vals.length) {
+           	  		resolve(vals[0]);
+           	  	}else {
+                    reject('当前无草稿');
+           	  	}
+           	  }
+           })
+		})
+	}
+
+	let msg,err;
+	[err,msg] = await fun.to(findMsg());
+	
+	try {
+		if(err) throw err;
+		msg.type = 'draft';
+		if(msg.user_id == req.userInfo.id) {  //是作者本人
+			res.render('write', {
+				meta: env.meta,
+				header: env.header,
+				word_msg: JSON.stringify(msg),
+				content: msg.content,
+				type: '1'
+			})
+		}else {
+			res.render('error/error');
+		}
+	}catch(e) {
+        res.render('error/error');
+	}
 
 })
 

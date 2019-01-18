@@ -58,10 +58,18 @@ function imgReplace(str) {
     	return '<div style="width:700px;margin-left:-40px;">'+img+'</div>';
     })
 }
+//async await 中间函数
+function to(promise) {
+	return promise.then(data => {
+	   return [null, data];
+	})
+	.catch(err => [err]);
+ }
 module.exports = {
 	selectClassify: selectClassify,
 	indexList: indexList,
 	encodeStr: encodeStr,
 	decodeStr: decodeStr,
-	imgReplace: imgReplace
+	imgReplace: imgReplace,
+	to: to
 }

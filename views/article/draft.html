@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% include '../layout/meta.html' with meta %}
+    <link rel="stylesheet" href="/plugins/element/element.min.css?v=60bfa99704ded437ebd59ce5b4b00252">
+    <link rel="stylesheet" href="/css/style.min.css?v=3d9718a7ae23f3601b60149cdac9896f">
+</head>
+
+<body>
+	{% include '../layout/header.html' with header %}
+	
+	<div id="draftPage" class="container settingPage">
+		<div class="setting_container">
+            {% include '../layout/articlebar.html' with index %}
+            <div class="articleList" v-if="showFlag==1">
+                <div class="articleItem" :class="{haveImg:vals.cover!=''}" v-for="vals in wordList">
+                    <a :href="'/writeDraft/' + vals.draft_sign" class="art_img" v-if="vals.cover!=''">
+                        <img :src="vals.cover" alt="" />
+                    </a>
+                    <a :href="'/writeDraft/' + vals.draft_sign" class="art_title" v-text="vals.title"></a>
+                    <div class="abstract" v-html="vals.abstract"></div>
+                </div>
+            </div>
+            <div class="pagination_container" v-show="paginationFlag">
+                <el-pagination background @current-change="pageChange" :current-page.sync="page" :page-size="10"
+                    layout="prev, pager, next, jumper" :total="total">
+                </el-pagination>
+            </div>
+            <div class="result_empty" v-if="showFlag==2">
+                <img src="/img/search_empty.png?v=f40cc1a7ce65f115cccf1382319be305" alt="">
+                <p>没有相关内容</p>
+            </div>
+		</div>
+	</div>
+	{% include '../layout/footer.html' %}
+	<script src="/plugins/jquery.min.js?v=e0e0559014b222245deb26b6ae8bd940"></script>
+	<script src="/plugins/vue.min.js?v=be4c25a10b8ae99067f58011f992adba"></script>
+	<script src="/plugins/element/element.min.js?v=1ad579b4e2bb516a98d063b5871a3878"></script>
+    <script src="/js/common.min.js?v=26842ad4d793b5f9cc92d886bcbb2d9d"></script>
+    <script src="/js/draft.min.js?v=1edd6231cf3179cf9ff908c4a1aac138"></script>
+	{% include '../layout/count.html' %}
+</body>
+
+</html>

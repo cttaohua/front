@@ -74,6 +74,10 @@
 			margin-left: 20px;
 			text-align: center;
 		}
+		.bottom_ctrl {
+			margin: 40px 0;
+			position: relative;
+		}
 		.publish {
 			display: block;
 			padding: 10px 20px;
@@ -81,7 +85,12 @@
 			border-radius: 50px;
 			font-size: $fontLarge;
 			background-color: $themefontColor;
-			margin: 40px auto;
+			margin: 0 auto;
+		}
+		.save {
+			position: absolute;
+			right: 0;
+			bottom: 0;
 		}
 	}
 }

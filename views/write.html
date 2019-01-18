@@ -4,7 +4,7 @@
 <head>
     {% include './layout/meta.html' with meta %}
     <link rel="stylesheet" href="/plugins/element/element.min.css?v=60bfa99704ded437ebd59ce5b4b00252">
-    <link rel="stylesheet" href="/css/style.min.css?v=ffaa652cd68a9470251459dfbc009c9e">
+    <link rel="stylesheet" href="/css/style.min.css?v=3d9718a7ae23f3601b60149cdac9896f">
 </head>
 
 <body>
@@ -35,20 +35,25 @@
 					<el-col :span="24">
 						<div class="upload">
 							<img :src="coverUrl" alt="" class="coverPic"/>
-							<button class="upload_btn" id="fileSelect">上传封面图</button>
+							<button class="btn upload_btn" id="fileSelect">上传封面图</button>
 							<input class="none" accept="image/*" name="upimage" id="upload_file" type="file">
 						</div>
 					</el-col>
                 </el-row>
             </div>
             <input type="hidden" name="word_msg" value="{{word_msg}}">
-            <button class="publish" v-on:click="comfirm()">
-                {% if word_msg.length %}
-                重新发布
-                {% else %}
-                发布文章
+            <div class="bottom_ctrl clearfix">
+                <button class="btn publish" v-on:click="comfirm()">
+                    {% if type == '2' %}
+                    重新发布
+                    {% else %}
+                    发布文章
+                    {% endif %}
+                </button>
+                {% if type == '1' %}
+                <el-button class="save" type="danger" round @click.native="saveDraft()">保存为草稿</el-button>
                 {% endif %}
-            </button>
+            </div>
         </div>
     </div>
     {% include './layout/footer.html' %}
@@ -57,8 +62,8 @@
     <script src="/plugins/vue.min.js?v=be4c25a10b8ae99067f58011f992adba"></script>
     <script src="/plugins/element/element.min.js?v=1ad579b4e2bb516a98d063b5871a3878"></script>
     <script src="/plugins/wangeditor/wangEditor.min.js?v=84ed219ca7a74501634b12a0364e3721"></script>
-    <script src="/js/common.min.js?v=89537aa78e06cb953440b161cc45caef"></script>
-    <script src="/js/write.min.js?v=6f7d323d837a59b3b06e40aec7960e27"></script>
+    <script src="/js/common.min.js?v=26842ad4d793b5f9cc92d886bcbb2d9d"></script>
+    <script src="/js/write.min.js?v=518ba869fc8fc5cc171e042d39dee881"></script>
     {% include './layout/count.html' %}
 </body>
 

@@ -4,6 +4,7 @@ var query = require('../../config/node-mysql.js');
 const db = require('../../db/package.js');
 var data = require('../../config/env.js').data;
 var random = require('../../config/tool.js').random;
+var getRandomStr = require('../../config/tool.js').getRandomStr;
 var transferredSingle = require('../../config/tool.js').transferredSingle;
 var async = require('async');
 var fs = require('fs');
@@ -26,6 +27,7 @@ router.post('/article', function(req, res, next) {
     var content = transferredSingle(req.body.content); //转义单引号
     var text = transferredSingle(req.body.text); //转义单引号
     var word_id = req.body.word_id;
+    var draft_id = req.body.draft_id;
     var newclassify = req.body.newclassify;
     var c_first_id = req.body.c_first_id;
     var c_second_id = req.body.c_second_id;
@@ -141,11 +143,13 @@ router.post('/article', function(req, res, next) {
 
     } else { //新增
         var coverUrl = "";
-        if (cover) { //有封面图
+        if (cover.length>100) { //更新了封面图
             var base64Data = cover.replace(/^data:image\/\w+;base64,/, "");
             var dataBuffer = new Buffer(base64Data, 'base64');
             coverUrl = "/uploadImg/cover/" + random(8) + ".png";
             fs.writeFile("public" + coverUrl, dataBuffer, function(err) {});
+        }else {
+            coverUrl = cover;
         }
         async.waterfall([
             function(callback) {
@@ -185,6 +189,11 @@ router.post('/article', function(req, res, next) {
                 //文章一级类别加数量
                 var a_sql = "update th_classify_first set article_num=article_num+1 where id='" + c_first_id + "'";
                 query(a_sql, function(err, vals, fields) {});
+                //删除草稿箱里的文章
+                if(draft_id) {
+                    var b_sql = "delete from th_draft where id = ?";
+                    query(b_sql,[draft_id],function(err,vals,fields){});
+                }
                 //用户字数，文章加数量
                 var s_sql = "update th_user set word_num=word_num+'" + word_num + "',article_num=article_num+1 where id=" +
                     userInfo.id;
@@ -311,6 +320,142 @@ router.post('/upload/acticle', function(req, res, next) {
     })
 
 
+})
+
+//保存为草稿
+router.post('/save/draft', function(req, res, next) {
+
+    if (typeof(req.userInfo.id) == 'undefined') {
+        data['code'] = 0;
+        data['body'] = '发表文章需要登录，请先登录';
+        res.json(data);
+        return false;
+    }
+
+    var userInfo = req.userInfo;
+    var title = req.body.title;
+    var cover = req.body.cover;
+    var content = transferredSingle(req.body.content); //转义单引号
+    var text = transferredSingle(req.body.text); //转义单引号
+    var draft_id = req.body.draft_id;
+    var new_classify = req.body.new_classify;
+    var c_first_id = req.body.c_first_id;
+    var c_second_id = req.body.c_second_id;
+    var abs = transferredSingle(req.body.abs); //转义单引号
+    var word_num = req.body.word_num;
+
+    var nowDate = (Date.parse(new Date()));
+
+    if (draft_id) { //编辑草稿
+        async.waterfall([
+            function(callback) {
+                var coverUrl = "";
+                if (cover.length < 100) { //没更新封面图
+                    callback(null, cover);
+                } else { //更新了封面图
+                    let s_sql = "select cover from th_draft where id=" + draft_id;
+                    query(s_sql, function(err, vals) {
+                        if (err) {
+                            callback('err', 0);
+                        } else {
+                            if (vals[0].cover.length) {
+                                fs.unlink("public" + vals[0].cover, function(err) {});
+                            }
+                            var base64Data = cover.replace(/^data:image\/\w+;base64,/, "");
+                            var dataBuffer = new Buffer(base64Data, 'base64');
+                            coverUrl = "/uploadImg/cover/" + random(8) + ".png";
+                            fs.writeFile("public" + coverUrl, dataBuffer, function(err) {});
+                            callback(null, coverUrl);
+                        }
+                    })
+                }
+            },
+            function(coverUrl, callback) {
+                //修改草稿
+
+                let setObj = {
+                    title: title,
+                    cover: coverUrl,
+                    content: content,
+                    text: text,
+                    update_time: nowDate,
+                    status: 1,
+                    first_id: c_first_id,
+                    classify_id: c_second_id,
+                    abstract: abs,
+                    word_num: word_num
+                }
+                let whereObj = {
+                    id: draft_id
+                }
+
+                db.update('th_draft', setObj, whereObj, function(err, vals) {
+                    if (err) {
+                        callback('err', 3);
+                    } else {
+                        callback(null);
+                    }
+                })
+            }
+        ], function(err, result) {
+            if (err) {
+                data['code'] = result;
+                data['body'] = '保存失败，请重试';
+            } else {
+                data['code'] = 200;
+                data['body'] = '/article/draft';
+            }
+            res.json(data);
+        })
+
+    } else { //新增草稿
+        var coverUrl = "";
+        if (cover) { //有封面图
+            var base64Data = cover.replace(/^data:image\/\w+;base64,/, "");
+            var dataBuffer = new Buffer(base64Data, 'base64');
+            coverUrl = "/uploadImg/cover/" + random(8) + ".png";
+            fs.writeFile("public" + coverUrl, dataBuffer, function(err) {});
+        }
+        async.waterfall([
+            function(callback) {
+                //添加文章
+                var r = getRandomStr();
+                let insert_obj = {
+                    draft_sign: r,
+                    title: title,
+                    cover: coverUrl,
+                    content: content,
+                    text: text,
+                    create_time: nowDate,
+                    user_id: userInfo.id,
+                    update_time: nowDate,
+                    status: 1,
+                    first_id: c_first_id,
+                    classify_id: c_second_id,
+                    new_classify: new_classify,
+                    abstract: abs,
+                    word_num: word_num
+                }    
+                db.insert('th_draft', insert_obj, function(err, vals) {
+                    if (err) {
+                        callback('err', 1);
+                    } else {
+                        callback(null);
+                    }
+                })
+            }
+        ], function(err, result) {
+            if (err) {
+                data['code'] = result;
+                data['body'] = '保存失败，请重试';
+            } else {
+                data['code'] = 200;
+                data['body'] = '/article/draft';
+            }
+            res.json(data);
+        })
+
+    }
 })
 
 module.exports = router;

@@ -6,6 +6,17 @@ function random(num) {
 	}
 	return Math.floor(Math.random() * (integer));
 }
+//获取n位的数字字母的字符串
+function getRandomStr(n) {
+	var n = n || 12; //默认12位
+	var res = '';
+	var chars = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+	for(var i = 0; i < n ; i ++) {
+		var id = Math.ceil(Math.random()*35);
+		res += chars[id];
+	}
+	return res;
+}
 //根据时间戳返回年月日的时间
 function dateYmd(timestamp) {
 	var date = new Date(Number(timestamp));
@@ -26,6 +37,9 @@ function dateYmdHis(timestamp) {
 }
 //转义单引号
 function transferredSingle(str) {
+	if(!str) {
+		return '';
+	}
 	return str.replace(/'/g, '&apos;');
 }
 //根据数字月份返回文字月份
@@ -75,6 +89,7 @@ function returnMonth(num) {
 }
 module.exports = {
 	random: random,
+	getRandomStr: getRandomStr,
 	dateYmd: dateYmd,
 	dateYmdHis: dateYmdHis,
 	transferredSingle: transferredSingle,

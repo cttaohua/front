@@ -88,7 +88,7 @@
 .articleItem {
     width: 100%;
     border-bottom: 1px solid #f0f0f0;
-    padding: 30px 2px 30px 0;
+    padding: 30px 2px 20px 0;
     position: relative;
     .art_img {
         position: absolute;
@@ -194,5 +194,20 @@
         &:hover {
             background-color: #dfe6f6;
         }
+    }
+}
+//结果页无结果样式
+.result_empty {
+    overflow: hidden;
+    img {
+        width: 100px;
+        display: block;
+        margin: 150px auto 0;
+    }
+    p {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 14px;
+        font-weight: 700;
     }
 }

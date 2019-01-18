@@ -7,6 +7,7 @@ module.exports = function(app) {
 	var user = require('../models/template/user.js');
 	var search = require('../models/template/searchPage.js');
 	var setting = require('../models/template/setting.js');
+	var article = require('../models/template/article.js');
 	app.use('/',home);
 	app.use('/',write);
 	app.use('/',login);
@@ -15,4 +16,5 @@ module.exports = function(app) {
 	app.use('/',user);
 	app.use('/',search);
 	app.use('/setting',setting);
+	app.use('/article',article);
 }

@@ -31,7 +31,7 @@ var insert = function(table, obj, callback) {
 	}
 	fields = fields.slice(0,fields.length-1); 
    var sql = "INSERT INTO " + table + ' ' + fields;
-   query(sql, values, condition);
+   query(sql, values, callback);
 	
 }
 /**
