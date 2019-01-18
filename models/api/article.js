@@ -392,13 +392,14 @@ router.post('/save/draft', function(req, res, next) {
 
                 db.update('th_draft', setObj, whereObj, function(err, vals) {
                     if (err) {
-                        callback('err', 3);
+                        callback('err', err);
                     } else {
                         callback(null);
                     }
                 })
             }
         ], function(err, result) {
+            console.log(result);
             if (err) {
                 data['code'] = result;
                 data['body'] = '保存失败，请重试';
