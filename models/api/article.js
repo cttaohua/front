@@ -399,7 +399,6 @@ router.post('/save/draft', function(req, res, next) {
                 })
             }
         ], function(err, result) {
-            console.log(result);
             if (err) {
                 data['code'] = result;
                 data['body'] = '保存失败，请重试';
