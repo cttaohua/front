@@ -438,13 +438,14 @@ router.post('/save/draft', function(req, res, next) {
                 }    
                 db.insert('th_draft', insert_obj, function(err, vals) {
                     if (err) {
-                        callback('err', 1);
+                        callback('err', err);
                     } else {
                         callback(null);
                     }
                 })
             }
         ], function(err, result) {
+            console.log(result);
             if (err) {
                 data['code'] = result;
                 data['body'] = '保存失败，请重试';
