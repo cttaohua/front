@@ -430,9 +430,9 @@ router.post('/save/draft', function(req, res, next) {
                     user_id: userInfo.id,
                     update_time: nowDate,
                     status: 1,
-                    first_id: c_first_id,
-                    classify_id: c_second_id,
-                    new_classify: new_classify,
+                    first_id: c_first_id?c_first_id:null,
+                    classify_id: c_second_id?c_second_id:null,
+                    new_classify: new_classify?new_classify:null,
                     abstract: abs,
                     word_num: word_num
                 }    
