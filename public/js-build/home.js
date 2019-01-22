@@ -8,15 +8,17 @@ new Vue({
         loading: true,
         item: '',
     },
-    created: function() {
+    created: function () {
 
     },
-    mounted: function() {
-        tagCloud();
-        this.swiper();
+    mounted: function () {
+        $(() => {
+            tagCloud();
+            this.swiper();
+        })
     },
     methods: {
-        swiper: function() {
+        swiper: function () {
             // swiper轮播图
             var mySwiper = new Swiper('.swiper-container', {
                 direction: 'horizontal',
@@ -33,7 +35,7 @@ new Vue({
                 }
             })
         },
-        getMsg: function() {
+        getMsg: function () {
             var _this = this;
             $.ajax({
                 url: '/api/homeList',
@@ -41,9 +43,9 @@ new Vue({
                 data: {
                     page: this.page
                 },
-                success: function(res) {
+                success: function (res) {
                     if (res.code == 200) {
-                        if (typeof(res.body) == 'object') {
+                        if (typeof (res.body) == 'object') {
                             _this.homeList = _this.homeList.concat(res.body);
                         }
                         if (res.body.length < 20) {
@@ -52,12 +54,12 @@ new Vue({
                         }
                     }
                 },
-                error: function() {
+                error: function () {
                     _this.$message.error('当前网络不佳，请稍后重试');
                 }
             })
         },
-        getMore: function() {
+        getMore: function () {
             this.page = this.page + 1;
             this.getMsg();
         }

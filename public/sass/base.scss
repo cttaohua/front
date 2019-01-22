@@ -40,9 +40,17 @@ input {
     outline: none;
 }
 
+input:focus {
+    border-color: $themefontColor!important;
+}
+
 textarea {
     border: none;
     outline: none;
+}
+
+textarea:focus {
+    border-color: $themefontColor!important;
 }
 
 button {
@@ -134,6 +142,14 @@ a {
 
 .none {
     display: none;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.pointer {
+    cursor: pointer;
 }
 
 .mt_10 {

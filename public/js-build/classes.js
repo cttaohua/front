@@ -1,6 +1,6 @@
 new Vue({
 	delimiters: ['${', '}'],
-    el: '#classesPage',
+	el: '#classesPage',
 	data: {
 		classiyf_id: '',
 		wordFlag: 1,
@@ -9,24 +9,26 @@ new Vue({
 		total: 0,
 		paginationFlag: true
 	},
-    created: function () {
+	created: function () {
 
-    },
-    mounted: function () {
-		tagCloud();
-		this.init();
-		this.getMsg();
-    },
+	},
+	mounted: function () {
+		$(() => {
+			tagCloud();
+			this.init();
+			this.getMsg();
+		});
+	},
 	methods: {
-		init: function() {
+		init: function () {
 			this.classiyf_id = $('#classify_id').val();
 		},
-		tabCut: function(flag) {
+		tabCut: function (flag) {
 			this.wordFlag = flag;
 			this.page = 1;
 			this.getMsg();
 		},
-		getMsg: function() {
+		getMsg: function () {
 			var _this = this;
 			$.ajax({
 				url: '/api/classifyList',
@@ -37,29 +39,29 @@ new Vue({
 					type: this.wordFlag
 				},
 				dataType: 'json',
-				success: function(res) {
+				success: function (res) {
 					_this.wordList = [];
-					if(res.code==200) {
-						if(res.body.list.length) {
+					if (res.code == 200) {
+						if (res.body.list.length) {
 							_this.wordList = res.body.list;
 							_this.paginationFlag = true;
-						}else {
+						} else {
 							_this.wordList = [];
 							_this.paginationFlag = false;
 						}
 						_this.total = res.body.count;
-					}else {
+					} else {
 						_this.paginationFlag = false;
 						_this.$message.warning(res.body);
 					}
 				},
-				error: function() {
+				error: function () {
 					_this.paginationFlag = false;
 					_this.$message.error('当前网络不佳，请稍后重试');
 				}
 			})
 		},
-		pageChange: function(current) {
+		pageChange: function (current) {
 			this.page = current;
 			this.getMsg();
 		}

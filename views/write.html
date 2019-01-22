@@ -4,7 +4,7 @@
 <head>
     {% include './layout/meta.html' with meta %}
     <link rel="stylesheet" href="/plugins/element/element.min.css?v=60bfa99704ded437ebd59ce5b4b00252">
-    <link rel="stylesheet" href="/css/style.min.css?v=7f87e5407f72086a6695cbfe21b83611">
+    <link rel="stylesheet" href="/css/style.min.css?v=5beb2ecdfe460081477448ab281527ec">
 </head>
 
 <body>
@@ -57,11 +57,16 @@
             </div>
         </div>
         <el-dialog id="cover-container" title="选择封面图" :visible.sync="dialogVisible">
-            <div class="coverlist clearfix">
-                <img :src="item.cover" class="coveritem" alt="" @click="chooseCover(item.cover)" v-for="item in cover_list">
+            <div v-show="cover_list.length">
+                <div class="coverlist clearfix">
+                    <img :src="item.cover" class="coveritem" alt="" @click="chooseCover(item.cover)" v-for="item in cover_list">
+                </div>
+                <p class="text-center pointer" v-show="cover_load==1" @click="loadCover()">加载更多</p>
+                <p class="text-center" v-show="cover_load==2">没有更多了</p>
             </div>
         </el-dialog>
     </div>
+
     {% include './layout/footer.html' %}
 
     <script src="/plugins/jquery.min.js?v=e0e0559014b222245deb26b6ae8bd940"></script>
@@ -69,7 +74,7 @@
     <script src="/plugins/element/element.min.js?v=1ad579b4e2bb516a98d063b5871a3878"></script>
     <script src="/plugins/wangeditor/wangEditor.min.js?v=84ed219ca7a74501634b12a0364e3721"></script>
     <script src="/js/common.min.js?v=26842ad4d793b5f9cc92d886bcbb2d9d"></script>
-    <script src="/js/write.min.js?v=3f3738817f47af64247a2afc0addfaa7"></script>
+    <script src="/js/write.min.js?v=ed3f734ec3791386298009379cfc0ddc"></script>
     {% include './layout/count.html' %}
 </body>
 

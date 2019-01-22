@@ -30,7 +30,7 @@ router.get('/u/:id', function (req, res, next) {
                 if (err) {
                     callback('err');
                 } else {
-                    callback(null, vals[0]);
+                    callback(null, vals);
                 }
             })
         }
@@ -38,15 +38,21 @@ router.get('/u/:id', function (req, res, next) {
         if (err) {
             res.render('error/error');
         } else {
-            if(result[0].hasOwnProperty('id')) {
-                env['meta']['title'] = result[0].nick + ' - 桃花源';
-                if(result[0].intro!=null&&result[0].intro!='null') {
-                    env['meta']['description'] = result[0].intro;
+            var msg = result[0];
+            if(!msg.length) {
+                res.render('error/error'); 
+                return false;
+            } 
+            msg = msg[0];
+            if(msg.hasOwnProperty('id')) {
+                env['meta']['title'] = msg.nick + ' - 桃花源';
+                if(msg.intro!=null&&msg.intro!='null') {
+                    env['meta']['description'] = msg.intro;
                 }
                 res.render('user', {
                     meta: env.meta,
                     header: env.header,
-                    msg: result[0],
+                    msg: msg,
                     type: type,   //列表类型 1最新文章 2热门排行 3待审核
                     userFlag: userFlag  //为1是当前用户，为0是其它用户
                 });

@@ -39,7 +39,7 @@ router.post('/article', function(req, res, next) {
         async.waterfall([
             function(callback) {
                 var coverUrl = "";
-                if (cover.length < 100) { //没更新封面图
+                if (cover.length < 100) { //没有上传封面图
                     callback(null, cover);
                 } else { //更新了封面图
                     let s_sql = "select cover from th_article where id=" + word_id;
@@ -47,9 +47,9 @@ router.post('/article', function(req, res, next) {
                         if (err) {
                             callback('err', 0);
                         } else {
-                            if (vals[0].cover.length) {
-                                fs.unlink("public" + vals[0].cover, function(err) {});
-                            }
+                            // if (vals[0].cover.length) {
+                            //     fs.unlink("public" + vals[0].cover, function(err) {});
+                            // }
                             var base64Data = cover.replace(/^data:image\/\w+;base64,/, "");
                             var dataBuffer = new Buffer(base64Data, 'base64');
                             coverUrl = "/uploadImg/cover/" + random(8) + ".png";
@@ -350,7 +350,7 @@ router.post('/save/draft', function(req, res, next) {
         async.waterfall([
             function(callback) {
                 var coverUrl = "";
-                if (cover.length < 100) { //没更新封面图
+                if (cover.length < 100) { //没有上传封面图
                     callback(null, cover);
                 } else { //更新了封面图
                     let s_sql = "select cover from th_draft where id=" + draft_id;
@@ -358,9 +358,9 @@ router.post('/save/draft', function(req, res, next) {
                         if (err) {
                             callback('err', 0);
                         } else {
-                            if (vals[0].cover.length) {
-                                fs.unlink("public" + vals[0].cover, function(err) {});
-                            }
+                            // if (vals[0].cover.length) {
+                            //     fs.unlink("public" + vals[0].cover, function(err) {});
+                            // }
                             var base64Data = cover.replace(/^data:image\/\w+;base64,/, "");
                             var dataBuffer = new Buffer(base64Data, 'base64');
                             coverUrl = "/uploadImg/cover/" + random(8) + ".png";
@@ -411,11 +411,13 @@ router.post('/save/draft', function(req, res, next) {
 
     } else { //新增草稿
         var coverUrl = "";
-        if (cover) { //有封面图
+        if (cover) { //有上传的封面图
             var base64Data = cover.replace(/^data:image\/\w+;base64,/, "");
             var dataBuffer = new Buffer(base64Data, 'base64');
             coverUrl = "/uploadImg/cover/" + random(8) + ".png";
             fs.writeFile("public" + coverUrl, dataBuffer, function(err) {});
+        }else {
+            coverUrl = cover;
         }
         async.waterfall([
             function(callback) {

@@ -266,16 +266,35 @@ router.get('/cover/list', async function (req, res, next) {
             })
         })
     }
+    function findCount() {
+        return new Promise((resolve,reject)=>{
+            let sql = "select count(*) as total from th_article where cover!='' and user_id = ? and status = 1 group by cover order by create_time DESC";
+            query(sql,[req.userInfo.id],(err,vals)=>{
+                if(err) {
+                    reject(err);
+                }else {
+                    resolve(vals[0].total);
+                }
+            })
+        })
+    }
 
-    let err,vals;
-    [err,vals] = await fun.to(findCover());
+    let err,vals,err2,count;
+    let awaitlist = findCover();
+    let awaitcount = findCount();    
+    [err,vals] = await fun.to(awaitlist);
+    [err2,count] = await fun.to(awaitcount);
     try{
         if(err) throw err;
+        if(err2) throw err2;
         data['code'] = 200;
-        data['body'] = vals;
+        data['body'] = {
+            list: vals,
+            count: count
+        };
     }catch(e) {
         data['code'] = 400;
-        data['body'] = err;
+        data['body'] = e;
     }
     res.json(data);
 })

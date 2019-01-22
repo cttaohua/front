@@ -14,7 +14,8 @@ new Vue({
         c_second_value: '',
         dialogVisible: false,
         cover_page: 1,
-        cover_list: []
+        cover_list: [],
+        cover_load: 1
     },
     created: function () {
 
@@ -308,13 +309,23 @@ new Vue({
                 },
                 success: (res)=>{
                     if(res.code==200) {
-                        this.cover_list = this.cover_list.concat(res.body);
+                        var list = res.body.list;
+                        if(list.length<10) {
+                            this.cover_load = 2;
+                        }else {
+                            this.cover_load = 1;
+                        }
+                        this.cover_list = this.cover_list.concat(list);
                     }
                 },
                 error: ()=> {
 
                 }
             })
+        },
+        loadCover: function() {
+            this.cover_page += 1;
+            this.getCoverList();
         },
         chooseCover: function(cover) {
             this.coverUrl = cover;

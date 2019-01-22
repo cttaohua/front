@@ -13,18 +13,21 @@ new Vue({
         comment_show: 2,
         recommendList: []
     },
-    created: function() {
+    created: function () {
 
     },
-    mounted: function() {
-        this.init();
-        this.delayload();
-        this.qqFace();
-
+    mounted: function () {
+        $(() => {
+            this.init();
+            this.delayload();
+            this.qqFace();
+        })
     },
     directives: {
         focus: {
-            update: function(el, { value }) {
+            update: function (el, {
+                value
+            }) {
                 if (value) {
                     el.focus();
                 }
@@ -33,7 +36,7 @@ new Vue({
     },
     filters: {
         date: dateYmdHis,
-        rtQQ: function(str) {
+        rtQQ: function (str) {
             str = str.replace(/\</g, '&lt;');
             str = str.replace(/\>/g, '&gt;');
             str = str.replace(/\n/g, '<br/>');
@@ -43,7 +46,7 @@ new Vue({
     },
     methods: {
         //初始化
-        init: function() {
+        init: function () {
             var _this = this;
             this.article_id = $('#article_id').val();
             this.classify_id = $('#classify_id').val();
@@ -52,13 +55,13 @@ new Vue({
             hljs.initHighlightingOnLoad();
             //图片懒加载
             $("img.lazy").lazyload({
-                effect : "fadeIn"
+                effect: "fadeIn"
             });
-            $('body').on('click', function() {
+            $('body').on('click', function () {
                 $('.receipt_code').hide(500);
             })
             //点击喜欢按钮
-            $('.like-group').on('click', function() {
+            $('.like-group').on('click', function () {
                 if (getCookie('userInfo')) {
                     if ($(this).hasClass('unlike')) { //不喜欢
                         $(this).removeClass('unlike').addClass('islike');
@@ -73,10 +76,10 @@ new Vue({
             })
         },
         //延迟加载评论
-        delayload: function() {
+        delayload: function () {
             var _this = this;
             var load_flag = 1;
-            $(window).scroll(function() {
+            $(window).scroll(function () {
                 var mTop = $('#comments')[0].offsetTop;
                 var sTop = $(window).scrollTop();
                 if (mTop - sTop < 600 && load_flag == 1) {
@@ -87,8 +90,8 @@ new Vue({
             })
         },
         //表情初始化
-        qqFace: function() {
-            if($('.main_emotion').length) {
+        qqFace: function () {
+            if ($('.main_emotion').length) {
                 $('.main_emotion').qqFace({
                     id: 'facebox',
                     assign: 'main_comment_area',
@@ -97,11 +100,11 @@ new Vue({
             }
         },
         //赞赏按钮
-        rewardswitch: function() {
+        rewardswitch: function () {
             $('.receipt_code').show(500);
         },
         //喜欢按钮
-        likefun: function(type) {
+        likefun: function (type) {
             var _this = this;
             $.ajax({
                 url: '/api/islike',
@@ -112,18 +115,18 @@ new Vue({
                     article_id: this.article_id,
                     author_id: this.author_id
                 },
-                success: function(res) {
+                success: function (res) {
                     if (res.code != 200) {
                         _this.$message.warning(res.body);
                     }
                 },
-                error: function() {
+                error: function () {
                     _this.$message.error('当前网络不佳，请稍后重试');
                 }
             })
         },
         //发表评论
-        review_send: function() {
+        review_send: function () {
             var _this = this;
             //发送评论
             if (!this.review_content.length) {
@@ -138,7 +141,7 @@ new Vue({
                     article_id: this.article_id,
                     content: this.review_content
                 },
-                success: function(res) {
+                success: function (res) {
                     if (res.code != 200) {
                         _this.$message.warning(res.body);
                     } else {
@@ -149,17 +152,17 @@ new Vue({
                         _this.getComment_list();
                     }
                 },
-                error: function() {
+                error: function () {
                     _this.$message.error('当前网络不佳，请稍后重试');
                 }
             })
         },
-        pageChange: function(current) {
+        pageChange: function (current) {
             this.comment_page = current;
             this.getComment_list();
         },
         //获取评论列表
-        getComment_list: function() {
+        getComment_list: function () {
             var _this = this;
             $.ajax({
                 url: '/api/commentList',
@@ -169,12 +172,12 @@ new Vue({
                     page: this.comment_page
                 },
                 dataType: 'json',
-                success: function(res) {
+                success: function (res) {
                     if (res.code == 200) {
                         var arr = [];
                         if (res.body.list.length != 0) {
                             arr = res.body.list;
-                            arr.forEach(function(current, index) {
+                            arr.forEach(function (current, index) {
                                 current.comment_reply = {
                                     flag: false,
                                     content: ''
@@ -182,7 +185,7 @@ new Vue({
                             })
                             //表情初始化
                             setTimeout(() => {
-                                $('.minor_emotion').each(function(index) {
+                                $('.minor_emotion').each(function (index) {
                                     $('.minor_emotion_' + index).qqFace({
                                         id: 'facebox',
                                         assign: 'minor_comment_area_' + index,
@@ -202,13 +205,13 @@ new Vue({
                         _this.$message.warning(res.body);
                     }
                 },
-                error: function() {
+                error: function () {
 
                 }
             })
         },
         //评论点赞
-        pointPraise: function(type, index) {
+        pointPraise: function (type, index) {
             var _this = this;
             if (!getCookie('userInfo')) {
                 goLogin(_this, '给这条评论点赞需要登录，现在去登录？');
@@ -230,7 +233,7 @@ new Vue({
                     type: type,
                     comment_id: _this.comment_list[index].id
                 },
-                success: function(res) {
+                success: function (res) {
                     if (res.code != 200) {
                         _this.$message.warning('操作失败，请稍后重试');
                         if (type == 1) {
@@ -242,7 +245,7 @@ new Vue({
                         }
                     }
                 },
-                error: function() {
+                error: function () {
                     _this.$message.error('当前网络不佳，请稍后重试');
                     if (type == 1) {
                         _this.comment_list[index].isPraise = false;
@@ -255,7 +258,7 @@ new Vue({
             })
         },
         //点击回复按钮
-        replyctrl: function(type, index, cur) {
+        replyctrl: function (type, index, cur) {
             var _this = this;
             if (!getCookie('userInfo')) {
                 goLogin(_this, '回复这条评论需要登录，现在去登录？');
@@ -274,7 +277,7 @@ new Vue({
             current.reply_person_id = reply_id;
         },
         //发表回复
-        reply_send: function(index) {
+        reply_send: function (index) {
             var _this = this;
             if (!getCookie('userInfo')) {
                 goLogin(_this, '回复这条评论需要登录，现在去登录？');
@@ -294,7 +297,7 @@ new Vue({
                     comment_id: current.id,
                     reply_id: current.reply_person_id
                 },
-                success: function(res) {
+                success: function (res) {
                     if (res.code == 200) {
                         current.reply_list.push(res.body);
                         current.comment_reply.content = '';
@@ -304,18 +307,18 @@ new Vue({
                         _this.$message.warning(res.body);
                     }
                 },
-                error: function() {
+                error: function () {
                     _this.$message.error('当前网络不佳，请稍后重试');
                 }
             })
         },
         //取消回复
-        cancel_reply: function(index) {
+        cancel_reply: function (index) {
             var current = this.comment_list[index];
             current.comment_reply.flag = false;
         },
         //推荐文章列表
-        getrecommend: function() {
+        getrecommend: function () {
             var _this = this;
             $.ajax({
                 url: '/api/article/recommendList',
@@ -326,7 +329,7 @@ new Vue({
                     classify_id: this.classify_id,
                     first_id: $('#first_id').val()
                 },
-                success: function(res) {
+                success: function (res) {
                     if (res.code == 200) {
                         _this.recommendList = res.body;
                     }
