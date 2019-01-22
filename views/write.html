@@ -4,7 +4,7 @@
 <head>
     {% include './layout/meta.html' with meta %}
     <link rel="stylesheet" href="/plugins/element/element.min.css?v=60bfa99704ded437ebd59ce5b4b00252">
-    <link rel="stylesheet" href="/css/style.min.css?v=3d9718a7ae23f3601b60149cdac9896f">
+    <link rel="stylesheet" href="/css/style.min.css?v=7f87e5407f72086a6695cbfe21b83611">
 </head>
 
 <body>
@@ -28,17 +28,18 @@
                             </el-option>
                         </el-select>
                     </el-col>
-					<el-col :span="6" class="create_classify">
-						<span @click="show_create" v-show="!create_flag">没有适合的二级分类？点击创建</span> 
-						<el-input placeholder="最多15个字符" v-show="create_flag" maxlength="15" v-model="new_classify"></el-input>
-					</el-col>
-					<el-col :span="24">
-						<div class="upload">
-							<img :src="coverUrl" alt="" class="coverPic"/>
-							<button class="btn upload_btn" id="fileSelect">上传封面图</button>
-							<input class="none" accept="image/*" name="upimage" id="upload_file" type="file">
-						</div>
-					</el-col>
+                    <el-col :span="6" class="create_classify">
+                        <span @click="show_create" v-show="!create_flag">没有适合的二级分类？点击创建</span>
+                        <el-input placeholder="最多15个字符" v-show="create_flag" maxlength="15" v-model="new_classify"></el-input>
+                    </el-col>
+                    <el-col :span="24">
+                        <div class="upload">
+                            <img :src="coverUrl" alt="" class="coverPic" />
+                            <button class="btn upload_btn" id="fileSelect">上传封面图</button>
+                            <button class="btn upload_btn" @click="dialogVisible = true">从之前的封面图中选择</button>
+                            <input class="none" accept="image/*" name="upimage" id="upload_file" type="file">
+                        </div>
+                    </el-col>
                 </el-row>
             </div>
             <input type="hidden" name="word_msg" value="{{word_msg}}">
@@ -55,6 +56,11 @@
                 {% endif %}
             </div>
         </div>
+        <el-dialog id="cover-container" title="选择封面图" :visible.sync="dialogVisible">
+            <div class="coverlist clearfix">
+                <img :src="item.cover" class="coveritem" alt="" @click="chooseCover(item.cover)" v-for="item in cover_list">
+            </div>
+        </el-dialog>
     </div>
     {% include './layout/footer.html' %}
 
@@ -63,7 +69,7 @@
     <script src="/plugins/element/element.min.js?v=1ad579b4e2bb516a98d063b5871a3878"></script>
     <script src="/plugins/wangeditor/wangEditor.min.js?v=84ed219ca7a74501634b12a0364e3721"></script>
     <script src="/js/common.min.js?v=26842ad4d793b5f9cc92d886bcbb2d9d"></script>
-    <script src="/js/write.min.js?v=518ba869fc8fc5cc171e042d39dee881"></script>
+    <script src="/js/write.min.js?v=3f3738817f47af64247a2afc0addfaa7"></script>
     {% include './layout/count.html' %}
 </body>
 

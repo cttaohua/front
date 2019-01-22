@@ -190,7 +190,7 @@ router.get('/draft/list', async function (req, res, next) {
     if (params.page == 1) {
         var page = 0;
     } else {
-        var page = limit * (params.page - 1);
+        var page = 10 * (params.page - 1);
     }
 
     function findList() {
@@ -239,6 +239,45 @@ router.get('/draft/list', async function (req, res, next) {
     }
     res.json(data);
 
+})
+
+//封面图列表
+router.get('/cover/list', async function (req, res, next) {
+    
+    if(req.userInfo==0) {
+        data['code'] = 400;
+        data['body'] = '请先登录';
+    }
+    var params = req.query;
+    if (params.page == 1) {
+        var page = 0;
+    } else {
+        var page = 10 * (params.page - 1);
+    }    
+    function findCover() {
+        return new Promise((resolve,reject)=>{
+            let sql = "select cover from th_article where cover!='' and user_id = ? and status = 1 group by cover order by create_time DESC limit ?,10";
+            query(sql,[req.userInfo.id,page],(err,vals)=>{
+                if(err) {
+                    reject(err);
+                }else {
+                    resolve(vals);
+                }
+            })
+        })
+    }
+
+    let err,vals;
+    [err,vals] = await fun.to(findCover());
+    try{
+        if(err) throw err;
+        data['code'] = 200;
+        data['body'] = vals;
+    }catch(e) {
+        data['code'] = 400;
+        data['body'] = err;
+    }
+    res.json(data);
 })
 
 module.exports = router;

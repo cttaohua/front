@@ -11,7 +11,10 @@ new Vue({
         c_first: [],
         c_first_value: '',
         c_second: [],
-        c_second_value: ''
+        c_second_value: '',
+        dialogVisible: false,
+        cover_page: 1,
+        cover_list: []
     },
     created: function () {
 
@@ -20,6 +23,7 @@ new Vue({
         $(() => {
             this.init();
             this.getC_first();
+            this.getCoverList();
             this.createEditor();
             this.transformImg();
             this.roll();
@@ -294,6 +298,27 @@ new Vue({
                     editor_title.removeClass('fixed');
                 }
             })
+        },
+        getCoverList: function() {
+            $.ajax({
+                url: '/api/cover/list',
+                type: 'get',
+                data: {
+                    page: this.cover_page
+                },
+                success: (res)=>{
+                    if(res.code==200) {
+                        this.cover_list = this.cover_list.concat(res.body);
+                    }
+                },
+                error: ()=> {
+
+                }
+            })
+        },
+        chooseCover: function(cover) {
+            this.coverUrl = cover;
+            this.dialogVisible = false;
         }
     }
 })
