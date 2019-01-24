@@ -9,7 +9,7 @@ var async = require('async');
 router.get('/u/:id', function (req, res, next) {
 	delete require.cache[require.resolve('../../config/env.js')];
 	var env = require('../../config/env.js');
-    var user_id = req.params.id;
+    var user_sign = req.params.id;
     env.header['userInfo'] = req.userInfo;
 	var type = req.query.type;
 	//当前类型
@@ -17,7 +17,7 @@ router.get('/u/:id', function (req, res, next) {
 		type = 1;
 	}
     //当前用户判断
-	if(user_id == req.userInfo.id) {  //为当前用户
+	if(user_sign == req.userInfo.user_sign) {  //为当前用户
 		var userFlag = 1;
 	}else {  //为其它用户
 		var userFlag = 0;
@@ -25,8 +25,8 @@ router.get('/u/:id', function (req, res, next) {
 	
     async.parallel([
         function (callback) {
-            var s_sql = "select * from th_user where id=" + user_id;
-            query(s_sql, function (err, vals, fields) {
+            var s_sql = "select * from th_user where sign=? or id =?";
+            query(s_sql, [user_sign,user_sign],function (err, vals, fields) {
                 if (err) {
                     callback('err');
                 } else {

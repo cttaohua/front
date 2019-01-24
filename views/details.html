@@ -17,14 +17,14 @@
                 <div class="master">
                     <h1 class="title">{{word_msg.title}}</h1>
                     <div class="author">
-                        <a class="avatar" href="/u/{{user_msg.id}}" target="_blank">
+                        <a class="avatar" href="/u/{{user_msg.sign}}" target="_blank">
                             {% if user_msg.head!=0 %}
                             <img src="{{user_msg.head}}" alt="" onerror="this.src='/img/head.png'"> {% else %}
                             <img src="/img/head.png?v=a6091bb2c45580b4a7ede77ee6d73de2" alt=""> {% endif %}
                         </a>
                         <div class="info">
                             <span class="name">
-                                <a href="/u/{{user_msg.id}}" target="_blank">{{user_msg.nick}}</a>
+                                <a href="/u/{{user_msg.sign}}" target="_blank">{{user_msg.nick}}</a>
                             </span>
                             <div class="meta">
                                 <span>{{word_msg.update_time}}</span>

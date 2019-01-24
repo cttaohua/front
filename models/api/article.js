@@ -205,9 +205,9 @@ router.post('/article', function (req, res, next) {
             } else {
                 data['code'] = 200;
                 if (newclassify) {
-                    data['body'] = '/u/' + userInfo.id + '?type=3';
+                    data['body'] = '/u/' + userInfo.sign + '?type=3';
                 } else {
-                    data['body'] = '/u/' + userInfo.id;
+                    data['body'] = '/u/' + userInfo.sign;
                 }
             }
             res.json(data);

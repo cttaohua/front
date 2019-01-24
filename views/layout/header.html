@@ -23,7 +23,7 @@
                 </div>
 				{% if header['userInfo']!=0 %}
 				<div class="user">
-					<a class="avatar" href="/u/{{header.userInfo.id}}">
+					<a class="avatar" href="/u/{{header.userInfo.sign}}">
 						{% if header.userInfo.head!=0 %}
 						<img src="{{header.userInfo.head}}" alt="" onerror="this.src='/img/head.png'">
 						{% else %}
@@ -32,7 +32,7 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li>
-							<a href="/u/{{header.userInfo.id}}">
+							<a href="/u/{{header.userInfo.sign}}">
 								<i class="icon">&#xe60d;</i>
 								<span>个人主页</span>
 							</a>
