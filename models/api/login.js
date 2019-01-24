@@ -4,6 +4,7 @@ var query = require('../../config/node-mysql.js');
 var data = require('../../config/env.js').data;
 var async = require('async');
 var fun = require('../../config/fun.js');
+const tool = require('../../config/tool.js');
 
 //注册接口
 router.post('/register', function (req, res, next) {
@@ -24,9 +25,10 @@ router.post('/register', function (req, res, next) {
             })
         },
         two: function (callback) {
-            var nowDate = (Date.parse(new Date())); 
-            var addSql = "insert into th_user (`account`,`nick`,`password`,`create_time`)" +
-                " values ('" + user_phone + "','" + user_name + "','" + user_password + "','" +
+			var nowDate = (Date.parse(new Date())); 
+			var r = tool.getRandomStr();
+            var addSql = "insert into th_user (`sign`,`account`,`nick`,`password`,`create_time`)" +
+                " values ('" + r + "','" + user_phone + "','" + user_name + "','" + user_password + "','" +
                 nowDate + "')";
             query(addSql, function (err, vals, fields) {
                 if (err) {
@@ -38,7 +40,7 @@ router.post('/register', function (req, res, next) {
         }
     }, function (err, result) {
         if (err) {
-            if (result[1] == 1) {
+            if (result[two] == 1) {
                 data['code'] = 1;
                 data['body'] = '注册失败';
             } else {
