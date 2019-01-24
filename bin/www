@@ -10,14 +10,14 @@ var http = require('http');
 var address = require('./config.js').port;
 
 //关键包
-var path = require('path'); 
-var https = require('https');
-var fs = require('fs');
+// var path = require('path'); 
+// var https = require('https');
+// var fs = require('fs');
 
 //ssl证书相关文件
-var privateKey  = fs.readFileSync(path.join(__dirname, './private.key'), 'utf8');
-var certificate = fs.readFileSync(path.join(__dirname, './full_chain.pem'), 'utf8');
-var credentials = {key: privateKey, cert: certificate};
+// var privateKey  = fs.readFileSync(path.join(__dirname, './private.key'), 'utf8');
+// var certificate = fs.readFileSync(path.join(__dirname, './full_chain.pem'), 'utf8');
+// var credentials = {key: privateKey, cert: certificate};
 
 /**
  * Get port from environment and store in Express.
@@ -30,13 +30,12 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-// var server = http.createServer(app);
-var server = https.createServer(credentials,app);
+var server = http.createServer(app);
+// var server = https.createServer(credentials,app);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
-
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);

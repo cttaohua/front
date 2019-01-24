@@ -268,7 +268,7 @@ router.get('/cover/list', async function (req, res, next) {
     }
     function findCount() {
         return new Promise((resolve,reject)=>{
-            let sql = "select count(*) as total from th_article where cover!='' and user_id = ? and status = 1 group by cover order by create_time DESC";
+            let sql = "select count(*) as total from th_article where cover!='' and user_id = ? and status = 1 group by cover";
             query(sql,[req.userInfo.id],(err,vals)=>{
                 if(err) {
                     reject(err);
