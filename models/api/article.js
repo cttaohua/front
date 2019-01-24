@@ -12,9 +12,9 @@ var multiparty = require('multiparty');
 // const images = require("images");
 
 
-router.post('/article', function(req, res, next) {
+router.post('/article', function (req, res, next) {
 
-    if (typeof(req.userInfo.id) == 'undefined') {
+    if (typeof (req.userInfo.id) == 'undefined') {
         data['code'] = 0;
         data['body'] = '发表文章需要登录，请先登录';
         res.json(data);
@@ -37,33 +37,23 @@ router.post('/article', function(req, res, next) {
     var nowDate = (Date.parse(new Date()));
     if (word_id) { //编辑
         async.waterfall([
-            function(callback) {
+            function (callback) {
                 var coverUrl = "";
                 if (cover.length < 100) { //没有上传封面图
                     callback(null, cover);
                 } else { //更新了封面图
-                    let s_sql = "select cover from th_article where id=" + word_id;
-                    query(s_sql, function(err, vals) {
-                        if (err) {
-                            callback('err', 0);
-                        } else {
-                            // if (vals[0].cover.length) {
-                            //     fs.unlink("public" + vals[0].cover, function(err) {});
-                            // }
-                            var base64Data = cover.replace(/^data:image\/\w+;base64,/, "");
-                            var dataBuffer = new Buffer(base64Data, 'base64');
-                            coverUrl = "/uploadImg/cover/" + random(8) + ".png";
-                            fs.writeFile("public" + coverUrl, dataBuffer, function(err) {});
-                            callback(null, coverUrl);
-                        }
-                    })
+                    var base64Data = cover.replace(/^data:image\/\w+;base64,/, "");
+                    var dataBuffer = new Buffer(base64Data, 'base64');
+                    coverUrl = "/uploadImg/cover/" + random(8) + ".png";
+                    fs.writeFile("public" + coverUrl, dataBuffer, function (err) {});
+                    callback(null, coverUrl);
                 }
             },
-            function(coverUrl, callback) {
+            function (coverUrl, callback) {
                 if (newclassify) {
                     var c_sql = "insert into th_classify (`value`,`status`,`article_num`,`parent_id`,`create_time`)" +
                         " values ('" + newclassify + "','0','0','" + c_first_id + "','" + nowDate + "')";
-                    query(c_sql, function(err, vals, fields) {
+                    query(c_sql, function (err, vals, fields) {
                         if (err) {
                             callback('err', 1);
                         } else {
@@ -74,10 +64,10 @@ router.post('/article', function(req, res, next) {
                     callback(null, c_second_id, coverUrl);
                 }
             },
-            function(c_id, coverUrl, callback) {
+            function (c_id, coverUrl, callback) {
                 //查询现有文章字数
                 let f_sql = "select word_num from th_article where id=?";
-                query(f_sql, [word_id], function(err, vals, fields) {
+                query(f_sql, [word_id], function (err, vals, fields) {
                     if (err) {
                         callback('err', 2);
                     } else {
@@ -85,7 +75,7 @@ router.post('/article', function(req, res, next) {
                     }
                 })
             },
-            function(origin_num, c_id, coverUrl, callback) {
+            function (origin_num, c_id, coverUrl, callback) {
                 //修改文章
                 if (newclassify) {
                     var status = 0;
@@ -109,7 +99,7 @@ router.post('/article', function(req, res, next) {
                     id: word_id
                 }
 
-                db.update('th_article', setObj, whereObj, function(err, vals) {
+                db.update('th_article', setObj, whereObj, function (err, vals) {
                     if (err) {
                         callback('err', 3);
                     } else {
@@ -127,10 +117,10 @@ router.post('/article', function(req, res, next) {
                 }
                 if (changeNum != 0) {
                     let a_sql = "update th_user set " + changeNum + " where id=?";
-                    query(a_sql, [userInfo.id], function(err, vals, fields) {});
+                    query(a_sql, [userInfo.id], function (err, vals, fields) {});
                 }
             }
-        ], function(err, result) {
+        ], function (err, result) {
             if (err) {
                 data['code'] = result;
                 data['body'] = '保存失败，请重试';
@@ -143,20 +133,20 @@ router.post('/article', function(req, res, next) {
 
     } else { //新增
         var coverUrl = "";
-        if (cover.length>100) { //更新了封面图
+        if (cover.length > 100) { //更新了封面图
             var base64Data = cover.replace(/^data:image\/\w+;base64,/, "");
             var dataBuffer = new Buffer(base64Data, 'base64');
             coverUrl = "/uploadImg/cover/" + random(8) + ".png";
-            fs.writeFile("public" + coverUrl, dataBuffer, function(err) {});
-        }else {
+            fs.writeFile("public" + coverUrl, dataBuffer, function (err) {});
+        } else {
             coverUrl = cover;
         }
         async.waterfall([
-            function(callback) {
+            function (callback) {
                 if (newclassify) {
                     var c_sql = "insert into th_classify (`value`,`status`,`article_num`,`parent_id`,`create_time`)" +
                         " values ('" + newclassify + "','0','0','" + c_first_id + "','" + nowDate + "')";
-                    query(c_sql, function(err, vals, fields) {
+                    query(c_sql, function (err, vals, fields) {
                         if (err) {
                             callback('err', 1);
                         } else {
@@ -167,14 +157,14 @@ router.post('/article', function(req, res, next) {
                     callback(null, c_second_id, 1);
                 }
             },
-            function(c_id, status, callback) {
+            function (c_id, status, callback) {
                 //添加文章
                 var a_sql =
                     "insert into th_article (`title`,`cover`,`content`,`text`,`create_time`,`user_id`,`update_time`,`status`,`first_id`,`classify_id`,`point_count`,`attention_count`,`comment_count`,`abstract`,`word_num`)" +
                     " values ('" + title + "','" + coverUrl + "','" + content + "', '" + text + "', '" + nowDate + "','" +
                     userInfo.id + "','" + nowDate + "','" + status + "','" + c_first_id + "','" + c_id + "','0','0','0','" + abs + "','" + word_num +
                     "')";
-                query(a_sql, function(err, vals, fields) {
+                query(a_sql, function (err, vals, fields) {
                     if (err) {
                         callback('err', 2);
                     } else {
@@ -182,25 +172,25 @@ router.post('/article', function(req, res, next) {
                     }
                 })
             },
-            function(c_id, callback) {
+            function (c_id, callback) {
                 //文章二级类别加数量
                 var c_sql = "update th_classify set article_num=article_num+1 where id='" + c_id + "'";
-                query(c_sql, function(err, vals, fields) {});
+                query(c_sql, function (err, vals, fields) {});
                 //文章一级类别加数量
                 var a_sql = "update th_classify_first set article_num=article_num+1 where id='" + c_first_id + "'";
-                query(a_sql, function(err, vals, fields) {});
+                query(a_sql, function (err, vals, fields) {});
                 //删除草稿箱里的文章
-                if(draft_id) {
+                if (draft_id) {
                     var b_sql = "delete from th_draft where id = ?";
-                    query(b_sql,[draft_id],function(err,vals,fields){});
+                    query(b_sql, [draft_id], function (err, vals, fields) {});
                 }
                 //用户字数，文章加数量
                 var s_sql = "update th_user set word_num=word_num+'" + word_num + "',article_num=article_num+1 where id=" +
                     userInfo.id;
-                query(s_sql, function(err, vals, fields) {});
+                query(s_sql, function (err, vals, fields) {});
                 callback(null);
             }
-        ], function(err, result) {
+        ], function (err, result) {
             if (err) {
                 data['code'] = result;
                 data['body'] = '保存失败，请重试';
@@ -220,7 +210,7 @@ router.post('/article', function(req, res, next) {
 })
 
 //文章上传图片
-router.post('/upload/acticle', function(req, res, next) {
+router.post('/upload/acticle', function (req, res, next) {
     var date = new Date(),
         Y = date.getFullYear().toString(),
         M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1).toString(),
@@ -229,9 +219,9 @@ router.post('/upload/acticle', function(req, res, next) {
     var filePath = "public/uploadImg/article/" + nowDate + "/";
 
     async.waterfall([
-        function(callback) {
+        function (callback) {
             //检查文件目录是否存在
-            fs.exists(filePath, function(exists) {
+            fs.exists(filePath, function (exists) {
                 if (exists) { //文件夹已存在
                     callback(null, 1)
                 } else { //文件夹不存在
@@ -239,16 +229,16 @@ router.post('/upload/acticle', function(req, res, next) {
                 }
             })
         },
-        function(type, callback) {
+        function (type, callback) {
             if (type == 1) {
                 callback(null);
             } else {
-                fs.mkdir(filePath, function(err) {
+                fs.mkdir(filePath, function (err) {
                     callback(null);
                 })
             }
         },
-        function(callback) {
+        function (callback) {
             var form = new multiparty.Form(); //新建表单
             //设置
             form.encoding = 'utf-8';
@@ -258,14 +248,14 @@ router.post('/upload/acticle', function(req, res, next) {
             form.maxFilesSize = 5 * 1024 * 1024; //文件字节大小限制，超出会报错err 5M
 
             //表单解析
-            form.parse(req, function(err, fields, files) {
+            form.parse(req, function (err, fields, files) {
                 //报错处理
                 if (err) {
                     callback('err', '请上传5M以内的图片');
                 }
                 var imgName;
                 //获取路径
-                Object.keys(files).forEach(function(name) {
+                Object.keys(files).forEach(function (name) {
                     imgName = name;
                 })
                 var oldpath = files[imgName][0].path;
@@ -302,7 +292,7 @@ router.post('/upload/acticle', function(req, res, next) {
                 callback(null, url);
             })
         }
-    ], function(err, result) {
+    ], function (err, result) {
         if (err) {
             var info = {
                 "error": 1,
@@ -323,9 +313,9 @@ router.post('/upload/acticle', function(req, res, next) {
 })
 
 //保存为草稿
-router.post('/save/draft', function(req, res, next) {
+router.post('/save/draft', function (req, res, next) {
 
-    if (typeof(req.userInfo.id) == 'undefined') {
+    if (typeof (req.userInfo.id) == 'undefined') {
         data['code'] = 0;
         data['body'] = '发表文章需要登录，请先登录';
         res.json(data);
@@ -348,31 +338,20 @@ router.post('/save/draft', function(req, res, next) {
 
     if (draft_id) { //编辑草稿
         async.waterfall([
-            function(callback) {
+            function (callback) {
                 var coverUrl = "";
                 if (cover.length < 100) { //没有上传封面图
                     callback(null, cover);
                 } else { //更新了封面图
-                    let s_sql = "select cover from th_draft where id=" + draft_id;
-                    query(s_sql, function(err, vals) {
-                        if (err) {
-                            callback('err', 0);
-                        } else {
-                            // if (vals[0].cover.length) {
-                            //     fs.unlink("public" + vals[0].cover, function(err) {});
-                            // }
-                            var base64Data = cover.replace(/^data:image\/\w+;base64,/, "");
-                            var dataBuffer = new Buffer(base64Data, 'base64');
-                            coverUrl = "/uploadImg/cover/" + random(8) + ".png";
-                            fs.writeFile("public" + coverUrl, dataBuffer, function(err) {});
-                            callback(null, coverUrl);
-                        }
-                    })
+                    var base64Data = cover.replace(/^data:image\/\w+;base64,/, "");
+                    var dataBuffer = new Buffer(base64Data, 'base64');
+                    coverUrl = "/uploadImg/cover/" + random(8) + ".png";
+                    fs.writeFile("public" + coverUrl, dataBuffer, function (err) {});
+                    callback(null, coverUrl);
                 }
             },
-            function(coverUrl, callback) {
+            function (coverUrl, callback) {
                 //修改草稿
-
                 let setObj = {
                     title: title,
                     cover: coverUrl,
@@ -380,9 +359,9 @@ router.post('/save/draft', function(req, res, next) {
                     text: text,
                     update_time: nowDate,
                     status: 1,
-                    first_id: c_first_id?c_first_id:null,
-                    classify_id: c_second_id?c_second_id:null,
-                    new_classify: new_classify?new_classify:null,
+                    first_id: c_first_id ? c_first_id : null,
+                    classify_id: c_second_id ? c_second_id : null,
+                    new_classify: new_classify ? new_classify : null,
                     abstract: abs,
                     word_num: word_num
                 }
@@ -390,7 +369,7 @@ router.post('/save/draft', function(req, res, next) {
                     id: draft_id
                 }
 
-                db.update('th_draft', setObj, whereObj, function(err, vals) {
+                db.update('th_draft', setObj, whereObj, function (err, vals) {
                     if (err) {
                         callback('err', err);
                     } else {
@@ -398,7 +377,7 @@ router.post('/save/draft', function(req, res, next) {
                     }
                 })
             }
-        ], function(err, result) {
+        ], function (err, result) {
             if (err) {
                 data['code'] = result;
                 data['body'] = '保存失败，请重试';
@@ -415,12 +394,12 @@ router.post('/save/draft', function(req, res, next) {
             var base64Data = cover.replace(/^data:image\/\w+;base64,/, "");
             var dataBuffer = new Buffer(base64Data, 'base64');
             coverUrl = "/uploadImg/cover/" + random(8) + ".png";
-            fs.writeFile("public" + coverUrl, dataBuffer, function(err) {});
-        }else {
+            fs.writeFile("public" + coverUrl, dataBuffer, function (err) {});
+        } else {
             coverUrl = cover;
         }
         async.waterfall([
-            function(callback) {
+            function (callback) {
                 //添加文章
                 var r = getRandomStr();
                 let insert_obj = {
@@ -433,13 +412,13 @@ router.post('/save/draft', function(req, res, next) {
                     user_id: userInfo.id,
                     update_time: nowDate,
                     status: 1,
-                    first_id: c_first_id?c_first_id:null,
-                    classify_id: c_second_id?c_second_id:null,
-                    new_classify: new_classify?new_classify:null,
+                    first_id: c_first_id ? c_first_id : null,
+                    classify_id: c_second_id ? c_second_id : null,
+                    new_classify: new_classify ? new_classify : null,
                     abstract: abs,
                     word_num: word_num
-                }    
-                db.insert('th_draft', insert_obj, function(err, vals) {
+                }
+                db.insert('th_draft', insert_obj, function (err, vals) {
                     if (err) {
                         callback('err', err);
                     } else {
@@ -447,7 +426,7 @@ router.post('/save/draft', function(req, res, next) {
                     }
                 })
             }
-        ], function(err, result) {
+        ], function (err, result) {
             if (err) {
                 data['code'] = result;
                 data['body'] = '保存失败，请重试';
