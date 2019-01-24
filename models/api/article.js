@@ -159,9 +159,10 @@ router.post('/article', function (req, res, next) {
             },
             function (c_id, status, callback) {
                 //添加文章
+                var r = getRandomStr();
                 var a_sql =
-                    "insert into th_article (`title`,`cover`,`content`,`text`,`create_time`,`user_id`,`update_time`,`status`,`first_id`,`classify_id`,`point_count`,`attention_count`,`comment_count`,`abstract`,`word_num`)" +
-                    " values ('" + title + "','" + coverUrl + "','" + content + "', '" + text + "', '" + nowDate + "','" +
+                    "insert into th_article (`article_sign`,`title`,`cover`,`content`,`text`,`create_time`,`user_id`,`update_time`,`status`,`first_id`,`classify_id`,`point_count`,`attention_count`,`comment_count`,`abstract`,`word_num`)" +
+                    " values ('" + r + "','" + title + "','" + coverUrl + "','" + content + "', '" + text + "', '" + nowDate + "','" +
                     userInfo.id + "','" + nowDate + "','" + status + "','" + c_first_id + "','" + c_id + "','0','0','0','" + abs + "','" + word_num +
                     "')";
                 query(a_sql, function (err, vals, fields) {
