@@ -35,7 +35,7 @@
                             </div>
                         </div>
                         {% if self_msg.id==user_msg.id %}
-                        <a href="/writeEdit/{{word_msg.id}}" class="edit">编辑文章</a>
+                        <a href="/writeEdit/{{word_msg.article_sign}}" class="edit">编辑文章</a>
                         {% endif %}
                     </div>
                 </div>
@@ -201,10 +201,10 @@
 				</div>
 				<div class="articleList">
 					<div class="articleItem" :class="{haveImg:vals.cover!=''}" v-for="vals in recommendList">
-						<a :href="'/p/' + vals.id" class="art_img" v-if="vals.cover!=''" target="_blank">
+						<a :href="'/p/' + vals.article_sign" class="art_img" v-if="vals.cover!=''" target="_blank">
 							<img :src="vals.cover" alt="" />
 						</a>
-						<a :href="'/p/' + vals.id" class="art_title" v-text="vals.title" target="_blank"></a>
+						<a :href="'/p/' + vals.article_sign" class="art_title" v-text="vals.title" target="_blank"></a>
 						<div class="abstract" v-html="vals.abstract"></div>
 						<div class="art_bottom">
 							<a class="fl" href="#" target="_blank" v-text="vals.nick"></a>
@@ -212,7 +212,7 @@
 								<i class="icon fl point">&#xe614;</i>
 								<span class="fl" v-text="vals.point_count"></span>
 							</div>
-							<a class="fl" :href="'/p/' + vals.id + '#comments'" target="_blank">
+							<a class="fl" :href="'/p/' + vals.article_sign + '#comments'" target="_blank">
 								<i class="icon fl comment">&#xe64c;</i>
 								<span class="fl" v-text="vals.comment_count"></span>
 							</a>

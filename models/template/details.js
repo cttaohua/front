@@ -9,13 +9,13 @@ const fun = require('../../config/fun.js');
 router.get('/p/:id', function (req, res, next) {
 	delete require.cache[require.resolve('../../config/env.js')];
     var env = require('../../config/env.js');
-    var word_id = req.params.id;
+    var sign = req.params.id;
 	env.header['userInfo'] = req.userInfo;
 	
 	async.waterfall([
 		function(callback) {
 			//文章信息
-			var s_sql = "select * from th_article where id='"+word_id+"'";
+			var s_sql = "select * from th_article where article_sign ='"+sign+"'";
 		    query(s_sql,function(err, vals, fields){
 				if(err) {
 					callback('err');
@@ -59,7 +59,7 @@ router.get('/p/:id', function (req, res, next) {
 		},
 		function(word_msg,user_msg,islike,callback) {
 			//文章浏览数量更新
-			var x_sql = "update th_article set point_count=point_count+1 where id = '"+word_id+"'";
+			var x_sql = "update th_article set point_count=point_count+1 where article_sign = '"+sign+"'";
 			query(x_sql,function(err, vals, fields){
 				if(err) {
 					callback('err');

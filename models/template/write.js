@@ -41,12 +41,13 @@ router.get('/writeEdit/:id',function(req,res,next) {
 	env.header['index'] = 0;
 	env.header['userInfo'] = req.userInfo;
 	env.meta['title'] = '桃花源 - 写文章';
-	const word_id = req.params.id;
+	const article_sign = req.params.id;
 
 	async.parallel([
 		function(callback) {
-           let s_sql = "select * from th_article where id="+word_id;
-           query(s_sql,function(err,vals){
+           let s_sql = "select * from th_article where article_sign = ?";
+           query(s_sql,[article_sign],function(err,vals){
+			   console.log(err);
            	  if(err) {
            	  	callback('err');
            	  }else {

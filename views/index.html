@@ -38,11 +38,11 @@
 				{% for key, item in list %}
 				<div class="articleItem {% if item.cover!='' %} haveImg {% endif %}">
 					{% if item.cover!='' %}
-					<a href="/p/{{item.id}}" class="art_img" target="_blank">
+					<a href="/p/{{item.article_sign}}" class="art_img" target="_blank">
 						<img src="{{item.cover}}" alt="" />
 					</a>
 					{% endif %}
-					<a href="/p/{{item.id}}" class="art_title" target="_blank">{{item.title}}</a>
+					<a href="/p/{{item.article_sign}}" class="art_title" target="_blank">{{item.title}}</a>
 					<div class="abstract">
 						{% autoescape %}
 						{{item.abstract}}
@@ -54,7 +54,7 @@
 							<i class="icon fl point">&#xe614;</i>
 							<span class="fl">{{item.point_count}}</span>
 						</div>
-						<a class="fl" href="/p/{{item.id}}#comments" target="_blank">
+						<a class="fl" href="/p/{{item.article_sign}}#comments" target="_blank">
 							<i class="icon fl comment">&#xe64c;</i>
 							<span class="fl">{{item.comment_count}}</span>
 						</a>
@@ -66,10 +66,10 @@
 				</div>
 				{% endfor %}
                 <div class="articleItem" :class="{haveImg:vals.cover!=''}" v-for="vals in homeList">
-                    <a :href="'/p/' + vals.id" class="art_img" v-if="vals.cover!=''" target="_blank">
+                    <a :href="'/p/' + vals.article_sign" class="art_img" v-if="vals.cover!=''" target="_blank">
                         <img :src="vals.cover" alt="" />
                     </a>
-                    <a :href="'/p/' + vals.id" class="art_title" v-text="vals.title" target="_blank"></a>
+                    <a :href="'/p/' + vals.article_sign" class="art_title" v-text="vals.title" target="_blank"></a>
                     <div class="abstract" v-html="vals.abstract"></div>
                     <div class="art_bottom">
 						<a class="fl" href="#" target="_blank" v-text="vals.nick"></a>
@@ -77,7 +77,7 @@
 							<i class="icon fl point">&#xe614;</i>
 							<span class="fl" v-text="vals.point_count"></span>
 						</div>
-						<a class="fl" :href="'/p/' + vals.id + '#comments'" target="_blank">
+						<a class="fl" :href="'/p/' + vals.article_sign + '#comments'" target="_blank">
 							<i class="icon fl comment">&#xe64c;</i>
 							<span class="fl" v-text="vals.comment_count"></span>
 						</a>

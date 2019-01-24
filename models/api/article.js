@@ -103,7 +103,14 @@ router.post('/article', function (req, res, next) {
                     if (err) {
                         callback('err', 3);
                     } else {
-                        callback(null);
+                        let a_sql = "select article_sign from th_article where id=?";
+                        query(a_sql,[word_id],function(err,vals){
+                            if(err) {
+                                callback('err',4);
+                            }else {
+                                callback(null,vals[0].article_sign);
+                            }
+                        })
                     }
                 })
 
@@ -126,7 +133,7 @@ router.post('/article', function (req, res, next) {
                 data['body'] = '保存失败，请重试';
             } else {
                 data['code'] = 200;
-                data['body'] = '/p/' + word_id;
+                data['body'] = '/p/' + result;
             }
             res.json(data);
         })
