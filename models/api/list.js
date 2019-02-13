@@ -273,7 +273,11 @@ router.get('/cover/list', async function (req, res, next) {
                 if(err) {
                     reject(err);
                 }else {
-                    resolve(vals[0].total);
+                    if(vals.length) {
+                        resolve(vals[0].total);
+                    }else {
+                        resolve(vals);
+                    }
                 }
             })
         })

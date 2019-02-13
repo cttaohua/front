@@ -16,9 +16,16 @@ var meta = {  // title keywords description
 	keywords: '桃花源,桃花源官网,图文创作,创作软件,原创社区,博客,IT,技术'
 }
 
+const qq = {
+	appid: '101544479',
+	appkey: 'e542cfaba01599adfc76db9f793e8c7e',
+	state: 'qqloginsuccess'
+}
+
 module.exports = {
 	secret: secret,
 	data: data,
 	header: header,
-	meta: meta
+	meta: meta,
+	qq: qq
 }

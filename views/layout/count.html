@@ -1,6 +1,9 @@
 <script>
 //自动推送百度搜索
 (function(){
+    if(window.location.href.search('localhost')!=-1) {
+        return false;
+    }
     var bp = document.createElement('script');
     var curProtocol = window.location.protocol.split(':')[0];
     if (curProtocol === 'https') {

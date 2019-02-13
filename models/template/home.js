@@ -5,12 +5,12 @@ var async = require('async');
 var fun = require('../../config/fun.js');
 
 // /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/', async function (req, res, next) {
     delete require.cache[require.resolve('../../config/env.js')];
     var env = require('../../config/env.js');
     env['header']['index'] = 1;
     env['header']['userInfo'] = req.userInfo;
-    
+
     async.parallel([
         function (callback) {
             fun.selectClassify(callback);
@@ -42,9 +42,10 @@ router.get('/', function (req, res, next) {
 
 //退出登录
 router.get('/layout', function (req, res, next) {
-     res.clearCookie('userInfo');
+     req.session.userInfo = null;
 	 //页面重定向
-	 res.redirect('/');
+     res.redirect('/');
+     return false;
 })
 
 module.exports = router;

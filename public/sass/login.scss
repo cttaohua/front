@@ -15,7 +15,7 @@
     }
     .login_center {
         width: 400px;
-        margin: 180px auto 0;
+        margin: 100px auto 0;
         padding: 50px 50px 30px;
         background-color: #fff;
         border-radius: 4px;
@@ -83,6 +83,8 @@
 				}
 				i {
 					font-size: 30px;
+				}
+				.gray {
 					color: $wireframe!important;
 				}
 				.microblog {

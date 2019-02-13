@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var compression = require('compression');
 // var logger = require('morgan');
 var swig = require('swig');
@@ -19,7 +20,6 @@ var app = express();
 app.engine('html', swig.renderFile);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
-
 
 //默认设置
 if(!config.setDefaults.cache) {
@@ -42,10 +42,20 @@ app.use(express.static(path.join(__dirname, 'public'),{
 	maxAge: '30d'
 }));
 
+//session设置
+app.use(session({
+    secret : 'secret', // 对session id 相关的cookie 进行签名
+    resave : true,
+    saveUninitialized: false, // 是否保存未初始化的会话
+    cookie : {
+        maxAge : 30*24*60*60*1000, // 设置 session 的有效时间，单位毫秒
+    }
+}))
+
 app.use(function (req, res, next) {
     var user_msg;
-    if (req.cookies.userInfo) {
-        user_msg = JSON.parse(new Buffer(req.cookies.userInfo, 'base64').toString());
+    if (req.session.userInfo) {
+        user_msg = JSON.parse(new Buffer(req.session.userInfo, 'base64').toString());
     }else {
 		user_msg = 0;
 	}

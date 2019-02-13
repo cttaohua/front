@@ -4,7 +4,7 @@
 <head>
     {% include './layout/meta.html' with meta %}
 	<link rel="stylesheet" href="/plugins/element/element.min.css?v=60bfa99704ded437ebd59ce5b4b00252">
-    <link rel="stylesheet" href="/css/style.min.css?v=5beb2ecdfe460081477448ab281527ec">
+    <link rel="stylesheet" href="/css/style.min.css?v=e75330cadae2103f54924a0c660158a8">
 </head>
 
 <body>
@@ -30,17 +30,17 @@
 						<div class="title">社交账号登录</div>
 					</div>
 					<div class="child">
-						<a href="javascript:;" v-on:click="thirdParty">
-							<i class="icon microblog">&#xe63d;</i>
+						<a href="javascript:;" v-on:click="thirdParty(1)">
+							<i class="icon microblog gray">&#xe63d;</i>
 						</a>
 					</div>
 					<div class="child">
-						<a href="javascript:;" v-on:click="thirdParty">
-							<i class="icon wechat">&#xe62f;</i>
+						<a href="javascript:;" v-on:click="thirdParty(2)">
+							<i class="icon wechat gray">&#xe62f;</i>
 						</a>
 					</div>
 					<div class="child">
-						<a href="javascript:;" v-on:click="thirdParty">
+						<a href="/auth/qq_connect" target="_blank">
 							<i class="icon qq">&#xe612;</i>
 						</a>
 					</div>
@@ -64,7 +64,7 @@
 	<script src="/plugins/vue.min.js?v=be4c25a10b8ae99067f58011f992adba"></script>
 	<script src="/plugins/element/element.min.js?v=1ad579b4e2bb516a98d063b5871a3878"></script>
 	<script src="/js/common.min.js?v=26842ad4d793b5f9cc92d886bcbb2d9d"></script>
-	<script src="/js/login.min.js?v=743f6e030acbaf67b484139ddc1dd8aa"></script>
+	<script src="/js/login.min.js?v=128091bed6b30d0a52a0d9fb2bc05d4f"></script>
 	{% include './layout/count.html' %}
 </body>
 
