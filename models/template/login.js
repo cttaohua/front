@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const http = require('http');
 const env = require('../../config/env.js');
-const request = require('request');
 const fun = require('../../config/fun.js');
 const tool = require('../../config/tool.js');
 const qq = require('../../library/qqlogin.js');
@@ -68,7 +66,9 @@ router.get('/qqcallback', async function(req,res,next){
 
 		if(inspect_result.length) {  //openid已经存在，直接登录
 			var user_base = new Buffer(JSON.stringify(inspect_result[0])).toString('base64');
+			var user_base_id = fun.encodeStr(String(inspect_result[0].id));
 			req.session.userInfo = user_base;
+			res.cookie("userId",user_base_id,{maxAge: 30*24*60*60*1000});
 			res.redirect('/');  //登录成功
 			return false;
 		}else {  //openid不存在，是新用户
@@ -106,7 +106,9 @@ router.get('/qqcallback', async function(req,res,next){
 			}
 			if(final_result.length) {  //存在用户
 				var user_base = new Buffer(JSON.stringify(final_result[0])).toString('base64');
+				var user_base_id = fun.encodeStr(String(final_result[0].id));
 				req.session.userInfo = user_base;
+				res.cookie("userId",user_base_id,{maxAge: 30*24*60*60*1000});
 				res.redirect('/');
 				return false;
 			}else {

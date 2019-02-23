@@ -1,3 +1,9 @@
+$(function () {
+    //搜索
+    searchMonitor();
+    //消息
+    //socketRun('ws://127.0.0.1:8888');
+})
 //标签云初始化
 function tagCloud() {
     //标签云
@@ -31,52 +37,73 @@ function goLogin(t, str) {
         cancelButtonText: '暂不登录',
         type: 'warning'
     }).then(function () {
-		var href = window.location.href;
-		window.localStorage.setItem('loginHref',href);
-        window.location.href= '/login';
+        var href = window.location.href;
+        window.localStorage.setItem('loginHref', href);
+        window.location.href = '/login';
     }).catch(function () {
-        
+
     })
 }
 //vue时间过滤器 输出年月日时分秒
 function dateYmdHis(timestamp) {
     var date = new Date(Number(timestamp)),
-    Y = date.getFullYear() + '.',
-    M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '.',
-    D = date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate() + ' ',
-    h = ' ' + date.getHours() + ':',
-    m = date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes();
+        Y = date.getFullYear() + '.',
+        M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '.',
+        D = date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate() + ' ',
+        h = ' ' + date.getHours() + ':',
+        m = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
     return Y + M + D + h + m;
 }
 //输出年月日
 function dateYmd(timestamp) {
     var date = new Date(Number(timestamp)),
-    Y = date.getFullYear() + '.',
-    M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '.',
-    D = date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate();
+        Y = date.getFullYear() + '.',
+        M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '.',
+        D = date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate();
     return Y + M + D;
 }
 //搜索相关脚本
 function searchMonitor() {
-	var main = $('#headerPage');
-	if(!main.length) {
-		return false;
-	}
-	var input = main.find('.search input');
-	var btn = main.find('.search .magnifying');
-    input.on('focus',function(){
+    var main = $('#headerPage');
+    if (!main.length) {
+        return false;
+    }
+    var input = main.find('.search input');
+    var btn = main.find('.search .magnifying');
+    input.on('focus', function () {
         input.parent('.search').addClass('active');
     })
-    input.on('blur',function(){
+    input.on('blur', function () {
         input.parent('.search').removeClass('active');
     })
-	btn.on('click',function(){
-		window.location.href = '/search?key=' + input.val();
-	})
-	input.keypress(function(e){
-		if(e.which == 13) {
-			window.location.href = '/search?key=' + input.val();
-		}
-	})
+    btn.on('click', function () {
+        window.location.href = '/search?key=' + input.val();
+    })
+    input.keypress(function (e) {
+        if (e.which == 13) {
+            window.location.href = '/search?key=' + input.val();
+        }
+    })
 }
-searchMonitor();
+//消息系统
+function socketRun(url) {
+    var ws = new WebSocket(url);
+    ws.onopen = onOpen;
+    ws.onclose = onClose;
+    ws.onerror = onError;
+    ws.onmessage = onMessage;
+    var onOpen = function () {
+            console.log("Socket opened.");
+            ws.send("Hi, Server!");
+        },
+        onMessage = function (data) {
+            console.log("We get signal:");
+            console.log(data);
+        },
+        onClose = function () {
+            //console.log("Socket closed.");
+        },
+        onError = function () {
+            //console.log("We got an error.");
+        };
+}

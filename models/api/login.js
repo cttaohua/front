@@ -11,7 +11,7 @@ router.post('/register', function (req, res, next) {
 
     var user_name = req.body['user_name'];
     var user_phone = req.body['user_phone'];
-    var user_password = fun.encodeStr(req.body['user_password']);
+	var user_password = fun.encodeStr(req.body['user_password']);
 
     async.series({
         one: function (callback) {
@@ -79,8 +79,12 @@ router.post('/login', function (req, res, next) {
 		one: function(callback) {
 			var s_sql = "select * from th_user where account='" + user_phone + "'";
 			query(s_sql,function(err, vals, fields){
+				if(err) {
+					callback('err',1);
+					return false;
+				}
 				if(vals.length) { //用户存在
-				    var password = fun.decodeStr(vals[0].password);  //解密
+					var password = fun.decodeStr(vals[0].password);  //解密
 					if(user_password == password) {  //密码正确
 						callback(null,vals[0]);
 					}else {   //密码错误
@@ -103,10 +107,12 @@ router.post('/login', function (req, res, next) {
 		}else {
 			data['code'] = 200;
 			data['body'] = result.one;
-			//将用户信息存入cookie中 
+			//将用户id存入cookie中 用户信息存入session中
 			var user_msg = JSON.stringify(result.one);
 			var user_base = new Buffer(user_msg).toString('base64');
+			var user_base_id = fun.encodeStr(String(result.one.id));
 			req.session.userInfo = user_base;
+			res.cookie("userId",user_base_id,{maxAge: 30*24*60*60*1000});
 		}
 		res.json(data);
 	})

@@ -7,6 +7,7 @@ var compression = require('compression');
 // var logger = require('morgan');
 var swig = require('swig');
 var bodyParser = require('body-parser');
+//const socketRun = require('./library/socket.js');
 const config = require('./bin/config.js');
 
 var indexRouter = require('./routes/index');
@@ -67,6 +68,8 @@ app.use(function (req, res, next) {
 indexRouter(app);
 apiRouter(app);
 
+//websocket
+//socketRun();
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -62,7 +62,7 @@ new Vue({
             })
             //点击喜欢按钮
             $('.like-group').on('click', function () {
-                if (getCookie('userInfo')) {
+                if (getCookie('userId')) {
                     if ($(this).hasClass('unlike')) { //不喜欢
                         $(this).removeClass('unlike').addClass('islike');
                         _this.likefun(1);
@@ -126,10 +126,11 @@ new Vue({
             })
         },
         //发表评论
-        review_send: function () {
+        review_send: function (event) {
             var _this = this;
+            var review_msg = $(event.currentTarget).parents('.review_container').find('textarea').val();
             //发送评论
-            if (!this.review_content.length) {
+            if (!review_msg.length) {
                 this.$message.warning('回复内容不能为空');
                 return false;
             }
@@ -139,7 +140,7 @@ new Vue({
                 dataType: 'json',
                 data: {
                     article_id: this.article_id,
-                    content: this.review_content
+                    content: review_msg
                 },
                 success: function (res) {
                     if (res.code != 200) {
@@ -213,7 +214,7 @@ new Vue({
         //评论点赞
         pointPraise: function (type, index) {
             var _this = this;
-            if (!getCookie('userInfo')) {
+            if (!getCookie('userId')) {
                 goLogin(_this, '给这条评论点赞需要登录，现在去登录？');
                 return false;
             }
@@ -260,7 +261,7 @@ new Vue({
         //点击回复按钮
         replyctrl: function (type, index, cur) {
             var _this = this;
-            if (!getCookie('userInfo')) {
+            if (!getCookie('userId')) {
                 goLogin(_this, '回复这条评论需要登录，现在去登录？');
                 return false;
             }
@@ -277,14 +278,15 @@ new Vue({
             current.reply_person_id = reply_id;
         },
         //发表回复
-        reply_send: function (index) {
+        reply_send: function (index,event) {
             var _this = this;
-            if (!getCookie('userInfo')) {
+            if (!getCookie('userId')) {
                 goLogin(_this, '回复这条评论需要登录，现在去登录？');
                 return false;
             }
             var current = _this.comment_list[index];
-            if (!current.comment_reply.content.length) {
+            var review_msg = $(event.currentTarget).parents('.review_container').find('textarea').val();
+            if (!review_msg.length) {
                 _this.$message.warning('回复内容不能为空');
                 return false;
             }
@@ -293,7 +295,7 @@ new Vue({
                 type: 'post',
                 dataType: 'json',
                 data: {
-                    content: current.comment_reply.content,
+                    content: review_msg,
                     comment_id: current.id,
                     reply_id: current.reply_person_id
                 },

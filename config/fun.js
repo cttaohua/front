@@ -34,7 +34,7 @@ function indexList(callback,offset) {
 }
 //加密函数
 function encodeStr(str) {
-	var encode = JSON.stringify(str);
+	//var encode = JSON.stringify(str);
 	var cipher = crypto.createCipher('aes192',secret);
 	var enc = cipher.update(str,'utf8','hex');
 	enc += cipher.final('hex');

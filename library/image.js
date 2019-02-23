@@ -7,7 +7,6 @@ class Ut {
 	 * @param {object} opts 
 	 */
     static downImg (opts,path) {
-        console.log(opts);
         return new Promise((resolve,reject)=>{
             request
             .get(opts)
