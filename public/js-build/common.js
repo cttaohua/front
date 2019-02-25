@@ -4,7 +4,7 @@ $(function () {
     //搜索
     searchMonitor();
     //消息
-    socketRun();
+    //socketRun();
 })
 //标签云初始化
 function tagCloud() {
