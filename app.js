@@ -7,7 +7,6 @@ var compression = require('compression');
 // var logger = require('morgan');
 var swig = require('swig');
 var bodyParser = require('body-parser');
-//const socketRun = require('./library/socket.js');
 const config = require('./bin/config.js');
 
 var indexRouter = require('./routes/index');
@@ -45,7 +44,7 @@ app.use(express.static(path.join(__dirname, 'public'),{
 
 //session设置
 app.use(session({
-    secret : 'secret', // 对session id 相关的cookie 进行签名
+    secret : 'taohua-secret', // 对session id 相关的cookie 进行签名
     resave : true,
     saveUninitialized: false, // 是否保存未初始化的会话
     cookie : {
@@ -67,9 +66,6 @@ app.use(function (req, res, next) {
 //路由设置
 indexRouter(app);
 apiRouter(app);
-
-//websocket
-//socketRun();
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

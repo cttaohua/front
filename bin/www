@@ -8,6 +8,7 @@ var app = require('../app');
 var debug = require('debug')('myapp:server');
 var http = require('http');
 var address = require('./config.js').port;
+const socketRun = require('../library/socket.js');
 
 //关键包
 // var path = require('path'); 
@@ -31,6 +32,7 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+socketRun(server);
 // var server = https.createServer(credentials,app);
 
 /**

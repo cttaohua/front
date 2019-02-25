@@ -12,7 +12,10 @@
                         </li>
                         <li {% if header[ 'index']==2 %} class="active" {% endif %}>
                             <a href="/write">写文章</a>
-                        </li>
+						</li>
+						<li {% if header[ 'index']==3 %} class="active" {% endif %} style="display: none">
+                            <a href="/notify/chat">消息</a>
+						</li>
                     </ul>
                     <div class="search">
                         <input type="text" placeholder="搜索" value="{{header['search']}}" autocomplete="off" maxlength="30"/>

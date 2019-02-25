@@ -13,11 +13,14 @@ new Vue({
     },
     mounted: function () {
         $(() => {
-            tagCloud();
-            this.swiper();
+            this.init();
         })
     },
     methods: {
+        init: function() {
+            tagCloud();
+            this.swiper();
+        },
         swiper: function () {
             // swiper轮播图
             var mySwiper = new Swiper('.swiper-container', {

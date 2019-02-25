@@ -211,12 +211,12 @@ router.post('/savereward', function(req, res, next) {
         } else {
             data['code'] = 200;
             data['body'] = '保存成功';
-            //将用户信息存入cookie中 
-            var user_msg = JSON.stringify(result[0]);
-            var user_base = new Buffer(user_msg).toString('base64');
-            res.cookie('userInfo', user_base, {
-                maxAge: 30 * 24 * 60 * 60 * 1000
-            });
+            //将用户id存入cookie中 用户信息存入session中
+			var user_msg = JSON.stringify(result[0]);
+			var user_base = new Buffer(user_msg).toString('base64');
+			var user_base_id = fun.encodeStr(String(result[0].id));
+			req.session.userInfo = user_base;
+			res.cookie("userId",user_base_id,{maxAge: 30*24*60*60*1000});
         }
         res.json(data);
     })

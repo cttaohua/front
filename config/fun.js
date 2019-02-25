@@ -65,11 +65,25 @@ function to(promise) {
 	})
 	.catch(err => [err]);
  }
+ //查询用户基本信息
+function selectUserBaseMsg(id) {
+	return new Promise((resolve,reject)=>{
+		var sql = "select * from th_user where id=?";
+		query(sql,[id],function(err,vals,fields){
+			if(err) {
+				reject(err);
+			}else {
+				resolve(vals);
+			}
+		})
+	})
+}
 module.exports = {
+	to: to,
 	selectClassify: selectClassify,
 	indexList: indexList,
 	encodeStr: encodeStr,
 	decodeStr: decodeStr,
 	imgReplace: imgReplace,
-	to: to
+	selectUserBaseMsg: selectUserBaseMsg
 }

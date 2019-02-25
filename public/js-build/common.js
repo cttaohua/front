@@ -1,8 +1,10 @@
 $(function () {
+    //保存vue实例
+    window.$vue = new Vue({});
     //搜索
     searchMonitor();
     //消息
-    //socketRun('ws://127.0.0.1:8888');
+    socketRun();
 })
 //标签云初始化
 function tagCloud() {
@@ -85,25 +87,73 @@ function searchMonitor() {
         }
     })
 }
+//动态加载js并获取加载完成回调函数
+function loadScript(url, callback) {
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	if(typeof(callback) != "undefined") {
+		if(script.readyState) {
+			script.onreadystatechange = function() {
+				if(script.readyState == "loaded" || script.readyState == "complete") {
+					script.onreadystatechange = null;
+					callback();
+				}
+			};
+		} else {
+			script.onload = function() {
+				callback();
+			};
+		}
+	}
+	script.src = url;
+	document.body.appendChild(script);
+}
+//消息铃声播放
+function didiPlay() {
+    $('#didiAudio')[0].play();
+}
 //消息系统
-function socketRun(url) {
-    var ws = new WebSocket(url);
-    ws.onopen = onOpen;
-    ws.onclose = onClose;
-    ws.onerror = onError;
-    ws.onmessage = onMessage;
-    var onOpen = function () {
-            console.log("Socket opened.");
-            ws.send("Hi, Server!");
-        },
-        onMessage = function (data) {
-            console.log("We get signal:");
-            console.log(data);
-        },
-        onClose = function () {
-            //console.log("Socket closed.");
-        },
-        onError = function () {
-            //console.log("We got an error.");
-        };
+function socketRun() {
+    if(!getCookie('userId')) {   //用户未登录，不用连接socket.io
+        return false;
+    }
+    if(window.location.href.indexOf('/notify/chat')!=-1) {  //在聊天页面，单独处理
+        return false;
+    }
+    if(window.location.host.indexOf('localhost')!=-1) {  //本地
+        var conn = '127.0.0.1:3001';
+    }else {   //正式环境
+        var conn = 'http://taohuayuansill.com:8080';
+    }   
+    //加载socket.io.js
+    loadScript('https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js',function(){
+        var socket = io.connect(conn);
+        //连接成功时触发
+        socket.on('connect', function () {
+            socket.emit("join",getCookie('userId'));
+        });
+        //群发消息
+        socket.on('message',function(data){
+            $vue.$notify({
+                type: 'info',
+                title: '消息',
+                message: data,
+                offset: 50
+            })
+        })
+        //收到私聊消息
+        socket.on('server_message',function(data){
+            var msg = JSON.parse(data);
+            $vue.$notify({
+                type: 'info',
+                title: '您有一条新的消息',
+                message: msg.text,
+                offset: 50,
+                onClick: function() {
+                    window.location.href = '/notify/chat';
+                }
+            })
+            didiPlay();
+        })
+    })  
 }

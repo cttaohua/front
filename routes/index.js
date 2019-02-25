@@ -8,6 +8,7 @@ module.exports = function(app) {
 	var search = require('../models/template/searchPage.js');
 	var setting = require('../models/template/setting.js');
 	var article = require('../models/template/article.js');
+	var notify = require('../models/template/notify.js')
 	app.use('/',home);
 	app.use('/',write);
 	app.use('/',login);
@@ -17,4 +18,5 @@ module.exports = function(app) {
 	app.use('/',search);
 	app.use('/setting',setting);
 	app.use('/article',article);
+	app.use('/notify',notify);
 }
