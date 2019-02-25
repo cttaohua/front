@@ -26,7 +26,7 @@ const alllinks = {};
 function socketRun(server) {
     const io = require('socket.io')(server);
     //加入连接
-    io.of('/socket').on('connection', function (socket) {
+    io.on('connection', function (socket) {
 
         //监听用户连接
         socket.on('join', function (userId) 
