@@ -24,7 +24,9 @@ const alllinks = {};
 
 //主函数
 function socketRun(server) {
-    const io = require('socket.io')(server);
+    const io = require('socket.io')(server,{
+        path: '/socket'
+    });
     //加入连接
     io.on('connection', function (socket) {
 
