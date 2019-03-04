@@ -25,7 +25,8 @@ const alllinks = {};
 //主函数
 function socketRun(server) {
     const io = require('socket.io')(server,{
-        path: '/socket'
+        path: '/socket',
+        transports: ['websocket']
     });
     //加入连接
     io.on('connection', function (socket) {

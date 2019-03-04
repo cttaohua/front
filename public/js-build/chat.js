@@ -33,7 +33,10 @@ new Vue({
             }  
             //加载socket.io.js
             loadScript('https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js', function () {
-                _this.socket = io.connect(conn,{path:'/socket/socket.io'});
+                _this.socket = io.connect(conn,{
+                    path:'/socket',
+                    transports: ['websocket']
+                });
                 //连接成功时触发
                 _this.socket.on('connect', function () {
                     _this.socket.emit("join", getCookie('userId'));
