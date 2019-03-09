@@ -49,13 +49,19 @@ app.use(session({
     saveUninitialized: false, // 是否保存未初始化的会话
     cookie : {
         maxAge : 30*24*60*60*1000, // 设置 session 的有效时间，单位毫秒
+        secure: false
     }
 }))
 
 app.use(function (req, res, next) {
     var user_msg;
-    if (req.session.userInfo) {
-        user_msg = JSON.parse(new Buffer(req.session.userInfo, 'base64').toString());
+    if(config.port='3001') {  //本地
+        var user_middle = req.cookies.userInfo;
+    }else {  //正式环境
+        var user_middle = req.session.userInfo;
+    }
+    if (user_middle) {
+        user_msg = JSON.parse(new Buffer(user_middle, 'base64').toString());
     }else {
 		user_msg = 0;
 	}

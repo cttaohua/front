@@ -4,7 +4,7 @@
 <head>
     {% include '../layout/meta.html' with meta %}
     <link rel="stylesheet" href="/plugins/element/element.min.css?v=60bfa99704ded437ebd59ce5b4b00252">
-    <link rel="stylesheet" href="/css/style.min.css?v=d7f59f809d6304df520f6a6a51d35e0d">
+    <link rel="stylesheet" href="/css/style.min.css?v=857f9353de979214035282e6134be6cc">
     <style>
         body {
             background-color: #eef0f5;
@@ -20,24 +20,26 @@
                 <div class="article">30天内联系人</div>
                 <div class="user-list">
                     <ul>
-                        <li class="active" v-for="vals in user_list"><div class="figure"><img :src="vals.head"></div> <div class="text"><div class="title"><span class="time">02月26日</span><span class="name">${vals.nick}</span> <p class="gray">${vals.intro}</div> <span class="notice-badge" style="display: none;">0</span></div></li>
+                        <li :class="{active:current_obj.relation_id==vals.relation_id}" v-for="(vals,index) in user_list" @click="cutchatPerson(index)"><div class="figure"><img :src="vals.head" v-if="vals.head" onerror="this.src='/img/head.png'"><img src="/img/head.png" v-if="!vals.head"></div> <div class="text"><div class="title"><span class="time">${vals.lately_time|dateMd}</span><span class="name">${vals.nick}</span> <p class="gray">${vals.intro}</div> <span class="notice-badge" style="display: none;">0</span></div></li>
                     </ul>
                 </div>
             </div>
             <div class="chat-record">
-                <div class="article">${current_obj.nick} · ${current_obj.intro}</div>
+                <div class="article" v-if="current_obj.nick">${current_obj.nick}<span v-if="current_obj.intro"> · ${current_obj.intro}</span></div>
                 <div class="chat-message">
-                    <div class="im-list">
+                    <div contenteditable="false" class="im-list">
                         <ul>
-                            <li class="item-friend" :class="{'item-myself':vals.belong==1}" v-for="vals in chat_list"><div class="message-text clearfix"><div class="figure"><img :src="vals.head"></div> <div class="text"><p><span>${vals.content}</span></p></div></div></li>
+                            <li class="item-friend" :class="{'item-myself':vals.belong==1}" v-for="vals in chat_list"><div class="message-text clearfix"><div class="figure"><img :src="vals.head" v-if="vals.head"  onerror="this.src='/img/head.png'"><img src="/img/head.png" v-if="!vals.head"></div> <div class="text"><p><span>${vals.content}</span></p></div></div></li>
                         </ul>
                     </div>
                 </div>
                 <div class="chat-editor">
-                    <div contenteditable="true" id="chat-input" class="chat-input" @input="watchDiv($event)" @keyup.enter="watchDiv($event)">${current_obj.prev_content}</div>
+                    <div contenteditable="true" id="chat-input" class="chat-input" @input="watchDiv($event)" @keyup.enter="sendMsg">${current_obj.prev_content}</div>
                     <div class="chat-op">
-                        <span class="tip">按Enter键或者点击发送按钮发送</span> <el-button type="success" size="small" round @click="sendMsg">发送</el-button></div>
+                        <span class="tip">按Enter键或者点击发送按钮发送</span> <el-button type="success" size="small" round @click="sendMsg">发送</el-button>
+                    </div>
                 </div>
+                <div class="im-welcome" v-if="!current_obj"></div>
             </div>
         </div>
     </div>
@@ -46,8 +48,8 @@
 	<script src="/plugins/jquery.min.js?v=e0e0559014b222245deb26b6ae8bd940"></script>
 	<script src="/plugins/vue.min.js?v=be4c25a10b8ae99067f58011f992adba"></script>
 	<script src="/plugins/element/element.min.js?v=1ad579b4e2bb516a98d063b5871a3878"></script>
-    <script src="/js/common.min.js?v=c7f37fd6c439058c2b5421b965f837ed"></script>
-    <script src="/js/chat.min.js?v=6e75fc4ea08a8a698b298c8050d8603b"></script>
+    <script src="/js/common.min.js?v=fc0b3d24bf1e66e8f9fb1484e81b5de1"></script>
+    <script src="/js/chat.min.js?v=96960ee7331eda61c74d0dcf6b4b9081"></script>
 	{% include '../layout/count.html' %}
 </body>
 

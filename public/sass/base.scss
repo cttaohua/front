@@ -59,8 +59,25 @@ button {
     cursor: pointer;
 }
 
+.btn {
+    text-align: center;
+}
+
 .btn:hover {
     opacity: 0.8;
+}
+
+.btn-theme {
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #fff;
+    border-radius: 40px;
+    background-color: #DB7093;
+    display: inline-block;
+}
+
+.btn-block {
+    display: block;
 }
 
 a {
@@ -166,6 +183,10 @@ a {
 
 .mb_10 {
     margin-bottom: 10px;
+}
+
+.mb_20 {
+    margin-bottom: 20px;
 }
 
 .load-more {

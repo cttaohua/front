@@ -17,11 +17,11 @@ router.get('/u/:id', function (req, res, next) {
 		type = 1;
 	}
     //当前用户判断
-	if(user_sign == req.userInfo.user_sign) {  //为当前用户
+	if(user_sign == req.userInfo.sign) {  //为当前用户
 		var userFlag = 1;
 	}else {  //为其它用户
 		var userFlag = 0;
-	}
+    }
 	
     async.parallel([
         function (callback) {

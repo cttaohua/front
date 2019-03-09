@@ -44,6 +44,7 @@ router.get('/', async function (req, res, next) {
 router.get('/layout', function (req, res, next) {
      req.session.userInfo = null;
      res.clearCookie('userId');
+     res.clearCookie('userInfo');
 	 //页面重定向
      res.redirect('/');
      return false;

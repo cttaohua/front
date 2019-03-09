@@ -113,6 +113,7 @@ router.post('/login', function (req, res, next) {
 			var user_base_id = fun.encodeStr(String(result.one.id));
 			req.session.userInfo = user_base;
 			res.cookie("userId",user_base_id,{maxAge: 30*24*60*60*1000});
+			res.cookie("userInfo",user_base,{maxAge: 30*24*60*60*1000});
 		}
 		res.json(data);
 	})

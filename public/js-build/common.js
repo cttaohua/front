@@ -4,7 +4,7 @@ $(function () {
     //搜索
     searchMonitor();
     //消息
-    //socketRun();
+    socketRun();
 })
 //标签云初始化
 function tagCloud() {
@@ -51,7 +51,7 @@ function dateYmdHis(timestamp) {
     var date = new Date(Number(timestamp)),
         Y = date.getFullYear() + '.',
         M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '.',
-        D = date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate() + ' ',
+        D = date.getDate() < 10 ? '0' + (date.getDate()) + ' ' : date.getDate() + ' ',
         h = ' ' + date.getHours() + ':',
         m = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
     return Y + M + D + h + m;
@@ -63,6 +63,13 @@ function dateYmd(timestamp) {
         M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '.',
         D = date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate();
     return Y + M + D;
+}
+//输出月日
+function dateMd(timestamp) {
+    var date = new Date(Number(timestamp)),
+        M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '月',
+        D = date.getDate() < 10 ? '0' + (date.getDate()) + '日' : date.getDate() + '日';
+    return M + D;
 }
 //搜索相关脚本
 function searchMonitor() {
@@ -127,7 +134,9 @@ function socketRun() {
     }   
     //加载socket.io.js
     loadScript('https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js',function(){
-        var socket = io.connect(conn);
+        var socket = io.connect(conn,{
+            path:'/socket'
+        });
         //连接成功时触发
         socket.on('connect', function () {
             socket.emit("join",getCookie('userId'));

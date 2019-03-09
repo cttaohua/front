@@ -20,13 +20,14 @@
 // module.exports = socketRun;
 
 const fun = require('../config/fun.js');
+const Chat = require('./chat/index.js');
 const alllinks = {};
 
 //主函数
 function socketRun(server) {
     const io = require('socket.io')(server,{
         path: '/socket',
-        transports: ['websocket']
+        // transports: ['websocket']
     });
     //加入连接
     io.on('connection', function (socket) {
@@ -44,15 +45,18 @@ function socketRun(server) {
             var msg = JSON.parse(data);
             msg.from = fun.decodeStr(msg.from);
             var target = alllinks[msg.to];
-            if (io.sockets.connected[target]) {
-                var r_msg = {
-                    from: msg.from,
-                    to: msg.to,
-                    text: msg.text,
-                    type: 1  //文本信息
-                }
+            var r_msg = {
+                from: msg.from,
+                to: msg.to,
+                text: msg.text,
+                type: 1  //文本信息
+            }
+            Chat.save(r_msg);
+            if (io.sockets.connected[target]) {  //用户在线
                 r_msg = JSON.stringify(r_msg);
                 io.sockets.connected[target].emit('server_message',r_msg);
+            } else {  //用户已掉线，从连接用户中清除
+                delete alllinks[msg.to];
             }
         });
         
