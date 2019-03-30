@@ -227,7 +227,7 @@ new Vue({
                 this.page_flag = true;
                 this.getRecord();
             },
-            deep:true
+            deep: false  // 注意一定不要深度监听
         }
     }
 })
