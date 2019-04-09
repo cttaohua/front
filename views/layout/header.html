@@ -1,77 +1,83 @@
 <div id="headerPage">
-    <header>
-        <nav>
-            <div class="center_container">
-                <div class="logo">
-                    <img src="/img/logo.png?v=c31538bf3ca7b2441836121f43c3545e" alt="" />
-                </div>
-                <div class="center">
-                    <ul class="navBar">
-                        <li {% if header[ 'index']==1 %} class="active" {% endif %}>
-                            <a href="/"><i class="icon">&#xe6c6;</i>发现</a>
-                        </li>
-                        <li {% if header[ 'index']==2 %} class="active" {% endif %}>
-                            <a href="/write"><i class="icon">&#xe66f;</i>写文章</a>
+	<header>
+		<nav>
+			<div class="center_container">
+				<div class="logo">
+					<img src="/img/logo.png?v=c31538bf3ca7b2441836121f43c3545e" alt="" />
+				</div>
+				<div class="center">
+					<ul class="navBar">
+						<li {% if header[ 'index']==1 %} class="active" {% endif %}>
+							<a href="/"><i class="icon">&#xe604;</i>发现</a>
 						</li>
+						<!-- <li {% if header[ 'index']==2 %} class="active" {% endif %}>
+							<a href="/write"><i class="icon">&#xe66f;</i>写文章</a>
+						</li> -->
 						<li {% if header[ 'index']==3 %} class="active" {% endif %}>
-                            <a href="/notify/chat"><i class="icon">&#xe629;</i>消息</a>
-						</li>
-                    </ul>
-                    <div class="search">
-                        <input type="text" placeholder="搜索" value="{{header['search']}}" autocomplete="off" maxlength="30"/>
-                        <div class="magnifying">
-                        	<i class="icon">&#xe60c;</i>
-                        </div>
-                    </div>
-                </div>
-				{% if header['userInfo']!=0 %}
-				<div class="user">
-					<a class="avatar" href="/u/{{header.userInfo.sign}}">
-						{% if header.userInfo.head!=0 %}
-						<img src="{{header.userInfo.head}}" alt="" onerror="this.src='/img/head.png'">
-						{% else %}
-						<img src="/img/head.png?v=a6091bb2c45580b4a7ede77ee6d73de2" alt="">
-						{% endif %}
-					</a>
-					<ul class="dropdown-menu">
-						<li>
-							<a href="/u/{{header.userInfo.sign}}">
-								<i class="icon">&#xe60d;</i>
-								<span>个人主页</span>
-							</a>
-						</li>
-						<li>
-							<a href="/article/draft">
-								<i class="icon">&#xe64f;</i>
-								<span>草稿箱</span>
-							</a>
-						</li>
-						<li>
-							<a href="/setting/help">
-								<i class="icon">&#xe603;</i>
-								<span>帮助与反馈</span>
-							</a>
-						</li>
-						<li>
-							<a href="/setting/basic">
-								<i class="icon">&#xe643;</i>
-								<span>设置</span>
-							</a>
-						</li>
-						<li>
-							<a href="/layout">
-								<i class="icon">&#xe605;</i>
-								<span>退出登录</span>
-							</a>
+							<a href="/notify/chat"><i class="icon">&#xe6dc;</i>消息</a>
 						</li>
 					</ul>
+					<div class="search">
+						<input type="text" placeholder="搜索" value="{{header['search']}}" autocomplete="off"
+							maxlength="30" />
+						<div class="magnifying">
+							<i class="icon">&#xe60c;</i>
+						</div>
+					</div>
+				</div>
+				{% if header['userInfo']!=0 %}
+				<div class="right-container clearfix">
+					<a href="/write" class="write-btn btn"><i class="icon">&#xe66f;</i>写文章</a>
+					<div class="user">
+						<a class="avatar" href="/u/{{header.userInfo.sign}}">
+							{% if header.userInfo.head!=0 %}
+							<img src="{{header.userInfo.head}}" alt="" onerror="this.src='/img/head.png'">
+							{% else %}
+							<img src="/img/head.png?v=2315f470e8d08c06279043c0e9832e89" alt="">
+							{% endif %}
+						</a>
+						<div class="dropdown-menu-container">
+							<ul class="dropdown-menu">
+								<li>
+									<a href="/u/{{header.userInfo.sign}}">
+										<i class="icon">&#xe60d;</i>
+										<span>个人主页</span>
+									</a>
+								</li>
+								<li>
+									<a href="/article/draft">
+										<i class="icon">&#xe64f;</i>
+										<span>草稿箱</span>
+									</a>
+								</li>
+								<li>
+									<a href="/setting/help">
+										<i class="icon">&#xe603;</i>
+										<span>帮助与反馈</span>
+									</a>
+								</li>
+								<li>
+									<a href="/setting/basic">
+										<i class="icon">&#xe643;</i>
+										<span>设置</span>
+									</a>
+								</li>
+								<li>
+									<a href="/layout">
+										<i class="icon">&#xe605;</i>
+										<span>退出登录</span>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
 				</div>
 				{% else %}
 				<button class="login">
 					<a href="/login">登录</a>
 				</button>
 				{% endif %}
-            </div>
-        </nav>
-    </header>
+			</div>
+		</nav>
+	</header>
 </div>
