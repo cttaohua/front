@@ -55,11 +55,6 @@ app.use(session({
 
 app.use(function (req, res, next) {
     var user_msg;
-    // if(config.port='3001') {  //本地
-    //     var user_middle = req.cookies.userInfo;
-    // }else {  //正式环境
-    //     var user_middle = req.session.userInfo;
-    // }
     var user_middle = req.session.userInfo?req.session.userInfo:req.cookies.userInfo;
     if (user_middle) {
         user_msg = JSON.parse(new Buffer(user_middle, 'base64').toString());
