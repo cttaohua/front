@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/plugins/element/element.min.css?v=60bfa99704ded437ebd59ce5b4b00252">
     <link rel="stylesheet"
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/atom-one-dark.min.css">
-    <link rel="stylesheet" href="/css/style.min.css?v=f4b57bce8a97550fe14b75aa21fd8f73">
+    <link rel="stylesheet" href="/css/style.min.css?v=b3a950c5f9190a9d18c5fda0f6c8341e">
 </head>
 
 <body>
@@ -20,7 +20,7 @@
                         <a class="avatar" href="/u/{{user_msg.sign}}" target="_blank">
                             {% if user_msg.head!=0 %}
                             <img src="{{user_msg.head}}" alt="" onerror="this.src='/img/head.png'"> {% else %}
-                            <img src="/img/head.png?v=a6091bb2c45580b4a7ede77ee6d73de2" alt=""> {% endif %}
+                            <img src="/img/head.png?v=2315f470e8d08c06279043c0e9832e89" alt=""> {% endif %}
                         </a>
                         <div class="info">
                             <span class="name">
@@ -57,7 +57,7 @@
                         <a class="avatar" href="/u/{{user_msg.id}}">
                             {% if user_msg.head!=0 %}
                             <img src="{{user_msg.head}}" alt="" onerror="this.src='/img/head.png'"> {% else %}
-                            <img src="/img/head.png?v=a6091bb2c45580b4a7ede77ee6d73de2" alt=""> {% endif %}
+                            <img src="/img/head.png?v=2315f470e8d08c06279043c0e9832e89" alt=""> {% endif %}
                         </a>
                         <a class="title" href="/u/{{user_msg.id}}">{{user_msg.nick}}</a>
                         <p>写了 {{user_msg.word_num}} 字，有 {{user_msg.article_num}} 篇文章，获得了 {{user_msg.like_num}} 个喜欢</p>
@@ -81,7 +81,7 @@
                     <div class="avatar">
                         {% if header.userInfo.head!=0 %}
                         <img src="{{header.userInfo.head}}" alt="" onerror="this.src='/img/head.png'"> {% else %}
-                        <img src="/img/head.png?v=a6091bb2c45580b4a7ede77ee6d73de2" alt=""> {% endif %}
+                        <img src="/img/head.png?v=2315f470e8d08c06279043c0e9832e89" alt=""> {% endif %}
                     </div>
                     <textarea id="main_comment_area" name="main_comment_area" placeholder="写下你的评论..." maxlength="200" v-model="review_content" @focus="reviewFlag=true"></textarea>
                     <div class="write-function-block" v-show="reviewFlag">
@@ -96,7 +96,7 @@
                 {% else %}
                 <div class="review_container haveAvatar">
                     <div class="avatar">
-                        <img src="/img/head.png?v=a6091bb2c45580b4a7ede77ee6d73de2" alt="">
+                        <img src="/img/head.png?v=2315f470e8d08c06279043c0e9832e89" alt="">
                     </div>
                     <div class="sign-container">
                         <a href="/login">
@@ -118,7 +118,7 @@
                         <div class="author">
                             <a :href="'/u/' + item.user_id" class="avatar" target="_blank">
                                 <img :src="item.head" alt="" onerror="this.src='/img/head.png'" v-if="item.head!=0">
-                                <img src="/img/head.png?v=a6091bb2c45580b4a7ede77ee6d73de2" alt="" v-if="item.head==0">
+                                <img src="/img/head.png?v=2315f470e8d08c06279043c0e9832e89" alt="" v-if="item.head==0">
                             </a>
                             <div class="info">
                                 <a :href="'/u/' + item.user_id" class="name" target="_blank">${item.nick}</a>
