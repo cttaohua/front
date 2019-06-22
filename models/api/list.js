@@ -137,7 +137,7 @@ router.get('/article/recommendList', function (req, res, next) {
 
     async.waterfall([
         function (callback) {
-            var s_sql = "select id,article_sign,title,cover,abstract,point_count,comment_count,attention_count from th_article where id!='" + params.article_id + "' and classify_id = '" + params.classify_id + "' order by point_count desc limit 0,10";
+            var s_sql = "select id,article_sign,title,cover,abstract,point_count,comment_count,attention_count from th_article where id!='" + params.article_id + "' and classify_id = '" + params.classify_id + "' and status = 1 order by point_count desc limit 0,10";
             query(s_sql, function (err, vals, fields) {
                 if (err) {
                     callback('err', 0);
@@ -148,7 +148,7 @@ router.get('/article/recommendList', function (req, res, next) {
         },
         function (list, callback) {
             if (list.length < 10) { //数据少于10条
-                let a_sql = "select id,article_sign,title,cover,abstract,point_count,comment_count,attention_count from th_article where id!='" + params.article_id + "' and first_id = '" + params.first_id + "' and classify_id!='" + params.classify_id + "' order by point_count desc limit 0,10";
+                let a_sql = "select id,article_sign,title,cover,abstract,point_count,comment_count,attention_count from th_article where id!='" + params.article_id + "' and first_id = '" + params.first_id + "' and classify_id!='" + params.classify_id + "' and status = 1 order by point_count desc limit 0,10";
                 query(a_sql, function (err, vals, fields) {
                     if (err) {
                         callback('err', 1);
@@ -243,7 +243,7 @@ router.get('/draft/list', async function (req, res, next) {
 
 //封面图列表
 router.get('/cover/list', async function (req, res, next) {
-    
+
     if(req.userInfo==0) {
         data['code'] = 400;
         data['body'] = '请先登录';
@@ -253,7 +253,7 @@ router.get('/cover/list', async function (req, res, next) {
         var page = 0;
     } else {
         var page = 10 * (params.page - 1);
-    }    
+    }
     function findCover() {
         return new Promise((resolve,reject)=>{
             let sql = "select cover from th_article where cover!='' and user_id = ? and status = 1 group by cover order by create_time DESC limit ?,10";
@@ -285,7 +285,7 @@ router.get('/cover/list', async function (req, res, next) {
 
     let err,vals,err2,count;
     let awaitlist = findCover();
-    let awaitcount = findCount();    
+    let awaitcount = findCount();
     [err,vals] = await fun.to(awaitlist);
     [err2,count] = await fun.to(awaitcount);
     try{

@@ -47,7 +47,6 @@ router.get('/writeEdit/:id', function (req, res, next) {
 		function (callback) {
 			let s_sql = "select id,user_id,content,title,cover,first_id,classify_id from th_article where article_sign = ?";
 			query(s_sql, [article_sign], function (err, vals) {
-				console.log(vals)
 				if (err) {
 					callback('err');
 				} else {
