@@ -29,6 +29,7 @@ router.get('/', async function (req, res, next) {
             })
         }
     ], function (err, result) {
+        console.log(result[0])
         res.render('index', {
 			header: env['header'],
 			meta: env['meta'],

@@ -5,10 +5,10 @@ const query = require('../../config/node-mysql.js');
 
 //聊天页面
 router.get('/chat', async function (req, res, next) {
-	
+
 	//未登录
-	if(req.userInfo==0) {  
-		res.redirect('/login');
+	if(req.userInfo==0) {
+		res.redirect('/login?originalUrl='+req.originalUrl);
 		return false;
 	}
 	delete require.cache[require.resolve('../../config/env.js')];
@@ -30,14 +30,14 @@ router.get('/chat', async function (req, res, next) {
 			user_msg: user_msg
 		});
 	}
-    
+
 });
 
 //跳转到聊天界面
 router.get('/with/linkman/:id', async function(req,res,next){
 	//未登录
-	if(req.userInfo==0) {  
-		res.redirect('/login');
+	if(req.userInfo==0) {
+		res.redirect('/login?originalUrl='+req.originalUrl);
 		return false;
 	}
 	let user_id = req.userInfo.id,
@@ -83,7 +83,7 @@ router.get('/with/linkman/:id', async function(req,res,next){
 	}else {	  //已经添加了联系人
 
 	}
-	res.redirect('/notify/chat');	
+	res.redirect('/notify/chat');
 })
 
 module.exports = router;

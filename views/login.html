@@ -4,7 +4,7 @@
 <head>
     {% include './layout/meta.html' with meta %}
 	<link rel="stylesheet" href="/plugins/element/element.min.css?v=60bfa99704ded437ebd59ce5b4b00252">
-    <link rel="stylesheet" href="/css/style.min.css?v=b3a950c5f9190a9d18c5fda0f6c8341e">
+    <link rel="stylesheet" href="/css/style.min.css?v=0f93d2cf0abca3c9086c177822dc45e8">
 </head>
 
 <body>
@@ -58,13 +58,14 @@
 				</el-input>
 				<el-button type="success" class="register_btn" @click="register">注册</el-button>
 			</div>
+			<input id="originalUrl" type="hidden" value="{{originalUrl}}">
 		</div>
 	</div>
 	<script src="/plugins/jquery.min.js?v=e0e0559014b222245deb26b6ae8bd940"></script>
 	<script src="/plugins/vue.min.js?v=be4c25a10b8ae99067f58011f992adba"></script>
 	<script src="/plugins/element/element.min.js?v=1ad579b4e2bb516a98d063b5871a3878"></script>
-	<script src="/js/common.min.js?v=7de52dd8c0e30b8c03fba42fde0d6fde"></script>
-	<script src="/js/login.min.js?v=128091bed6b30d0a52a0d9fb2bc05d4f"></script>
+	<script src="/js/common.min.js?v=bdf39f1c112211414e100bbbad0728d2"></script>
+	<script src="/js/login.min.js?v=b58e2e842d4ca04da93e02a3857a3464"></script>
 	{% include './layout/count.html' %}
 </body>
 

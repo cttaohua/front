@@ -14,11 +14,12 @@ router.get('/login', function (req, res, next) {
 	var env = require('../../config/env');
 	env['meta']['title'] = '登录 - 桃花源';
 	env['meta']['description'] = '加入桃花源，开启你的创作之路，来这里接受全世界的认同';
-	
+
     res.render('login', {
-		    meta: env.meta,
+				meta: env.meta,
+				originalUrl: req.query.originalUrl?req.query.originalUrl:''
     });
-	
+
 });
 
 /* GET qq登录 */
@@ -35,12 +36,12 @@ router.get('/auth/qq_connect',function(req,res,next){
 router.get('/qqcallback', async function(req,res,next){
 
 		let params = req.query;
-		
+
 		if(params.state!=env.qq.state) {
 			res.send('error/error');
 			return false;
 		}
-		
+
 		let code = params.code;
 
 		let err,access_obj;
@@ -98,7 +99,7 @@ router.get('/qqcallback', async function(req,res,next){
 			}
 			//创建成功，查询此条用户信息
 			let err7,final_result;
-			
+
 			[err7,final_result] = await fun.to(qq.inspectopenid(open_obj.openid));
 			if(err7) {
 				res.render('error/error');
@@ -116,7 +117,7 @@ router.get('/qqcallback', async function(req,res,next){
 				return false;
 			}
 		}
-		
+
         // { ret: 0,
 		// 	msg: '',
 		// 	is_lost: 0,

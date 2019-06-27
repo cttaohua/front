@@ -39,9 +39,8 @@ function goLogin(t, str) {
         cancelButtonText: '暂不登录',
         type: 'warning'
     }).then(function () {
-        var href = window.location.href;
-        window.localStorage.setItem('loginHref', href);
-        window.location.href = '/login';
+        var href = window.location.pathname;
+        window.location.href = '/login?originalUrl='+href;
     }).catch(function () {
 
     })
@@ -131,7 +130,7 @@ function socketRun() {
         var conn = '127.0.0.1:3001';
     }else {   //正式环境
         var conn = 'taohuayuanskill.com';
-    }   
+    }
     //加载socket.io.js
     loadScript('https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js',function(){
         var socket = io.connect(conn,{
@@ -164,5 +163,5 @@ function socketRun() {
             })
             didiPlay();
         })
-    })  
+    })
 }

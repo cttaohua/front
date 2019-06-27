@@ -9,7 +9,7 @@ router.get('/write', function (req, res, next) {
 
 	//未登录
 	if (req.userInfo == 0) {
-		res.redirect('/login');
+		res.redirect('/login?originalUrl='+req.originalUrl);
 		return false;
 	}
 	delete require.cache[require.resolve('../../config/env.js')];
@@ -33,7 +33,7 @@ router.get('/writeEdit/:id', function (req, res, next) {
 
 	//未登录
 	if (req.userInfo == 0) {
-		res.redirect('/login');
+		res.redirect('/login?originalUrl='+req.originalUrl);
 		return false;
 	}
 	delete require.cache[require.resolve('../../config/env.js')];
@@ -90,7 +90,7 @@ router.get('/writeDraft/:id', async function (req, res, next) {
 
 	//未登录
 	if (req.userInfo == 0) {
-		res.redirect('/login');
+		res.redirect('/login?originalUrl='+req.originalUrl);
 		return false;
 	}
 	delete require.cache[require.resolve('../../config/env.js')];

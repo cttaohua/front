@@ -5,10 +5,10 @@ var router = express.Router();
 
 
 router.get('/basic', function (req, res, next) {
-	
+
 	//未登录
-	if(req.userInfo==0) {  
-		res.redirect('/login');
+	if(req.userInfo==0) {
+		res.redirect('/login?originalUrl='+req.originalUrl);
 		return false;
 	}
 	delete require.cache[require.resolve('../../config/env.js')];
@@ -20,14 +20,14 @@ router.get('/basic', function (req, res, next) {
 		header: env.header,
 		index: 0
     });
-    
+
 });
 
 router.get('/reward', function(req,res,next){
-	
+
 	//未登录
 	if(req.userInfo==0) {
-		res.redirect('/login');
+		res.redirect('/login?originalUrl='+req.originalUrl);
 		return false;
 	}
 	delete require.cache[require.resolve('../../config/env.js')];
@@ -39,11 +39,11 @@ router.get('/reward', function(req,res,next){
 		header: env.header,
 		index: 1
 	})
-	
+
 })
 
 router.get('/help',function(req,res,next){
-	
+
 	delete require.cache[require.resolve('../../config/env.js')];
 	var env = require('../../config/env.js');
 	env.header['userInfo'] = req.userInfo;
@@ -53,7 +53,7 @@ router.get('/help',function(req,res,next){
 		header: env.header,
 		index: 2
 	})
-	
+
 })
 
 module.exports = router;

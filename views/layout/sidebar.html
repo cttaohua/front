@@ -1,6 +1,6 @@
 <div id="sidebarPage">
     <div class="sidebar_li">
-        <div class="classify">{{classify.month}}月最热</div>
+        <div class="classify">{{classify.month}}月最火</div>
         <div class="tag">
             <ul class="clearfix">
 				{% for item in classify.commend %}
@@ -18,7 +18,7 @@
         <div class="classify">热门分类</div>
         <div class="cloud">
 			{% for cloud in classify.list %}
-			<a href="/c/{{cloud.id}}" target="_blank">{{cloud.value}}</a>
+			<a href="/c/{{cloud.id}}" class="{{cloud.class_name}}" target="_blank">{{cloud.value}}</a>
 			{% endfor %}
         </div>
     </div>

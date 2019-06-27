@@ -6,15 +6,19 @@ new Vue({
 		login_password: '',
 		register_name: '',
 		register_phone: '',
-		register_password: ''
+		register_password: '',
+		originalUrl: ''
 	},
 	created: function () {
 
 	},
 	mounted: function () {
-
+		this.init()
 	},
 	methods: {
+		init: function () {
+			this.originalUrl = $('#originalUrl').val()
+		},
 		cut: function (flag) {
 			this.cut_flag = flag;
 		},
@@ -81,13 +85,13 @@ new Vue({
 				dataType: 'json',
 				success: function (res) {
 					if (res.code == 200) {
-						var href = window.localStorage.getItem('loginHref');
-						if (href != '' && href != null) {
-							window.location.href = href;
+						// var href = window.localStorage.getItem('loginHref');
+						if (_this.originalUrl != '') {
+							window.location.href = _this.originalUrl;
 						} else {
 							window.location.href = '/';
 						}
-						window.localStorage.setItem('loginHref', '');
+						// window.localStorage.setItem('loginHref', '');
 					} else {
 						if (res.code == 1) {
 							_this.cut_flag = 2;

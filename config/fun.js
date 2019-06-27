@@ -9,6 +9,9 @@ function selectClassify(callback) {
 		if(err) {
 			callback('err');
 		}else {
+			vals.map((item) => {
+				return item.class_name = 'colorful_' + tool.random(1)
+			})
 			var m = new Date().getMonth() + 1;
 			var month = tool.returnMonth(m);
 			let commend = vals.slice(0,6);
@@ -43,8 +46,8 @@ function encodeStr(str) {
 //解密函数
 function decodeStr(str) {
 	var decipher = crypto.createDecipher('aes192', secret);
-	var dec = decipher.update(str, 'hex', 'utf8'); 
-	dec += decipher.final('utf8'); 
+	var dec = decipher.update(str, 'hex', 'utf8');
+	dec += decipher.final('utf8');
 	return dec;
 }
 //img正则替换+懒加载
