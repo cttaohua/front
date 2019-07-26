@@ -99,7 +99,7 @@
 		}
 		.el-dialog__body {
 			height: 400px;
-			overflow-y: scroll;
+			overflow-y: auto;
 		}
 	}
 	.coverlist {
@@ -124,11 +124,11 @@
 }
 
 .w-e-text-container {
-    /*编辑器的高度*/
-    height: 600px!important;
+  /*编辑器的高度*/
+  height: 600px!important;
 	z-index: 10!important;
 }
 
 .w-e-icon-upload2 {
-    // font-size: 30px;
+  // font-size: 30px;
 }

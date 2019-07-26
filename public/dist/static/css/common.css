@@ -1,0 +1,103 @@
+* {
+  font-size: 14px;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  /*在移动端禁用长按选中文本功能*/
+  -webkit-touch-callout:none;
+  -webkit-user-select:none;
+  -khtml-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+}
+/*IOS移动端点击阴影如何去除*/
+*{-webkit-tap-highlight-color: rgba(0,0,0,0);-webkit-tap-highlight-color:transparent;}
+html,body{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  /*overflow: hidden;*/
+  /*background-color: #f2f4f6;*/
+}
+#app{
+  height: 100%;
+}
+
+@font-face {
+  font-family: 'happy';
+  src: url('../font/happy.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+li {
+  list-style: none;
+}
+
+.clearfix {
+  zoom: 1;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+  line-height: 0;
+  clear: both;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+::-webkit-input-placeholder { /* WebKit browsers */
+  font-size:12px;
+  color: #bbbbbb;
+}
+
+/*滚动条样式*/
+/* ::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track-piece {
+  background-color: rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  height: 5px;
+  background-color: rgba(125, 125, 125, 0.7);
+  -webkit-border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  width: 5px;
+  background-color: rgba(125, 125, 125, 0.7);
+  -webkit-border-radius: 5px;
+} */
+.overflow_auto{
+  overflow: auto !important;
+}
+
+.ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+/*这个方式兼容所有版本的谷歌浏览器*/
+audio::-webkit-media-controls {
+　　overflow: hidden !important
+}
+audio::-webkit-media-controls-enclosure {
+　　width: calc(100% + 32px);
+　　margin-left: auto;
+}
+
+
