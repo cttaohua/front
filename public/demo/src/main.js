@@ -7,7 +7,14 @@ import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
 import 'highlight.js/styles/atom-one-light.css' //样式文件
 
+// 全局组件
+import IconSymbol from './components/IconSymbol'
+import CodeArea from './components/CodeArea'
+
 Vue.use(Antd)
+
+Vue.component('icon', IconSymbol)
+Vue.component('codeArea', CodeArea)
 
 Vue.config.productionTip = false
 
