@@ -142,7 +142,7 @@ export default {
           -webkit-text-fill-color: transparent;
           -webkit-text-stroke: 2px #d6d6d6;
           background: url('https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1614732232,705397304&fm=26&gp=0.jpg');
-          background-size: cover;
+          background-size: 100% 100%;
         }
       `
     },
@@ -152,7 +152,7 @@ export default {
           background: url('https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1614732232,705397304&fm=26&gp=0.jpg');
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
-          background-size: cover;
+          background-size: contain;
           animation: 10s infinite linear animate;
         }
         .effect06:before {
