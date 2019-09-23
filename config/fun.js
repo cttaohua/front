@@ -58,7 +58,7 @@ function imgReplace(str) {
     	var src1 = match.match(regSrc)[0];
     	var src2 = src1.slice(5,src1.length-1);
     	var img = '<img class="lazy" data-original="'+src2+'" src="'+src2+'">';
-    	return '<div style="width:700px;margin-left:-40px;">'+img+'</div>';
+    	return '<div style="width:700px;margin-left:-40px;margin-bottom:0;">'+img+'</div>';
     })
 }
 //async await 中间函数
