@@ -43,7 +43,7 @@ body {
 
 ::-webkit-scrollbar-thumb:vertical {
     height: 20px;
-    background-color: rgb(231, 70, 74);
+    background-color: $themefontColor;
     -webkit-border-radius: 15px;
     z-index: 1000;
 }
@@ -163,16 +163,6 @@ a {
 .el-message {
     z-index: 99999999 !important;
 }
-
-// .el-button--primary {
-//     background-color: $themefontColor;
-//     border-color: $themefontColor;
-// }
-//
-// .el-button--primary:hover {
-//     background-color: $themefontColor;
-//     border-color: $themefontColor;
-// }
 
 .none {
     display: none;
