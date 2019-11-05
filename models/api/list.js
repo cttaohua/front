@@ -5,6 +5,7 @@ var data = require('../../config/env.js').data;
 var fun = require('../../config/fun.js');
 var async = require('async');
 
+// 首页文章列表
 router.get('/homeList', function (req, res, next) {
     var params = req.query;
     var page = Number(params.page);
@@ -26,6 +27,7 @@ router.get('/homeList', function (req, res, next) {
 
 });
 
+// 分类列表
 router.get('/classifyList', function (req, res, next) {
 
     var params = req.query;
@@ -75,6 +77,7 @@ router.get('/classifyList', function (req, res, next) {
     })
 });
 
+// 用户页面文章列表
 router.get('/userList', function (req, res, next) {
 
     var params = req.query;

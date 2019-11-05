@@ -37,13 +37,13 @@ body {
 }
 
 ::-webkit-scrollbar-track-piece {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgb(231, 70, 74);
     -webkit-border-radius: 15px;
 }
 
 ::-webkit-scrollbar-thumb:vertical {
     height: 20px;
-    background-color: #999999;
+    background-color: transparent;
     -webkit-border-radius: 15px;
     z-index: 1000;
 }
@@ -142,18 +142,18 @@ a {
 }
 
 ::selection {
-    background: #FFC0CB;
-    color: #000;
+    background: rgb(231, 70, 74);
+    color: #fff;
 }
 
 ::-moz-selection {
-    background: #FFC0CB;
-    color: #000;
+    background: rgb(231, 70, 74);
+    color: #fff;
 }
 
 ::-webkit-selection {
-    background: #FFC0CB;
-    color: #000;
+    background: rgb(231, 70, 74);
+    color: #fff;
 }
 
 .el-select-dropdown__item.selected {
