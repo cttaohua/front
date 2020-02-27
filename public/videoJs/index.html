@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://vjs.zencdn.net/7.6.6/video-js.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+  <script src="https://vjs.zencdn.net/7.6.6/video.min.js"></script>
+  <script src="index.js"></script>
+  <style>
+    .btn {
+      width: 100px;
+      height: 100px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+	<video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered" webkit-playsinline="webkit-playsinline" playsinline controls preload="none" width="640" height="264" data-setup="{}" poster="http://vjs.zencdn.net/v/oceans.png">
+    <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+  </video>
+  <button id="btn" class="btn">播放视频</button>
+  <button id="btn1" class="btn">播放视频2</button>
+ 	<script>
+ 	//videojs.options.flash.swf = 'video-js.swf'
+   // Create a player.
+   const options = {
+     controlBar: {
+       captionsButton: false,
+       fullscreenToggle: false,
+       chaptersButton: false,
+       pictureInPictureToggle: false
+     }
+   }
+		var player = videojs('example_video_1', options, function () {
+      const title = document.querySelector('.vjs-title-bar')
+      title.addEventListener('click', () => {
+        console.log(this.remainingTime())
+        if (this.isFullscreen()) {
+          this.ended()
+          this.exitFullscreen()
+        } else {
+          this.requestFullscreen()
+        }
+      })
+      // var textNode = document.createElement('div');
+      // textNode.className = 'vjs-hhhhh';
+      // this.el().appendChild(textNode);
+		});
+
+    const url1 = 'http://vjs.zencdn.net/v/oceans.mp4'
+    const url2 = 'https://haoweilai-tob-video.oss-cn-beijing.aliyuncs.com/img/website/home1.mp4'
+
+		// Add the TitleBar as a child of the player and provide it some text
+		// in its options.
+    player.addChild('TitleBar', {text: '这里是标题'});
+
+    const btn = document.querySelector('#btn')
+    btn.addEventListener('click', function () {
+      player.src(url1)
+      player.load(url1)
+      player.play()
+      player.requestFullscreen()
+    })
+
+    const btn1 = document.querySelector('#btn1')
+    btn1.addEventListener('click', function () {
+      player.src(url2)
+      player.load(url2)
+      player.play()
+      player.requestFullscreen()
+    })
+
+    player.on('ended', function (e) {
+      console.log(e)
+    })
+
+    document.addEventListener("WeixinJSBridgeReady", function() {
+      player.play()
+    }, false);
+
+
+    // children: [
+    //   'playToggle',
+    //   "volumePanel",
+    //   "currentTimeDisplay",
+    //   "timeDivider",
+    //   "durationDisplay",
+    //   "progressControl",
+    //   "liveDisplay",
+    //   "remainingTimeDisplay",
+    //   "customControlSpacer",
+    //   "playbackRateMenuButton",
+    //   "chaptersButton",
+    //   "descriptionsButton",
+    //   "subsCapsButton",
+    //   "audioTrackButton",
+    //   "fullscreenToggle"
+    // ]
+    // children: {
+    //   bigPlayButton : false,
+    //   textTrackDisplay : false,
+    //   posterImage: false,
+    //   errorDisplay : false,
+    //   controlBar : {
+    //     captionsButton : false,
+    //     chaptersButton: false,
+    //     subtitlesButton:false,
+    //     liveDisplay:false,
+    //     playbackRateMenuButton:false
+    //   }
+    // }
+ 	</script>
+</body>
+</html>
